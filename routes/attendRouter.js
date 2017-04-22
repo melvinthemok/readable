@@ -1,6 +1,6 @@
-const express = require('express')
-const router = express.Router()
-const attendController = require('../controllers/attendController')
+var express = require('express')
+var router = express.Router()
+var attendController = require('../controllers/attendController')
 
 router.get('/', attendController.getAttend)
 

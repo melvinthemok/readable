@@ -1,7 +1,7 @@
-const User = require('../models/user')
-const passport = require('../config/ppconfig')
+var User = require('../models/user')
+var passport = require('../config/ppconfig')
 
-let userController = {
+var userController = {
   getSignUp: function (req, res) {
     res.render('./user/signup')
   },

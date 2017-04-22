@@ -13,11 +13,15 @@
         var logInStyle = ""
         var dropDownStyle = ""
         var currentUserName = ""
+        var isStudentStyle= ""
         if (currentUser) {
           registerStyle = "display:none; visibility:hidden"
           logInStyle = "display:none; visibility:hidden"
           currentUserName = currentUser.name
           currentUserId = currentUser.id
+          if (currentUser.role === "student") {
+            isStudentStyle = "display:none; visibility hidden"
+          }
         } else if (!currentUser) {
           dropDownStyle = "display:none; visibility:hidden"
           currentUserName = ""
@@ -35,6 +39,8 @@
                 <div class="dropdown-menu dropdown-menu-right" style="<%= dropDownStyle %>">
                   <h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>let us know if you are</em></h6>
                   <a class="dropdown-item" href="/attend" style="<%= dropDownStyle %>">attending</a>
+                  <h6 class="dropdown-header" style="<%= dropDownStyle %> <%= isStudentStyle %>"><em>view this Saturday's</em></h6>
+                  <a class="dropdown-item" href="/group" style="<%= dropDownStyle %> <%= isStudentStyle %>">groups</a>
                   <h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>stay don't go</em></h6>
                   <a class="dropdown-item" href="/user/logout" style="<%= dropDownStyle %>">log out</a>
                 </div>

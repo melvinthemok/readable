@@ -1,0 +1,70 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">groups</h2><br>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+  <div class="d-flex flex-wrap justify-content-center mb-4">
+  <%
+  function compareLevels(a, b) {
+    if (a.readingLevel > b.readingLevel) return 1
+    if (a.readingLevel < b.readingLevel) return -1
+    return 0
+  }
+  
+  allAttendingStudents = allAttendingStudents.sort(compareLevels)
+  
+  function chunkify(array, n) {
+    if (n < 2)
+      return [array]
+    var output = []
+    var i = 0
+    var size
+    if (array.length % n === 0) {
+      size = Math.floor(array.length / n)
+      while (i < array.length) {
+        output.push(array.slice(i, i += size))
+      }
+    } else {
+      while (i < array.length) {
+        size = Math.ceil((array.length - i) / n--)
+        output.push(array.slice(i, i += size))
+      }
+    }
+    return output
+  }
+
+  allAttendingStudents = chunkify(allAttendingStudents, allAttendingTeachers.length)
+  %>
+  
+  <% allAttendingTeachers.forEach(function (indivAttendingTeacher, indivAttendingTeacherIndex) { %>
+    <%
+    let selfGroupCardStyle = ""
+    let selfGroupHeaderStyle = ""
+    if (indivAttendingTeacher.name === currentUser.name) {
+      selfGroupCardStyle = "card-outline-primary"
+      selfGroupHeaderStyle = "color:#0275d8"
+    } else {
+      selfGroupHeaderStyle = "color:#a9a9a9"
+      selfGroupHeader = ""
+    }
+    %>
+    <div class="card m-2 <%= selfGroupCardStyle %>" style="width: 20rem;">
+      <div class="card-header" style="<%= selfGroupHeaderStyle %>">
+      <%= indivAttendingTeacher.name %>
+      </div>
+      <div class="card-block">
+      <% allAttendingStudents[indivAttendingTeacherIndex].forEach(function (student) { %>
+        <p class="card-text mb-2">
+          <%= student.name %> <span class="badge badge-info mb-2 float-right"><%= student.readingLevel %></span>
+        </p>
+      <% }) %>
+      </div>
+    </div>
+  <% }) %>
+  </div>
+</div>

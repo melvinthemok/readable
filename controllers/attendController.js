@@ -1,6 +1,6 @@
-const User = require('../models/user')
+var User = require('../models/user')
 
-let attendController = {
+var attendController = {
   getAttend: function (req, res) {
     res.render('./user/attend')
   },
