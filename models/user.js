@@ -33,12 +33,12 @@ let UserSchema = new mongoose.Schema({
       'your user name must be between 3 and 40 characters'
     ]
   },
-  gender: {
+  role: {
     type: String,
-    enum: ['male', 'female'],
+    enum: ['student', 'teacher'],
     required: [
       true,
-      'please provide your gender'
+      'please state if you are a student or a teacher'
     ]
   },
   readingLevel: {
@@ -52,16 +52,33 @@ let UserSchema = new mongoose.Schema({
       'please specify your reading level between 1 and 50'
     ],
     required: [
-      true,
+      function() {
+        return this.role === 'student'
+      },
       'please specify your reading level'
     ]
   },
-  role: {
+  gender: {
     type: String,
-    enum: ['student', 'teacher'],
+    enum: ['male', 'female'],
     required: [
       true,
-      'please state if you are a student or a teacher'
+      'please provide your gender'
+    ]
+  },
+  age: {
+    type: Number,
+    min: [
+      5,
+      'please specify your age'
+    ],
+    max: [
+      50,
+      'please specify your age'
+    ],
+    required: [
+      true,
+      'please specify your age'
     ]
   },
   password: {
@@ -78,6 +95,10 @@ let UserSchema = new mongoose.Schema({
       30,
       'your password must be between 8 and 30 characters'
     ]
+  },
+  attending: {
+    type: Boolean,
+    required: true
   }
   // createdPrograms: [
   //   {

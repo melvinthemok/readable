@@ -3,7 +3,8 @@ const app = express()
 const path = require('path')
 const ejsLayouts = require('express-ejs-layouts')
 const mongoose = require('mongoose')
-const auth = require('./routes/authRouter')
+const user = require('./routes/userRouter')
+const attend = require('./routes/attendRouter')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
@@ -49,8 +50,13 @@ app.get('/', function (req, res) {
   res.render('index')
 })
 
-app.use('/auth', auth)
+app.use('/user', user)
+app.use('/attend', attend)
 
 app.use(isLoggedIn)
+
+// app.get('/attend', function (req, res) {
+//  res.render('attend')
+// })
 
 app.listen(process.env.PORT || 3000)
