@@ -1,51 +1,52 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
-      <nav class="navbar navbar-default navbar-toggleable-sm navbar-light">
+      <nav class="navbar navbar-default navbar-toggleable-xl navbar-light">
+        <a class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <% if (currentUser) { %>
+        <p>hi, <%= currentUserName %>!</p>
+        <% } %>
+        <% if (!currentUser) { %>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-          <span class="navbar-toggler-icon"></span>
+          <span>☰</span>
         </button>
+        <% } %>
+        </a>
         <a class="nav-link" href="/">Home</a>
         <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <%
-        var registerStyle = ""
-        var logInStyle = ""
-        var dropDownStyle = ""
-        var currentUserName = ""
-        var isStudentStyle= ""
-        if (currentUser) {
-          registerStyle = "display:none; visibility:hidden"
-          logInStyle = "display:none; visibility:hidden"
-          currentUserName = currentUser.name
-          currentUserId = currentUser.id
-          if (currentUser.role === "student") {
-            isStudentStyle = "display:none; visibility hidden"
+          <div class="navbar-nav ml-auto">
+          <%
+          var registerStyle = ""
+          var logInStyle = ""
+          var dropDownStyle = ""
+          var currentUserName = ""
+          var isStudentStyle= ""
+          if (currentUser) {
+            registerStyle = "display:none; visibility:hidden"
+            logInStyle = "display:none; visibility:hidden"
+            currentUserName = currentUser.name
+            currentUserId = currentUser.id
+            if (currentUser.role === "student") {
+              isStudentStyle = "display:none; visibility hidden"
+            }
+          } else if (!currentUser) {
+            dropDownStyle = "display:none; visibility:hidden"
+            currentUserName = ""
+            currentUserId = ""
           }
-        } else if (!currentUser) {
-          dropDownStyle = "display:none; visibility:hidden"
-          currentUserName = ""
-          currentUserId = ""
-        }
-        %>
-              <li class="nav-item">
-                <a class="nav-link" href="/user/signup" style="<%= registerStyle %>">sign up </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/user/login" style="<%= logInStyle %>">log in </a>
-              </li>
-              <li class="nav-item dropdown" style="<%= dropDownStyle %>">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" style="<%= dropDownStyle %>">hey, <%= currentUserName %>!</a>
-                <div class="dropdown-menu dropdown-menu-right" style="<%= dropDownStyle %>">
-                  <h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>let us know if you are</em></h6>
-                  <a class="dropdown-item" href="/attend" style="<%= dropDownStyle %>">attending</a>
-                  <h6 class="dropdown-header" style="<%= dropDownStyle %> <%= isStudentStyle %>"><em>view this Saturday's</em></h6>
-                  <a class="dropdown-item" href="/group" style="<%= dropDownStyle %> <%= isStudentStyle %>">groups</a>
-                  <h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>stay don't go</em></h6>
-                  <a class="dropdown-item" href="/user/logout" style="<%= dropDownStyle %>">log out</a>
-                </div>
-              </li>
-          </ul>
+          %>
+            <a class="nav-item nav-link" href="/auth/signup" style="<%= registerStyle %>">sign up </a>
+            <a class="nav-item nav-link" href="/auth/login" style="<%= logInStyle %>">log in</a>
+            <a class="nav-item dropdown nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" style="<%= dropDownStyle %>">hey, <%= currentUserName %>!</a>
+            <div class="dropdown-menu dropdown-menu-right" style="<%= dropDownStyle %>">
+              <!--<h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>let us know if you are</em></h6>
+              <a class="dropdown-item" href="/attend" style="<%= dropDownStyle %>">attending</a>
+              <h6 class="dropdown-header" style="<%= dropDownStyle %> <%= isStudentStyle %>"><em>view this Saturday's</em></h6>
+              <a class="dropdown-item" href="/group" style="<%= dropDownStyle %> <%= isStudentStyle %>">groups</a>-->
+              <h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>stay don't go</em></h6>
+              <a class="dropdown-item" href="/auth/logout" style="<%= dropDownStyle %>">log out</a>
+            </div>
+          </div>
         </div>
       </nav>
     </div>

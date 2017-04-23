@@ -1,0 +1,62 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">welcome</h2><br>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/auth/signup/teacher" method="POST" class="mb-5">
+        <div class="form-group">
+          <label for="teacherEmail">Email</label>
+          <input id="teacherEmail" class="form-control" type="email" name="email" placeholder="name@email.com">
+        </div>
+        <div class="form-group">
+          <label for="teacherName">Name</label>
+          <input id="teacherName" class="form-control" type="text" name="name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label><br>
+          <select class="custom-select" id="genderInput" name="gender">
+            <option value="" selected disabled hidden>Please select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label><br>
+          <select class="custom-select" id="ageInput" name="age">
+            <option value="" selected disabled hidden>Please select</option>
+            <option value="16 to 25">16 to 25</option>
+            <option value="26 to 35">26 to 35</option>
+            <option value="36 to 45">36 to 45</option>
+            <option value="46 to 55">46 to 55</option>
+            <option value="56 to 65">56 to 65</option>
+            <option value="above 65">Above 65</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="experience">Experience with kids</label><br>
+          <textarea class="form-control" id="experience" rows="5" placeholder="Please leave this space blank if you have none"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="startDate">When did you join ReadAble?</label><br>
+          <input class="form-control" type="date" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= new Date().getDate() %>">
+        </div>
+        <div class="form-group">
+          <label for="teacherPassword">Your password (between 8 and 30 characters please)</label>
+          <input id="teacherPassword" class="form-control" type="password" name="password" placeholder="**********">
+        </div>
+        <div class="form-group">
+          <label for="adminPasswordAttempt">If you are also registering as a ReadAble administrator, please enter the password you were given</label>
+          <input id="adminPasswordAttempt" class="form-control" type="password" name="adminPasswordAttempt" placeholder="**********">
+        </div><br>
+        <button class="btn btn-primary float-right" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

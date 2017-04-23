@@ -3,7 +3,7 @@ var app = express()
 var path = require('path')
 var ejsLayouts = require('express-ejs-layouts')
 var mongoose = require('mongoose')
-var user = require('./routes/userRouter')
+var auth = require('./routes/authRouter')
 var attend = require('./routes/attendRouter')
 var group = require('./routes/groupRouter')
 var morgan = require('morgan')
@@ -51,9 +51,9 @@ app.get('/', function (req, res) {
   res.render('index')
 })
 
-app.use('/user', user)
-app.use('/attend', attend)
-app.use('/group', group)
+app.use('/auth', auth)
+// app.use('/attend', attend)
+// app.use('/group', group)
 
 app.use(isLoggedIn)
 
