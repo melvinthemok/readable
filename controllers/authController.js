@@ -1,4 +1,4 @@
-var Teacher = require('../models/teacher')
+var Tutor = require('../models/tutor')
 var CatchPlus = require('../models/catchPlus')
 var passport = require('../config/ppconfig')
 require('dotenv').config({ silent: true })
@@ -12,16 +12,16 @@ var authController = {
     res.render('./auth/login/index')
   },
 
-  getTeacherSignUp: function (req, res) {
-    res.render('./auth/signup/teacher')
+  getTutorSignUp: function (req, res) {
+    res.render('./auth/signup/tutor')
   },
 
   getCatchPlusSignUp: function (req, res) {
     res.render('./auth/signup/catchPlus')
   },
 
-  postTeacherSignUp: function (req, res) {
-    var teacher = new Teacher({
+  postTutorSignUp: function (req, res) {
+    var tutor = new Tutor({
       email: req.body.email,
       name: req.body.name,
       gender: req.body.gender,
@@ -29,16 +29,16 @@ var authController = {
       experience: req.body.experience,
       startDate: req.body.startDate,
       password: req.body.password,
-      userType: 'teacher',
+      userType: 'tutor',
       admin: req.body.adminPasswordAttempt === process.env.ADMIN_PASSWORD,
       attending: false
     })
-    teacher.save(function (err) {
+    tutor.save(function (err) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/auth/signup/teacher')
+        res.redirect('/auth/signup/tutor')
       } else {
-        passport.authenticate('teacher-local', {
+        passport.authenticate('tutor-local', {
           successRedirect: '/',
           successFlash: 'Account set up successfully, ' + req.body.name + '! You\'re logged in'
         })(req, res)
@@ -65,15 +65,15 @@ var authController = {
     })
   },
 
-  getTeacherLogIn: function (req, res) {
-    res.render('./auth/login/teacher')
+  getTutorLogIn: function (req, res) {
+    res.render('./auth/login/tutor')
   },
 
   getCatchPlusLogIn: function (req, res) {
     res.render('./auth/login/catchPlus')
   },
 
-  postTeacherLogIn: passport.authenticate('teacher-local', {
+  postTutorLogIn: passport.authenticate('tutor-local', {
     successRedirect: '/',
     failureRedirect: '/auth/login',
     failureFlash: true,

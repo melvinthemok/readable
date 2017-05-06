@@ -1,6 +1,6 @@
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
-var Teacher = require('../models/teacher')
+var Tutor = require('../models/tutor')
 var CatchPlus = require('../models/catchPlus')
 
 passport.serializeUser(function (user, done) {
@@ -14,8 +14,8 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (key, done) {
   var Model
   switch (key.type) {
-    case 'teacher':
-      Model = Teacher
+    case 'tutor':
+      Model = Tutor
       break
     case 'catchPlus':
       Model = CatchPlus
@@ -28,13 +28,13 @@ passport.deserializeUser(function (key, done) {
   })
 })
 
-passport.use('teacher-local', new LocalStrategy({
+passport.use('tutor-local', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
 }, function (email, password, done) {
-  Teacher.findOne({ email: email }, function (err, user) {
+  Tutor.findOne({ email: email }, function (err, user) {
     if (err) return done(err)
-    if (!user) return done(null, false, { message: 'Oops - there\'s no teacher with that email address!' })
+    if (!user) return done(null, false, { message: 'Oops - there\'s no tutor with that email address!' })
     if (!user.validPassword(password)) return done(null, false, { message: 'Oops - that wasn\'t a valid password!' })
     return done(null, user)
   })

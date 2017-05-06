@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var bcrypt = require('bcryptjs')
 var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-var TeacherSchema = new mongoose.Schema({
+var TutorSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [
@@ -83,7 +83,7 @@ var TeacherSchema = new mongoose.Schema({
   userType: {
     type: String,
     required: true,
-    default: 'teacher'
+    default: 'tutor'
   },
   admin: {
     type: Boolean,
@@ -95,15 +95,15 @@ var TeacherSchema = new mongoose.Schema({
   }
 })
 
-TeacherSchema.pre('save', function (next) {
-  var teacher = this
-  if (!teacher.isModified('password')) return next()
-  var hash = bcrypt.hashSync(teacher.password, 10)
-  teacher.password = hash
+TutorSchema.pre('save', function (next) {
+  var tutor = this
+  if (!tutor.isModified('password')) return next()
+  var hash = bcrypt.hashSync(tutor.password, 10)
+  tutor.password = hash
   next()
 })
 
-TeacherSchema.post('save', function(error, doc, next) {
+TutorSchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new Error('the email and/or name you provided is/are already in our database'))
   } else {
@@ -111,17 +111,17 @@ TeacherSchema.post('save', function(error, doc, next) {
   }
 })
 
-TeacherSchema.methods.validPassword = function (password) {
+TutorSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
 
-TeacherSchema.options.toJSON = {
+TutorSchema.options.toJSON = {
   transform: function (doc, ret, options) {
     delete ret.password
     return ret
   }
 }
 
-var Teacher = mongoose.model('Teacher', TeacherSchema)
+var Tutor = mongoose.model('Tutor', TutorSchema)
 
-module.exports = Teacher
+module.exports = Tutor

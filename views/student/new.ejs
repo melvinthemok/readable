@@ -1,0 +1,56 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">sign up a new student</h2><br>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/student/new" method="POST" class="mb-5">
+        <div class="form-group">
+          <label for="studentName">Name</label>
+          <input id="studentName" class="form-control" type="text" name="name" placeholder="Student's name">
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label><br>
+          <select class="custom-select" id="genderInput" name="gender">
+            <option value="" selected disabled hidden>Please select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label><br>
+          <select class="custom-select" id="ageInput" name="age">
+            <option value="" selected disabled hidden>Please select</option>
+            <% for (var i = 5; i < 21; i++) { %>
+            <option value="<%= i %>"><%= i %></option>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="schoolLevel">School level</label><br>
+          <select class="custom-select" id="schoolLevelInput" name="schoolLevel">
+            <option value="" selected disabled hidden>Please select</option>
+            <option value="Pre-primary">Pre-primary</option>
+            <% for (var j = 1; j < 7; j++) { %>
+            <option value="Primary <%= j %>">Primary <%= j %></option>
+            <% } %>
+            <% for (var k = 1; k < 6; k++) { %>
+            <option value="Secondary <%= k %>">Secondary <%= k %></option>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="startDate">When did this student start at ReadAble?</label><br>
+          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()+1).toString() : (newDate()).toString() %>">
+        </div><br>
+        <button class="btn btn-primary float-right" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -10,14 +10,14 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <form action="/auth/signup/teacher" method="POST" class="mb-5">
+      <form action="/auth/signup/tutor" method="POST" class="mb-5">
         <div class="form-group">
-          <label for="teacherEmail">Email</label>
-          <input id="teacherEmail" class="form-control" type="email" name="email" placeholder="name@email.com">
+          <label for="tutorEmail">Email</label>
+          <input id="tutorEmail" class="form-control" type="email" name="email" placeholder="name@email.com">
         </div>
         <div class="form-group">
-          <label for="teacherName">Name</label>
-          <input id="teacherName" class="form-control" type="text" name="name" placeholder="Your name">
+          <label for="tutorName">Name</label>
+          <input id="tutorName" class="form-control" type="text" name="name" placeholder="Your name">
         </div>
         <div class="form-group">
           <label for="gender">Gender</label><br>
@@ -54,9 +54,9 @@
           <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()+1).toString() : (newDate()).toString() %>">
         </div>
         <div class="form-group">
-          <label for="teacherPassword" class="mb-0">Your password</label><br>
+          <label for="tutorPassword" class="mb-0">Your password</label><br>
           <small class="text-muted mt-0">Between 8 and 30 characters please</small>
-          <input class="form-control mt-2" id="teacherPassword" type="password" name="password" placeholder="**********">
+          <input class="form-control mt-2" id="tutorPassword" type="password" name="password" placeholder="**********">
         </div>
         <div class="form-group">
           <label for="adminPasswordAttempt" class="mb-0">Only for ReadAble administrators</label><br>
