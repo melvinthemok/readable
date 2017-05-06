@@ -40,20 +40,28 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="experience">Experience with kids</label><br>
-          <textarea class="form-control" id="experience" rows="5" placeholder="Please leave this space blank if you have none"></textarea>
+          <label for="experience" class="mb-0">Experience with kids</label><br>
+          <small class="text-muted mt-0">In <span id="remainingChars">500</span> characters</small>
+          <textarea class="form-control" id="experience" name="experience" rows="5" placeholder="Please leave this space blank if you have none."></textarea>
+          <script>
+            document.getElementById('experience').onkeyup = function() {
+              document.getElementById('remainingChars').innerHTML = 500 - this.value.length
+            }
+          </script>
         </div>
         <div class="form-group">
           <label for="startDate">When did you join ReadAble?</label><br>
-          <input class="form-control" type="date" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= new Date().getDate() %>">
+          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()+1).toString() : (newDate()).toString() %>">
         </div>
         <div class="form-group">
-          <label for="teacherPassword">Your password (between 8 and 30 characters please)</label>
-          <input id="teacherPassword" class="form-control" type="password" name="password" placeholder="**********">
+          <label for="teacherPassword" class="mb-0">Your password</label><br>
+          <small class="text-muted mt-0">Between 8 and 30 characters please</small>
+          <input class="form-control mt-2" id="teacherPassword" type="password" name="password" placeholder="**********">
         </div>
         <div class="form-group">
-          <label for="adminPasswordAttempt">If you are also registering as a ReadAble administrator, please enter the password you were given</label>
-          <input id="adminPasswordAttempt" class="form-control" type="password" name="adminPasswordAttempt" placeholder="**********">
+          <label for="adminPasswordAttempt" class="mb-0">Only for ReadAble administrators</label><br>
+          <small class="text-muted mt-0">Enter the password you were given</small>
+          <input class="form-control mt-2" id="adminPasswordAttempt" type="password" name="adminPasswordAttempt" placeholder="**********">
         </div><br>
         <button class="btn btn-primary float-right" type="submit">Submit</button>
       </form>

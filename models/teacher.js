@@ -52,7 +52,11 @@ var TeacherSchema = new mongoose.Schema({
     ]
   },
   experience: {
-    type: String
+    type: String,
+    maxlength: [
+      300,
+      'please specify your experience within 500 characters'
+    ]
   },
   startDate: {
     type: Date,

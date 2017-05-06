@@ -26,14 +26,13 @@ var authController = {
       name: req.body.name,
       gender: req.body.gender,
       age: req.body.age,
-      experience: req.body.experience || null,
+      experience: req.body.experience,
       startDate: req.body.startDate,
       password: req.body.password,
       userType: 'teacher',
       admin: req.body.adminPasswordAttempt === process.env.ADMIN_PASSWORD,
       attending: false
     })
-    teacher.markModified('startDate')
     teacher.save(function (err) {
       if (err) {
         req.flash('error', err.toString())
