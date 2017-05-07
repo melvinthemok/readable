@@ -21,6 +21,12 @@
           <input id="name" class="form-control" type="text" name="name" placeholder="Your name">
           <small id="nameLengthMessage" class="form-text form-control-feedback"></small>
         </div>
+        <div id="phone-form-group" class="form-group">
+          <label for="phone" class="mb-0">Phone</label>
+          <small class="form-text text-muted mt-0 mb-2">+65 | Singapore</small>
+          <input id="phone" class="form-control" type="text" name="phone" placeholder="Your contact number">
+          <small id="phoneLengthMessage" class="form-text form-control-feedback"></small>
+        </div>
         <div id="password-form-group" class="form-group">
           <label for="password" class="mb-0">Your password</label>
           <small class="form-text text-muted mt-0 mb-2">Between 8 and 30 characters</small>
@@ -29,12 +35,13 @@
           <input id="password" class="form-control" type="password" name="password" placeholder="**********">
           <small id="passwordMessage" class="form-text form-control-feedback"></small>
         </div><br>
-        <button id="submitButton" class="btn btn-primary float-right" type="submit">Submit</button>
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
       </form>
     </div>
   </div>
 </div>
 <script type="text/javascript" src="/javascript/emailRegexCheck.js"></script>
 <script type="text/javascript" src="/javascript/nameLengthCheck.js"></script>
+<script type="text/javascript" src="/javascript/phoneLengthCheck.js"></script>
 <script type="text/javascript" src="/javascript/passwordLengthCheck.js"></script>
 <script type="text/javascript" src="/javascript/passwordMatch.js"></script>

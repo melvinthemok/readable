@@ -24,6 +24,7 @@ var authController = {
     var tutor = new Tutor({
       email: req.body.email,
       name: req.body.name,
+      phone: req.body.phone,
       gender: req.body.gender,
       age: req.body.age,
       experience: req.body.experience,
@@ -50,6 +51,7 @@ var authController = {
     var catchPlus = new CatchPlus({
       email: req.body.email,
       name: req.body.name,
+      phone: req.body.phone,
       password: req.body.password,
       userType: 'catchPlus'
     })

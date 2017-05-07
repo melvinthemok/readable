@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcryptjs')
 var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+var phoneRegex = /^\d{8}$/
 
 var CatchPlusSchema = new mongoose.Schema({
   email: {
@@ -13,7 +14,7 @@ var CatchPlusSchema = new mongoose.Schema({
     lowercase: true,
     match: [
       emailRegex,
-      'that email address is not a valid regular expression'
+      'that email address is not valid'
     ]
   },
   name: {
@@ -26,6 +27,18 @@ var CatchPlusSchema = new mongoose.Schema({
     maxlength: [
       40,
       'your user name must be between 3 and 40 characters long'
+    ]
+  },
+  phone: {
+    type: String,
+    unique: true,
+    match: [
+      phoneRegex,
+      'that phone number is not valid'
+    ],
+    required: [
+      true,
+      'a valid phone number is required'
     ]
   },
   password: {
