@@ -53,14 +53,8 @@ app.get('/', function (req, res) {
 })
 
 app.use('/auth', auth)
-app.use('/student', student)
+app.use('/student', isLoggedIn, student)
 // app.use('/attend', attend)
 // app.use('/group', group)
-
-app.use(isLoggedIn)
-
-// app.get('/attend', function (req, res) {
-//  res.render('attend')
-// })
 
 app.listen(process.env.PORT || 3000)

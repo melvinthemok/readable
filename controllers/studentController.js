@@ -1,12 +1,12 @@
-const Student = require('../models/student')
+var Student = require('../models/student')
 
-let studentController = {
+var studentController = {
   getStudentSignUp: function (req, res) {
     res.render('student/new')
   },
 
   postStudentSignUp: function (req, res) {
-    let newStudent = new Student({
+    var newStudent = new Student({
       name: req.body.name,
       gender: req.body.gender,
       age: req.body.age,

@@ -16,39 +16,37 @@
         <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
           <div class="navbar-nav ml-auto">
           <%
-          var registerStyle = ""
-          var logInStyle = ""
-          var dropDownStyle = ""
+          var loggedInStyle = ""
+          var loggedOutStyle = ""
           var currentUserName = ""
           var isStudentStyle= ""
           if (currentUser) {
-            registerStyle = "display:none; visibility:hidden;"
-            logInStyle = "display:none; visibility:hidden;"
+            loggedInStyle = "display:none; visibility:hidden;"
             currentUserName = currentUser.name
             currentUserId = currentUser.id
             if (currentUser.role === "student") {
               isStudentStyle = "display:none; visibility hidden;"
             }
           } else if (!currentUser) {
-            dropDownStyle = "display:none; visibility:hidden;"
+            loggedOutStyle = "display:none; visibility:hidden;"
             currentUserName = ""
             currentUserId = ""
           }
           %>
-            <a class="nav-item nav-link" href="/auth/signup" style="<%= registerStyle %>">sign up </a>
-            <a class="nav-item nav-link" href="/auth/login" style="<%= logInStyle %>">log in</a>
+            <a class="nav-item nav-link" href="/auth/signup" style="<%= loggedInStyle %>">sign up </a>
+            <a class="nav-item nav-link" href="/auth/login" style="<%= loggedInStyle %>">log in</a>
             <div class="dropdown">
-              <a class="nav-item nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" style="<%= dropDownStyle %>">hey, <%= currentUserName %>!</a>
-              <div class="dropdown-menu dropdown-menu-right" style="<%= dropDownStyle %> position: absolute; z-index: 1;">
-                <!--<h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>let us know if you are</em></h6>
-                <a class="dropdown-item" href="/attend" style="<%= dropDownStyle %>">attending</a>
-                <h6 class="dropdown-header" style="<%= dropDownStyle %> <%= isStudentStyle %>"><em>view this Saturday's</em></h6>
-                <a class="dropdown-item" href="/group" style="<%= dropDownStyle %> <%= isStudentStyle %>">groups</a>-->
-                <h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>awesome</em></h6>
-                <a class="dropdown-item" href="/student/new" style="<%= dropDownStyle %>">sign up a student</a>
+              <a class="nav-item nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" style="<%= loggedOutStyle %>">hey, <%= currentUserName %>!</a>
+              <div class="dropdown-menu dropdown-menu-right" style="<%= loggedOutStyle %> position: absolute; z-index: 1;">
+                <!--<h6 class="dropdown-header" style="<%= loggedOutStyle %>"><em>let us know if you are</em></h6>
+                <a class="dropdown-item" href="/attend" style="<%= loggedOutStyle %>">attending</a>
+                <h6 class="dropdown-header" style="<%= loggedOutStyle %> <%= isStudentStyle %>"><em>view this Saturday's</em></h6>
+                <a class="dropdown-item" href="/group" style="<%= loggedOutStyle %> <%= isStudentStyle %>">groups</a>-->
+                <h6 class="dropdown-header"><em>awesome</em></h6>
+                <a class="dropdown-item" href="/student/new">sign up a student</a>
                 <div class="dropdown-divider"></div>
-                <h6 class="dropdown-header" style="<%= dropDownStyle %>"><em>stay don't go</em></h6>
-                <a class="dropdown-item" href="/auth/logout" style="<%= dropDownStyle %>">log out</a>
+                <h6 class="dropdown-header"><em>stay don't go</em></h6>
+                <a class="dropdown-item" href="/auth/logout">log out</a>
               </div>
             </div>
           </div>
