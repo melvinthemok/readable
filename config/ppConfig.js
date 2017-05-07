@@ -46,7 +46,7 @@ passport.use('catchPlus-local', new LocalStrategy({
 }, function (email, password, done) {
   CatchPlus.findOne({ email: email }, function (err, user) {
     if (err) return done(err)
-    if (!user) return done(null, false, { message: 'Oops - there\'s no Catch+ volunteer with that email address!' })
+    if (!user) return done(null, false, { message: 'Oops - there\'s no one from Catch+ with that email address!' })
     if (!user.validPassword(password)) return done(null, false, { message: 'Oops - that wasn\'t a valid password!' })
     return done(null, user)
   })
