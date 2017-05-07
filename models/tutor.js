@@ -54,7 +54,7 @@ var TutorSchema = new mongoose.Schema({
   experience: {
     type: String,
     maxlength: [
-      300,
+      500,
       'please specify your experience within 500 characters'
     ]
   },

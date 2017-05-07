@@ -11,13 +11,15 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <form action="/auth/signup/tutor" method="POST" class="mb-5">
-        <div class="form-group">
-          <label for="tutorEmail">Email</label>
-          <input id="tutorEmail" class="form-control" type="email" name="email" placeholder="name@email.com">
+        <div id="email-form-group" class="form-group">
+          <label for="email">Email</label>
+          <input id="email" class="form-control" type="email" name="email" placeholder="name@email.com">
+          <small id="emailRegexMessage" class="form-text form-control-feedback"></small>
         </div>
-        <div class="form-group">
-          <label for="tutorName">Name</label>
-          <input id="tutorName" class="form-control" type="text" name="name" placeholder="Your name">
+        <div id="name-form-group" class="form-group">
+          <label for="name">Name</label>
+          <input id="name" class="form-control" type="text" name="name" placeholder="Your name">
+          <small id="nameLengthMessage" class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group">
           <label for="gender">Gender</label><br>
@@ -39,17 +41,10 @@
             <option value="above 65">Above 65</option>
           </select>
         </div>
-        <div class="form-group">
+        <div id="experience-form-group" class="form-group">
           <label for="experience" class="mb-0">Experience with kids</label><br>
-          <small class="form-text text-muted mt-0 mb-2">Characters remaining: <span id="remainingChars">500</span></small>
-          <textarea class="form-control" id="experience" name="experience" rows="5" placeholder="Please leave this space blank if you have none"></textarea>
-          <script>
-            document.addEventListener('DOMContentLoaded', function () {
-              document.getElementById('experience').onkeyup = function() {
-                document.getElementById('remainingChars').innerHTML = 500 - this.value.length
-              }
-            })
-          </script>
+          <textarea id="experience" class="form-control" name="experience" rows="5" placeholder="Please leave this space blank if you have none"></textarea>
+          <small id="experienceMessage" class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group">
           <label for="startDate">When did you join ReadAble?</label><br>
@@ -61,7 +56,7 @@
           <input id="passwordDraft" class="form-control" type="password" name="passwordDraft" placeholder="**********">
           <small class="form-text text-muted mt-1 mb-2">Please confirm</small>
           <input id="password" class="form-control" type="password" name="password" placeholder="**********">
-          <small id="passwordConfirmationMessage" class="form-text form-control-feedback"></small>
+          <small id="passwordMessage" class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group">
           <label for="adminPasswordAttempt" class="mb-0">Only for ReadAble administrators</label><br>
@@ -73,4 +68,8 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="/javascript/emailRegexCheck.js"></script>
+<script type="text/javascript" src="/javascript/nameLengthCheck.js"></script>
+<script type="text/javascript" src="/javascript/expLengthCheck.js"></script>
+<script type="text/javascript" src="/javascript/passwordLengthCheck.js"></script>
 <script type="text/javascript" src="/javascript/passwordMatch.js"></script>

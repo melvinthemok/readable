@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var passwordFormGroup = document.getElementById('password-form-group')
   var password1 = document.getElementById('passwordDraft')
   var password2 = document.getElementById('password')
-  var message = document.getElementById('passwordConfirmationMessage')
+  var message = document.getElementById('passwordMessage')
   var submitButton = document.getElementById('submitButton')
   password2.onkeyup = function () {
     if (password1.value === password2.value) {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
       password1.classList.remove('form-control-warning')
       password2.classList.add('form-control-success')
       password2.classList.remove('form-control-warning')
-      message.innerHTML = 'Passwords match'
+      message.textContent = 'Passwords match'
       submitButton.removeAttribute('disabled')
     } else {
       if (!password1.classList.contains('form-control-warning') && !passwordFormGroup.classList.contains('has-warning')) {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         password2.classList.remove('form-control-success')
         passwordFormGroup.classList.remove('has-success')
       }
-      message.innerHTML = "Passwords don't match"
+      message.textContent = "Passwords don't match"
       submitButton.setAttribute('disabled', true)
     }
   }
