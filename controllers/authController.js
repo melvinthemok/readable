@@ -47,12 +47,13 @@ var authController = {
   },
 
   postCatchPlusSignUp: function (req, res) {
-    CatchPlus.create({
+    var catchPlus = new CatchPlus({
       email: req.body.email,
       name: req.body.name,
       password: req.body.password,
       userType: 'catchPlus'
-    }, function (err, createdCatchPlus) {
+    })
+    catchPlus.save(function (err) {
       if (err) {
         req.flash('error', err.toString())
         res.redirect('/auth/signup/catchPlus')
