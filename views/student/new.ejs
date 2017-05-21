@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <form action="/student/new" method="POST" class="mb-5">
+      <form action="/student" method="POST" class="mb-5">
         <div class="form-group">
           <label for="studentName">Name</label>
           <input id="studentName" class="form-control" type="text" name="name" placeholder="Student's name">
@@ -46,10 +46,10 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="startDate">When did this student start at ReadAble?</label><br>
-          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()+1).toString() : (newDate()).toString() %>">
+          <label for="startDate">When did this student join ReadAble?</label><br>
+          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
         </div><br>
-        <button class="btn btn-primary float-right" type="submit">Submit</button>
+        <button class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
       </form>
     </div>
   </div>

@@ -73,7 +73,7 @@ CatchPlusSchema.pre('save', function (next) {
 
 CatchPlusSchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
-    next(new Error('the email and/or name you provided is/are already in our database'))
+    next(new Error('the email, name, and/or phone number you provided is/are already in use'))
   } else {
     next(error)
   }

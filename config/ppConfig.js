@@ -35,7 +35,7 @@ passport.use('tutor-local', new LocalStrategy({
   Tutor.findOne({ email: email }, function (err, user) {
     if (err) return done(err)
     if (!user) return done(null, false, { message: 'Oops - there\'s no tutor with that email address!' })
-    if (!user.validPassword(password)) return done(null, false, { message: 'Oops - that wasn\'t a valid password!' })
+    if (!user.validPassword(password)) return done(null, false, { message: 'Incorrect password!' })
     return done(null, user)
   })
 }))
@@ -47,7 +47,7 @@ passport.use('catchPlus-local', new LocalStrategy({
   CatchPlus.findOne({ email: email }, function (err, user) {
     if (err) return done(err)
     if (!user) return done(null, false, { message: 'Oops - there\'s no one from Catch+ with that email address!' })
-    if (!user.validPassword(password)) return done(null, false, { message: 'Oops - that wasn\'t a valid password!' })
+    if (!user.validPassword(password)) return done(null, false, { message: 'Incorrect password!' })
     return done(null, user)
   })
 }))

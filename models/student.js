@@ -102,6 +102,14 @@ var StudentSchema = new mongoose.Schema({
   }
 })
 
+// StudentSchema.post('save', function(error, doc, next) {
+//   if (error.name === 'MongoError' && error.code === 11000) {
+//     next(new Error('the name you provided is already in use'))
+//   } else {
+//     next(error)
+//   }
+// })
+
 var Student = mongoose.model('Student', StudentSchema)
 
 module.exports = Student

@@ -40,8 +40,15 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="/javascript/emailRegexCheck.js"></script>
-<script type="text/javascript" src="/javascript/nameLengthCheck.js"></script>
-<script type="text/javascript" src="/javascript/phoneLengthCheck.js"></script>
-<script type="text/javascript" src="/javascript/passwordLengthCheck.js"></script>
-<script type="text/javascript" src="/javascript/passwordMatch.js"></script>
+<%
+  var javaScriptFiles = [
+    'emailRegexCheck',
+    'nameLengthCheck',
+    'phoneLengthCheck',
+    'passwordLengthCheck',
+    'passwordMatch'
+  ]
+  javaScriptFiles.forEach(function (file) {
+%>
+<script type="text/javascript" src="/javascript/<%= file %>.js"></script>
+<%  })  %>
