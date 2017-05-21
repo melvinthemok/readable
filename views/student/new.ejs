@@ -11,13 +11,14 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <form action="/student" method="POST" class="mb-5">
-        <div class="form-group">
-          <label for="studentName">Name</label>
-          <input id="studentName" class="form-control" type="text" name="name" placeholder="Student's name">
+        <div id="name-form-group" class="form-group">
+          <label for="name">Name</label>
+          <input id="name" class="form-control" type="text" name="name" placeholder="Student's name">
+          <small id="nameLengthMessage" class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group">
           <label for="gender">Gender</label><br>
-          <select class="custom-select" id="genderInput" name="gender">
+          <select class="custom-select" id="gender" name="gender">
             <option value="" selected disabled hidden>Please select</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -25,7 +26,7 @@
         </div>
         <div class="form-group">
           <label for="age">Age</label><br>
-          <select class="custom-select" id="ageInput" name="age">
+          <select class="custom-select" id="age" name="age">
             <option value="" selected disabled hidden>Please select</option>
             <% for (var i = 5; i < 21; i++) { %>
             <option value="<%= i %>"><%= i %></option>
@@ -33,8 +34,29 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="family">Family code</label><br>
+          <select class="custom-select" id="family" name="family">
+            <option value="" selected disabled hidden>Please select</option>
+            <option value="">Unknown</option>
+            <option value="A4">A4</option>
+            <option value="B6">B6</option>
+            <option value="C3">C3</option>
+            <option value="D4">D4</option>
+            <option value="E4">E4</option>
+            <option value="F2">F2</option>
+            <option value="G2">G2</option>
+            <option value="H4">H4</option>
+            <option value="J3">J3</option>
+            <option value="K3">K3</option>
+            <option value="L2">L2</option>
+            <option value="M2">M2</option>
+            <option value="X2">X2</option>
+            <option value="Z4">Z4</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label for="schoolLevel">School level</label><br>
-          <select class="custom-select" id="schoolLevelInput" name="schoolLevel">
+          <select class="custom-select" id="schoolLevel" name="schoolLevel">
             <option value="" selected disabled hidden>Please select</option>
             <option value="Pre-primary">Pre-primary</option>
             <% for (var j = 1; j < 7; j++) { %>
@@ -48,9 +70,49 @@
         <div class="form-group">
           <label for="startDate">When did this student join ReadAble?</label><br>
           <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label><br>
+          <select class="custom-select" id="category" name="category">
+            <option value="" selected disabled hidden>Please select</option>
+            <option value="pre-school">Pre-school</option>
+            <option value="Fitzroy">Fitzroy</option>
+            <option value="Fitzroy-1v1">Fitzroy (one-on-one)</option>
+            <option value="post-Fitzroy">Post-Fitzroy</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Preferred tutor(s)</label><br>
+          <% allTutors.forEach(function (tutor) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input mr-1" type="checkbox" name="preferredTutors" value="<%= tutor.id %>">
+                <%= tutor.name %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Other student(s) to avoid</label><br>
+          <% allStudents.forEach(function (student) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input mr-1" type="checkbox" name="kidsToAvoid" value="<%= student.id %>">
+                <%= student.name %>
+              </label>
+            </div>
+          <% }) %>
         </div><br>
-        <button class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
       </form>
     </div>
   </div>
 </div>
+<%
+  var javaScriptFiles = [
+    'nameLengthCheck'
+  ]
+  javaScriptFiles.forEach(function (file) {
+%>
+<script type="text/javascript" src="/javascript/<%= file %>.js"></script>
+<%  })  %>

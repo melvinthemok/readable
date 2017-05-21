@@ -41,7 +41,7 @@ var authController = {
       } else {
         passport.authenticate('tutor-local', {
           successRedirect: '/',
-          successFlash: 'Account set up successfully, ' + req.body.name + '! You\'re logged in'
+          successFlash: (req.body.adminPasswordAttempt === process.env.ADMIN_PASSWORD ? 'Administrator ' : 'Tutor ' ) + 'account set up successfully, ' + req.body.name + '! You\'re logged in'
         })(req, res)
       }
     })

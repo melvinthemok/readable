@@ -18,22 +18,41 @@ var StudentSchema = new mongoose.Schema({
     enum: ['male', 'female'],
     required: [
       true,
-      'please provide your student\'s gender'
+      'please provide this student\'s gender'
     ]
   },
   age: {
     type: Number,
     min: [
       5,
-      'your student\'s age must be between ages 4 and 21 to qualify'
+      'the student\'s age must be between ages 4 and 21 to qualify'
     ],
     max: [
       20,
-      'your student\'s age must be between ages 4 and 21 to qualify'
+      'the student\'s age must be between ages 4 and 21 to qualify'
     ],
     required: [
       true,
-      'please specify your student\'s age'
+      'please specify this student\'s age'
+    ]
+  },
+  family: {
+    type: String,
+    enum: [
+      'A4', 
+      'B6',
+      'C3',
+      'D4',
+      'E4',
+      'F2',
+      'G2',
+      'H4',
+      'J3',
+      'K3',
+      'L2',
+      'M2',
+      'X2',
+      'Z4'
     ]
   },
   schoolLevel: {
@@ -54,33 +73,35 @@ var StudentSchema = new mongoose.Schema({
     ],
     required: [
       true,
-      'please specify your student\'s school level'
+      'please specify this student\'s school level'
     ]
   },
   startDate: {
     type: Date,
     required: [
       true,
-      'please specify when you joined ReadAble'
+      'please specify when this student joined ReadAble'
     ]
   },
-  booksDone: [
-    {
-      type: Number 
-    }
-  ],
-  currentBook: {
-    type: Number
+  category: {
+    type: String,
+    enum: ['pre-school', 'Fitzroy', 'Fitzroy-1v1', 'post-Fitzroy'],
+    required: [
+      true,
+      'please specify this student\'s category'
+    ]
   },
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comments'
-    }
-  ],
-  preferredTutor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Tutor'
+  preferredTutors: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tutor'
+      }
+    ],
+    validate: [
+      preferredTutorsArrayLimit, 
+      'each student should have a maximum of 3 preferred tutors'
+    ]
   },
   kidsToAvoid: [
     {
@@ -88,8 +109,78 @@ var StudentSchema = new mongoose.Schema({
       ref: 'Student'
     }
   ],
+  fitzroyBooksDone: [
+    {
+      book: {
+        type: Number,
+        min: [
+          1,
+          'the lowest Fitzroy level is 1'
+        ],
+        max: [
+          60,
+          'the highest Fitzroy level is 60'
+        ],
+        required: [
+          true,
+          'please specify a Fitzroy level'
+        ]
+      },
+      date: {
+        type: Date,
+        required: [
+          true,
+          'please specify the date this Fitzroy level was completed'
+        ]
+      }
+    }
+  ],
+  fitzroyBooksInProgress: [
+    {
+      book: {
+        type: Number,
+        min: [
+          1,
+          'the lowest Fitzroy level is 1'
+        ],
+        max: [
+          60,
+          'the highest Fitzroy level is 60'
+        ],
+        required: [
+          true,
+          'please specify a Fitzroy level'
+        ]
+      },
+      date: {
+        type: Date,
+        required: [
+          true,
+          'please specify the date this Fitzroy level was commenced'
+        ]
+      }
+    }
+  ],
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comments'
+    }
+  ],
   password: {
     type: String
+    // required: [
+    //   true,
+    //   'a password is required'
+    // ],
+    // minlength: [
+    //   8,
+    //   'your password must be between 8 and 30 characters'
+    // ],
+    // maxlength: [
+    //   30,
+    //   'your password must be between 8 and 30 characters'
+    // ]
   },
   userType: {
     type: String
@@ -102,13 +193,17 @@ var StudentSchema = new mongoose.Schema({
   }
 })
 
-// StudentSchema.post('save', function(error, doc, next) {
-//   if (error.name === 'MongoError' && error.code === 11000) {
-//     next(new Error('the name you provided is already in use'))
-//   } else {
-//     next(error)
-//   }
-// })
+function preferredTutorsArrayLimit (val) {
+  return val.length <= 3
+}
+
+StudentSchema.post('save', function(error, doc, next) {
+  if (error.name === 'MongoError' && error.code === 11000) {
+    next(new Error('the name you provided is already in use'))
+  } else {
+    next(error)
+  }
+})
 
 var Student = mongoose.model('Student', StudentSchema)
 
