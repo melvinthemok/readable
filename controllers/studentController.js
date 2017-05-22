@@ -26,6 +26,12 @@ var studentController = {
       category: req.body.category,
       preferredTutors: req.body.preferredTutors,
       kidsToAvoid: req.body.kidsToAvoid,
+      fitzroyBooksDone: req.body.fitzroyBooksDone.map(function(book, index) {
+        var obj = {}
+        obj['book'] = book
+        obj['dateDone'] = req.body.fitzroyDatesDone.filter(function (dateString) { return dateString })[index]
+        return obj
+      }),
       attending: false
     })
     newStudent.save(function (err, savedStudent) {

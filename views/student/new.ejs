@@ -68,7 +68,8 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="startDate">When did this student join ReadAble?</label><br>
+          <label for="startDate" class="mb-0">When did this student join ReadAble?</label><br>
+          <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
           <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
         </div>
         <div class="form-group">
@@ -82,7 +83,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="control-label">Preferred tutor(s)</label><br>
+          <label class="control-label">Preferred tutor(s) (up to 3)</label><br>
           <% allTutors.forEach(function (tutor) { %>
             <div class="form-check">
               <label class="form-check-label">
@@ -93,7 +94,7 @@
           <% }) %>
         </div>
         <div class="form-group">
-          <label class="control-label">Other student(s) to avoid</label><br>
+          <label class="control-label">Any student(s) to avoid?</label><br>
           <% allStudents.forEach(function (student) { %>
             <div class="form-check">
               <label class="form-check-label">
@@ -102,6 +103,25 @@
               </label>
             </div>
           <% }) %>
+        </div>
+        <div class="form-group">
+          <label class="control-label mb-0">Fitzroy books completed</label><br>
+          <small class="form-text text-muted mt-0 mb-2">And date of completion</small>
+          <% for (var i = 1; i < 61; i++) { %>
+            <div class="form-check">
+              <div class="row">
+                <div class="col-4">
+                  <label class="form-check-label">
+                    <input class="form-check-input mr-1" id="fitzroyBooksDone.<%= i %>.book" type="checkbox" name="fitzroyBooksDone" value="<%= i %>">
+                    Level <%= i %>
+                  </label>
+                </div>
+                <div class="col-6 offset-2">
+                  <input class="form-control form-control-sm" id="fitzroyBooksDone.<%= i %>.date" style="display: none; visibility: hidden" type="date" name="fitzroyDatesDone">
+                </div>
+              </div>
+            </div>
+          <% } %>
         </div><br>
         <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
       </form>
@@ -110,7 +130,8 @@
 </div>
 <%
   var javaScriptFiles = [
-    'nameLengthCheck'
+    'nameLengthCheck',
+    'fitzroyDateShow'
   ]
   javaScriptFiles.forEach(function (file) {
 %>

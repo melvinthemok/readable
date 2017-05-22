@@ -126,7 +126,7 @@ var StudentSchema = new mongoose.Schema({
           'please specify a Fitzroy level'
         ]
       },
-      date: {
+      dateDone: {
         type: Date,
         required: [
           true,
@@ -152,7 +152,7 @@ var StudentSchema = new mongoose.Schema({
           'please specify a Fitzroy level'
         ]
       },
-      date: {
+      dateStarted: {
         type: Date,
         required: [
           true,
