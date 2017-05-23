@@ -109,7 +109,7 @@ var StudentSchema = new mongoose.Schema({
       ref: 'Student'
     }
   ],
-  fitzroyBooksDone: [
+  fitzroyProgress: [
     {
       book: {
         type: Number,
@@ -126,38 +126,15 @@ var StudentSchema = new mongoose.Schema({
           'please specify a Fitzroy level'
         ]
       },
-      dateDone: {
+      startDate: {
         type: Date,
         required: [
           true,
-          'please specify the date this Fitzroy level was completed'
-        ]
-      }
-    }
-  ],
-  fitzroyBooksInProgress: [
-    {
-      book: {
-        type: Number,
-        min: [
-          1,
-          'the lowest Fitzroy level is 1'
-        ],
-        max: [
-          60,
-          'the highest Fitzroy level is 60'
-        ],
-        required: [
-          true,
-          'please specify a Fitzroy level'
+          'please specify the respective Fitzroy date(s) started'
         ]
       },
-      dateStarted: {
-        type: Date,
-        required: [
-          true,
-          'please specify the date this Fitzroy level was commenced'
-        ]
+      endDate: {
+        type: Date
       }
     }
   ],

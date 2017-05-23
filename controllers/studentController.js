@@ -26,12 +26,13 @@ var studentController = {
       category: req.body.category,
       preferredTutors: req.body.preferredTutors,
       kidsToAvoid: req.body.kidsToAvoid,
-      fitzroyBooksDone: req.body.fitzroyBooksDone.map(function(book, index) {
+      fitzroyProgress: req.body.fitzroyStartDates.map(function(date, index) {
         var obj = {}
-        obj['book'] = book
-        obj['dateDone'] = req.body.fitzroyDatesDone.filter(function (dateString) { return dateString })[index]
+        obj['startDate'] = date
+        obj['startDate'] ? obj['book'] = req.body.fitzroyBooks.shift() : obj['book'] = ''
+        obj['endDate'] = req.body.fitzroyEndDates[index]
         return obj
-      }),
+      }).filter(function (obj) { return obj['book'] }),
       attending: false
     })
     newStudent.save(function (err, savedStudent) {
