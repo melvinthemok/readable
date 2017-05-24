@@ -6,21 +6,17 @@ router.get('/signup', authController.getSignUp)
 
 router.get('/login', authController.getLogIn)
 
-router.get('/signup/tutor', authController.getTutorSignUp)
+router.get('/tutor/signup', authController.getTutorSignUp)
+router.post('/tutor/signup', authController.postTutorSignUp)
 
-router.get('/signup/catchPlus', authController.getCatchPlusSignUp)
+router.get('/catchPlus/signup', authController.getCatchPlusSignUp)
+router.post('/catchPlus/signup', authController.postCatchPlusSignUp)
 
-router.post('/signup/tutor', authController.postTutorSignUp)
+router.get('/tutor/login', authController.getTutorLogIn)
+router.post('/tutor/login', authController.postTutorLogIn)
 
-router.post('/signup/catchPlus', authController.postCatchPlusSignUp)
-
-router.get('/login/tutor', authController.getTutorLogIn)
-
-router.get('/login/catchPlus', authController.getCatchPlusLogIn)
-
-router.post('/login/tutor', authController.postTutorLogIn)
-
-router.post('/login/catchPlus', authController.postCatchPlusLogIn)
+router.get('/catchPlus/login', authController.getCatchPlusLogIn)
+router.post('/catchPlus/login', authController.postCatchPlusLogIn)
 
 router.get('/logout', authController.getLogOut)
 

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 
-var StudentSchema = new mongoose.Schema({
+var FitzroySchema = new mongoose.Schema({
   name: {
     type: String,
     unique: true,
@@ -109,7 +109,7 @@ var StudentSchema = new mongoose.Schema({
       ref: 'Student'
     }
   ],
-  fitzroyProgress: [
+  progress: [
     {
       book: {
         type: Number,
@@ -174,7 +174,7 @@ function preferredTutorsArrayLimit (val) {
   return val.length <= 3
 }
 
-StudentSchema.post('save', function(error, doc, next) {
+FitzroySchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new Error('the name you provided is already in use'))
   } else {
@@ -182,6 +182,6 @@ StudentSchema.post('save', function(error, doc, next) {
   }
 })
 
-var Student = mongoose.model('Student', StudentSchema)
+var Fitzroy = mongoose.model('Fitzroy', FitzroySchema)
 
-module.exports = Student
+module.exports = Fitzroy

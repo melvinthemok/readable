@@ -1,49 +1,61 @@
-var Student = require('../models/student')
+var Fitzroy = require('../models/fitzroy')
 var Tutor = require('../models/tutor')
 
 var studentController = {
-  getStudentSignUp: function (req, res) {
-    Tutor.find({}, function (err, allTutors) {
-      if (err) throw err
-      Student.find({}, function (err, allStudents) {
-        if (err) throw err
-        res.render('student/new', {
-          allTutors: allTutors,
-          allStudents: allStudents
-        })
-      })
-    })
+  new: function (req, res) {
+    res.render('student/new')
   },
 
-  postStudentSignUp: function (req, res) {
-    var newStudent = new Student({
-      name: req.body.name,
-      gender: req.body.gender,
-      age: req.body.age,
-      family: req.body.family,
-      schoolLevel: req.body.schoolLevel,
-      startDate: req.body.startDate,
-      category: req.body.category,
-      preferredTutors: req.body.preferredTutors,
-      kidsToAvoid: req.body.kidsToAvoid,
-      fitzroyProgress: req.body.fitzroyStartDates.map(function(date, index) {
-        var obj = {}
-        obj['startDate'] = date
-        obj['startDate'] ? obj['book'] = req.body.fitzroyBooks.shift() : obj['book'] = ''
-        obj['endDate'] = req.body.fitzroyEndDates[index]
-        return obj
-      }).filter(function (obj) { return obj['book'] }),
-      attending: false
-    })
-    newStudent.save(function (err, savedStudent) {
-      if (err) {
-        req.flash('error', err.toString())
-        res.redirect('/student/new')
-      } else {
-        req.flash('success', req.body.name + ' successfully signed up!')
-        res.redirect('/')
-      }
-    })
+  fitzroy: {
+
+    new: function (req, res) {
+      Tutor.find({}, function (err, allTutors) {
+        if (err) throw err
+        Fitzroy.find({}, function (err, allStudents) {
+          if (err) throw err
+          res.render('student/fitzroy/new', {
+            allTutors: allTutors,
+            allFitzroys: allFitzroys
+          })
+        })
+      })
+    },
+
+    create: function (req, res) {
+      var newFitzroy = new Fitzroy({
+        name: req.body.name,
+        gender: req.body.gender,
+        age: req.body.age,
+        family: req.body.family,
+        schoolLevel: req.body.schoolLevel,
+        startDate: req.body.startDate,
+        category: req.body.category,
+        preferredTutors: req.body.preferredTutors,
+        kidsToAvoid: req.body.kidsToAvoid,
+        progress: req.body.fitzroyStartDates.map(function (date, index) {
+          var obj = {}
+          obj['startDate'] = date
+          !obj['startDate']
+            ? obj['book'] = ''
+            : typeof req.body.fitzroyBooks === 'string'
+              ? obj['book'] = req.body.fitzroyBooks
+              : obj['book'] = req.body.fitzroyBooks.shift()
+          obj['endDate'] = req.body.fitzroyEndDates[index]
+          return obj
+        }).filter(function (obj) { return obj['book']}),
+        attending: false
+      })
+      newFitzroy.save(function (err, savedFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/student/fitzroy/new')
+        } else {
+          req.flash('success', req.body.name + ' successfully signed up!')
+          res.redirect('/')
+        // res.redirect('/fitzroy')
+        }
+      })
+    }
   }
 }
 

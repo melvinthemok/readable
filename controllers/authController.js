@@ -5,19 +5,19 @@ require('dotenv').config({ silent: true })
 
 var authController = {
   getSignUp: function (req, res) {
-    res.render('./auth/signup/index')
+    res.render('./auth/signup')
   },
 
   getLogIn: function (req, res) {
-    res.render('./auth/login/index')
+    res.render('./auth/login')
   },
 
   getTutorSignUp: function (req, res) {
-    res.render('./auth/signup/tutor')
+    res.render('./auth/tutor/signup')
   },
 
   getCatchPlusSignUp: function (req, res) {
-    res.render('./auth/signup/catchPlus')
+    res.render('./auth/catchPlus/signup')
   },
 
   postTutorSignUp: function (req, res) {
@@ -37,7 +37,7 @@ var authController = {
     tutor.save(function (err) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/auth/signup/tutor')
+        res.redirect('/auth/tutor/signup')
       } else {
         passport.authenticate('tutor-local', {
           successRedirect: '/',
@@ -58,7 +58,7 @@ var authController = {
     catchPlus.save(function (err) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/auth/signup/catchPlus')
+        res.redirect('/auth/catchPlus/signup')
       } else {
         passport.authenticate('catchPlus-local', {
           successRedirect: '/',
@@ -69,11 +69,11 @@ var authController = {
   },
 
   getTutorLogIn: function (req, res) {
-    res.render('./auth/login/tutor')
+    res.render('./auth/tutor/login')
   },
 
   getCatchPlusLogIn: function (req, res) {
-    res.render('./auth/login/catchPlus')
+    res.render('./auth/catchPlus/login')
   },
 
   postTutorLogIn: passport.authenticate('tutor-local', {
