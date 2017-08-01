@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 
-var FitzroySchema = new mongoose.Schema({
+var PreSchoolSchema = new mongoose.Schema({
   name: {
     type: String,
     unique: true,
@@ -55,27 +55,6 @@ var FitzroySchema = new mongoose.Schema({
       'Z4'
     ]
   },
-  schoolLevel: {
-    type: String,
-    enum: [
-      'Pre-primary', 
-      'Primary 1',
-      'Primary 2',
-      'Primary 3',
-      'Primary 4',
-      'Primary 5',
-      'Primary 6',
-      'Secondary 1',
-      'Secondary 2',
-      'Secondary 3',
-      'Secondary 4',
-      'Secondary 5'
-    ],
-    required: [
-      true,
-      'please specify this student\'s school level'
-    ]
-  },
   startDate: {
     type: Date,
     required: [
@@ -106,36 +85,7 @@ var FitzroySchema = new mongoose.Schema({
   kidsToAvoid: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Fitzroy'
-    }
-  ],
-  progress: [
-    {
-      book: {
-        type: Number,
-        min: [
-          1,
-          'the lowest Fitzroy level is 1'
-        ],
-        max: [
-          60,
-          'the highest Fitzroy level is 60'
-        ],
-        required: [
-          true,
-          'please specify a Fitzroy level'
-        ]
-      },
-      startDate: {
-        type: Date,
-        required: [
-          true,
-          'please specify the respective Fitzroy date(s) started'
-        ]
-      },
-      endDate: {
-        type: Date
-      }
+      ref: 'PreSchool'
     }
   ],
   comments: [
@@ -154,7 +104,7 @@ function preferredTutorsArrayLimit (val) {
   return val.length <= 3
 }
 
-FitzroySchema.post('save', function(error, doc, next) {
+PreSchoolSchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new Error('the name you provided is already in use'))
   } else {
@@ -162,6 +112,6 @@ FitzroySchema.post('save', function(error, doc, next) {
   }
 })
 
-var Fitzroy = mongoose.model('Fitzroy', FitzroySchema)
+var PreSchool = mongoose.model('PreSchool', PreSchoolSchema)
 
-module.exports = Fitzroy
+module.exports = PreSchool

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 
-var FitzroySchema = new mongoose.Schema({
+var PostFitzroySchema = new mongoose.Schema({
   name: {
     type: String,
     unique: true,
@@ -106,36 +106,7 @@ var FitzroySchema = new mongoose.Schema({
   kidsToAvoid: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Fitzroy'
-    }
-  ],
-  progress: [
-    {
-      book: {
-        type: Number,
-        min: [
-          1,
-          'the lowest Fitzroy level is 1'
-        ],
-        max: [
-          60,
-          'the highest Fitzroy level is 60'
-        ],
-        required: [
-          true,
-          'please specify a Fitzroy level'
-        ]
-      },
-      startDate: {
-        type: Date,
-        required: [
-          true,
-          'please specify the respective Fitzroy date(s) started'
-        ]
-      },
-      endDate: {
-        type: Date
-      }
+      ref: 'PostFitzroy'
     }
   ],
   comments: [
@@ -154,7 +125,7 @@ function preferredTutorsArrayLimit (val) {
   return val.length <= 3
 }
 
-FitzroySchema.post('save', function(error, doc, next) {
+PostFitzroySchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new Error('the name you provided is already in use'))
   } else {
@@ -162,6 +133,6 @@ FitzroySchema.post('save', function(error, doc, next) {
   }
 })
 
-var Fitzroy = mongoose.model('Fitzroy', FitzroySchema)
+var PostFitzroy = mongoose.model('PostFitzroy', PostFitzroySchema)
 
-module.exports = Fitzroy
+module.exports = PostFitzroy

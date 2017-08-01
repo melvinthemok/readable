@@ -13,13 +13,13 @@ var studentController = require('../controllers/studentController')
 
 router.get('/new', canCreateStudent, studentController.new)
 
-// router.get('/pre-school/new', canCreateStudent, studentController.getPreSchoolSignUp)
-// router.post('/pre-school', canCreateStudent, studentController.postPreSchoolSignUp)
+router.get('/pre-school/new', canCreateStudent, studentController.preSchool.new)
+router.post('/pre-school', canCreateStudent, studentController.preSchool.create)
 
 router.get('/fitzroy/new', canCreateStudent, studentController.fitzroy.new)
 router.post('/fitzroy', canCreateStudent, studentController.fitzroy.create)
 
-// router.get('/post-fitzroy/new', canCreateStudent, studentController.getPostFitzroySignUp)
-// router.post('/post-fitzroy', canCreateStudent, studentController.postPostFitzroySignUp)
+router.get('/post-fitzroy/new', canCreateStudent, studentController.postFitzroy.new)
+router.post('/post-fitzroy', canCreateStudent, studentController.postFitzroy.create)
 
 module.exports = router
