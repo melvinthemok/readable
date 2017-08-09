@@ -109,7 +109,16 @@ var PostFitzroySchema = new mongoose.Schema({
       ref: 'PostFitzroy'
     }
   ],
+  attendance: [
+    {
+      date: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Saturdate'
+      }
+    }
+  ],
   comments: [
+    // Shift to attendance?
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comments'

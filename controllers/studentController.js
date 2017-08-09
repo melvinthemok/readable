@@ -2,6 +2,8 @@ var Fitzroy = require('../models/fitzroy')
 var PreSchool = require('../models/preSchool')
 var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
+var Saturdate = require('../models/saturdate')
+var formatDate = require('../public/javascript/formatDate')
 
 var studentController = {
   // later change to index view at 'students/' with links to different listalls and news
@@ -24,9 +26,23 @@ var studentController = {
               res.redirect('/students/new')
               // res.redirect('/students/pre-school')
             } else {
-              res.render('students/preSchool/new', {
-                allTutors: allTutors,
-                allPreSchools: allPreSchools
+              Saturdate.find({}, function (err, allSaturdates) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/new')
+                  // res.redirect('/students/fitzroy')
+                } else {
+                  res.render('students/preSchool/new', {
+                    allTutors: allTutors,
+                    allPreSchools: allPreSchools,
+                    allSaturdates: allSaturdates.sort(function (date1, date2) {
+                      if (date1.date < date2.date) return -1
+                      else if (date1.date > date2.date) return 1
+                      else return 0
+                    }),
+                    formatDate: formatDate
+                  })
+                }
               })
             }
           })
@@ -45,6 +61,11 @@ var studentController = {
         intervention: req.body.intervention,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
+        attendance: req.body.saturdates.map(function (date) {
+          var obj = {}
+          obj['date'] = date
+          return obj
+        }),
         attending: false
       })
       newPreSchool.save(function (err, savedPreSchool) {
@@ -87,9 +108,23 @@ var studentController = {
               res.redirect('/students/new')
               // res.redirect('/students/fitzroy')
             } else {
-              res.render('students/fitzroy/new', {
-                allTutors: allTutors,
-                allFitzroys: allFitzroys
+              Saturdate.find({}, function (err, allSaturdates) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/new')
+                  // res.redirect('/students/fitzroy')
+                } else {
+                  res.render('students/fitzroy/new', {
+                    allTutors: allTutors,
+                    allFitzroys: allFitzroys,
+                    allSaturdates: allSaturdates.sort(function (date1, date2) {
+                      if (date1.date < date2.date) return -1
+                      else if (date1.date > date2.date) return 1
+                      else return 0
+                    }),
+                    formatDate: formatDate
+                  })
+                }
               })
             }
           })
@@ -109,17 +144,21 @@ var studentController = {
         intervention: req.body.intervention,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
-        progress: req.body.fitzroyStartDates.map(function (date, index) {
-          var obj = {}
-          obj['startDate'] = date
-          !obj['startDate']
-            ? obj['book'] = ''
-            : typeof req.body.fitzroyBooks === 'string'
-              ? obj['book'] = req.body.fitzroyBooks
-              : obj['book'] = req.body.fitzroyBooks.shift()
-          obj['endDate'] = req.body.fitzroyEndDates[index]
-          return obj
-        }).filter(function (obj) { return obj['book']}),
+        attendance: typeof req.body.fitzroyBooks === 'string'
+          ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+          : req.body.fitzroyBooks.map(function (book) {
+            var obj = {}
+            obj['book'] = book
+            obj['date'] = req.body.saturdates.shift()
+            if (req.body.fitzroyCompleted) {
+              if (obj['book'] !== '0') {
+                typeof req.body.fitzroyCompleted === 'string'
+                  ? obj['completed'] = req.body.fitzroyCompleted
+                  : obj['completed'] = req.body.fitzroyCompleted.shift()
+              }
+            }
+            return obj
+          }),
         attending: false
       })
       newFitzroy.save(function (err, savedFitzroy) {
@@ -162,9 +201,23 @@ var studentController = {
               res.redirect('/students/new')
               // res.redirect('/students/post-fitzroy')
             } else {
-              res.render('students/postFitzroy/new', {
-                allTutors: allTutors,
-                allPostFitzroys: allPostFitzroys
+              Saturdate.find({}, function (err, allSaturdates) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/new')
+                  // res.redirect('/students/fitzroy')
+                } else {
+                  res.render('students/postFitzroy/new', {
+                    allTutors: allTutors,
+                    allPostFitzroys: allPostFitzroys,
+                    allSaturdates: allSaturdates.sort(function (date1, date2) {
+                      if (date1.date < date2.date) return -1
+                      else if (date1.date > date2.date) return 1
+                      else return 0
+                    }),
+                    formatDate: formatDate
+                  })
+                }
               })
             }
           })
@@ -184,6 +237,11 @@ var studentController = {
         intervention: req.body.intervention,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
+        attendance: req.body.saturdates.map(function (date) {
+          var obj = {}
+          obj['date'] = date
+          return obj
+        }),
         attending: false
       })
       newPostFitzroy.save(function (err, savedPostFitzroy) {

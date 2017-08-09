@@ -129,25 +129,55 @@
         </div>
         <% } %>
         <div class="form-group">
-          <label class="control-label mb-0">Fitzroy progress</label><br>
-          <small class="form-text text-muted mt-0 mb-2">Date(s) started (and completed, if applicable)</small>
-          <% for (var i = 1; i < 61; i++) { %>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input mr-1" id="fitzroy.<%= i %>.book" type="checkbox" name="fitzroyBooks" value="<%= i %>">
-                Level <%= i %>
-              </label>
-              <div id="fitzroy.<%= i %>.dates" class="row" style="display: none; visibility: hidden">
-                <div class="form-group col-6">
-                  <label for="fitzroy.<%= i %>.startDate" class="text-muted mb-0"><small>Started</small></label>
-                  <input class="form-control form-control-sm" id="fitzroy.<%= i %>.startDate" type="date" name="fitzroyStartDates">
-                </div>
-                <div class="form-group col-6">
-                  <label for="fitzroy.<%= i %>.endDate" class="text-muted mb-0"><small>Completed?</small></label>
-                  <input class="form-control form-control-sm" id="fitzroy.<%= i %>.endDate" type="date" name="fitzroyEndDates">
+          <label class="control-label mb-0">Attendance</label><br>
+          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student.<br>Select the Fitzroy book level covered during each session, or whether the student did some other activity.<br>If a Fitzroy book was covered, indicate whether that book level was completed.</small>
+          <% if (allSaturdates.length > 0) { %>
+            <% allSaturdates.forEach(function (saturdate, index) { %>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                  <%= formatDate(saturdate.date) %>
+                </label>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                    (function (i) {
+                      var saturdatesCheckbox = document.getElementById('fitzroy.' + i + '.date')
+                      var fitzroyBookDiv = document.getElementById('fitzroy.' + i + '.book')
+                      var fitzroyCompletedDiv = document.getElementById('fitzroy.' + i + '.completed')
+                      saturdatesCheckbox.onchange = function () {
+                        if (this.checked) {
+                          fitzroyBookDiv.removeAttribute('style')
+                          fitzroyCompletedDiv.removeAttribute('style')
+                        } else {
+                          fitzroyBookDiv.setAttribute('style', 'display:none; visibility:hidden')
+                          fitzroyCompletedDiv.setAttribute('style', 'display:none; visibility:hidden')
+                        }
+                      }
+                    }(<%= index %>))
+                  })
+                </script>
+                <div class="row ml-1">
+                  <div id="fitzroy.<%= index %>.book" class="form-group mb-0" style="display: none; visibility: hidden">
+                    <label for="fitzroy.<%= index %>.book" class="text-muted mb-0 mt-1 ml-4"><small>Fitzroy Book Level</small></label><br>
+                    <select class="custom-select ml-4" id="fitzroy.<%= index %>.book" name="fitzroyBooks">
+                      <option value="" selected disabled hidden>Please select</option>
+                      <option value="0">Other activity</option>
+                      <% for (var l = 1; l < 61; l++) { %>
+                      <option value="<%= l %>"><%= l %></option>
+                      <% } %>
+                    </select>
+                  </div>                
+                  <div id="fitzroy.<%= index %>.completed" class="form-group" style="display: none; visibility: hidden;">
+                    <label for="fitzroy.<%= index %>.completed" class="text-muted mb-0 mt-1 ml-4"><small>Book completed?</small></label><br>
+                    <select class="custom-select ml-4" id="fitzroy.<%= index %>.completed" name="fitzroyCompleted">
+                      <option value="" selected disabled hidden>Please select</option>
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
+            <% }) %>
           <% } %>
         </div><br>
         <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
@@ -157,8 +187,7 @@
 </div>
 <%
   var javaScriptFiles = [
-    'nameLengthCheck',
-    'fitzroyDateShow'
+    'nameLengthCheck'
   ]
   javaScriptFiles.forEach(function (file) {
 %>

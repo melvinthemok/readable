@@ -109,36 +109,28 @@ var FitzroySchema = new mongoose.Schema({
       ref: 'Fitzroy'
     }
   ],
-  progress: [
+  attendance: [
     {
+      date: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Saturdate'
+      },
       book: {
         type: Number,
-        min: [
-          1,
-          'the lowest Fitzroy level is 1'
-        ],
-        max: [
-          60,
-          'the highest Fitzroy level is 60'
-        ],
+        min: 0,
+        max: 60,
         required: [
           true,
-          'please specify a Fitzroy level'
+          'please specify what was covered during this session'
         ]
       },
-      startDate: {
-        type: Date,
-        required: [
-          true,
-          'please specify the respective Fitzroy date(s) started'
-        ]
-      },
-      endDate: {
-        type: Date
+      completed: {
+        type: Boolean
       }
     }
   ],
   comments: [
+    // Shift to attendance?
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comments'

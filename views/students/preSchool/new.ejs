@@ -115,7 +115,20 @@
           <% }) %>
         </div>
         <% } %>
-        <br>
+        <div class="form-group">
+          <label class="control-label mb-0">Attendance</label><br>
+          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student</small>
+          <% if (allSaturdates.length > 0) { %>
+            <% allSaturdates.forEach(function (saturdate, index) { %>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                  <%= formatDate(saturdate.date) %>
+                </label>
+              </div>
+            <% }) %>
+          <% } %>
+        </div><br>
         <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
       </form>
     </div>
