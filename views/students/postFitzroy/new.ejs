@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6 offset-sm-3">
-        <h2 class="display-4">fitzroy</h2>
+        <h2 class="display-4">post-fitzroy</h2>
         <hr class="my-4">
         <p>sign up a new student</p>
       </div>
@@ -12,7 +12,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <form action="/student/fitzroy" method="POST" class="mb-5">
+      <form action="/students/post-fitzroy" method="POST" class="mb-5">
         <div id="name-form-group" class="form-group">
           <label for="name">Name</label>
           <input id="name" class="form-control" type="text" name="name" placeholder="Student's name">
@@ -72,7 +72,7 @@
         <div class="form-group">
           <label for="startDate" class="mb-0">When did this student join ReadAble?</label><br>
           <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
-          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
+          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
         </div>
         <div class="form-group">
           <label for="oneOnOne">Needs one-on-one attention?</label><br>
@@ -115,10 +115,10 @@
             </div>
           <% }) %>
         </div>
-        <% if (allFitzroys.length > 0) { %>
+        <% if (allPostFitzroys.length > 0) { %>
         <div class="form-group">
           <label class="control-label">Any student(s) to avoid?</label><br>
-          <% allFitzroys.forEach(function (student) { %>
+          <% allPostFitzroys.forEach(function (student) { %>
             <div class="form-check">
               <label class="form-check-label">
                 <input class="form-check-input mr-1" type="checkbox" name="kidsToAvoid" value="<%= student.id %>">
@@ -128,28 +128,7 @@
           <% }) %>
         </div>
         <% } %>
-        <div class="form-group">
-          <label class="control-label mb-0">Fitzroy progress</label><br>
-          <small class="form-text text-muted mt-0 mb-2">Date(s) started (and completed, if applicable)</small>
-          <% for (var i = 1; i < 61; i++) { %>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input mr-1" id="fitzroy.<%= i %>.book" type="checkbox" name="fitzroyBooks" value="<%= i %>">
-                Level <%= i %>
-              </label>
-              <div id="fitzroy.<%= i %>.dates" class="row" style="display: none; visibility: hidden">
-                <div class="form-group col-6">
-                  <label for="fitzroy.<%= i %>.startDate" class="text-muted mb-0"><small>Started</small></label>
-                  <input class="form-control form-control-sm" id="fitzroy.<%= i %>.startDate" type="date" name="fitzroyStartDates">
-                </div>
-                <div class="form-group col-6">
-                  <label for="fitzroy.<%= i %>.endDate" class="text-muted mb-0"><small>Completed?</small></label>
-                  <input class="form-control form-control-sm" id="fitzroy.<%= i %>.endDate" type="date" name="fitzroyEndDates">
-                </div>
-              </div>
-            </div>
-          <% } %>
-        </div><br>
+        <br>
         <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
       </form>
     </div>
@@ -157,8 +136,7 @@
 </div>
 <%
   var javaScriptFiles = [
-    'nameLengthCheck',
-    'fitzroyDateShow'
+    'nameLengthCheck'
   ]
   javaScriptFiles.forEach(function (file) {
 %>

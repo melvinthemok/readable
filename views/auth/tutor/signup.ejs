@@ -55,7 +55,7 @@
         <div class="form-group">
           <label for="startDate" class="mb-0">When did you join ReadAble?</label><br>
           <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
-          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()+1).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
+          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
         </div>
         <div id="password-form-group" class="form-group">
           <label for="password" class="mb-0">Your password</label><br>

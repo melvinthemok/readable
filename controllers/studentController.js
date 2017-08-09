@@ -4,22 +4,33 @@ var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
 
 var studentController = {
+  // later change to index view at 'students/' with links to different listalls and news
   new: function (req, res) {
-    res.render('student/new')
+    res.render('students/new')
   },
 
   preSchool: {
     
     new: function (req, res) {
       Tutor.find({}, function (err, allTutors) {
-        if (err) throw err
-        PreSchool.find({}, function (err, allPreSchools) {
-          if (err) throw err
-          res.render('student/preSchool/new', {
-            allTutors: allTutors,
-            allPreSchools: allPreSchools
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/new')
+          // res.redirect('/students/pre-school')
+        } else {
+          PreSchool.find({}, function (err, allPreSchools) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/new')
+              // res.redirect('/students/pre-school')
+            } else {
+              res.render('students/preSchool/new', {
+                allTutors: allTutors,
+                allPreSchools: allPreSchools
+              })
+            }
           })
-        })
+        }
       })
     },
 
@@ -39,7 +50,7 @@ var studentController = {
       newPreSchool.save(function (err, savedPreSchool) {
         if (err) {
           req.flash('error', err.toString())
-          res.redirect('/student/pre-school/new')
+          res.redirect('/students/pre-school/new')
         } else {
           PreSchool.update(
             { _id: { $in: savedPreSchool.kidsToAvoid }},
@@ -48,11 +59,11 @@ var studentController = {
             function (err) {
               if (err) {
                 req.flash('error', err.toString())
-                res.redirect('/student/pre-school/new')
+                res.redirect('/students/pre-school/new')
               } else {
                 req.flash('success', savedPreSchool.name + ' successfully signed up!')
                 res.redirect('/')
-                // res.redirect('/pre-school')
+                // res.redirect('/students/pre-school')
               }
             }
           )
@@ -65,14 +76,24 @@ var studentController = {
 
     new: function (req, res) {
       Tutor.find({}, function (err, allTutors) {
-        if (err) throw err
-        Fitzroy.find({}, function (err, allFitzroys) {
-          if (err) throw err
-          res.render('student/fitzroy/new', {
-            allTutors: allTutors,
-            allFitzroys: allFitzroys
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/new')
+          // res.redirect('/students/fitzroy')
+        } else {
+          Fitzroy.find({}, function (err, allFitzroys) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/new')
+              // res.redirect('/students/fitzroy')
+            } else {
+              res.render('students/fitzroy/new', {
+                allTutors: allTutors,
+                allFitzroys: allFitzroys
+              })
+            }
           })
-        })
+        }
       })
     },
 
@@ -104,7 +125,7 @@ var studentController = {
       newFitzroy.save(function (err, savedFitzroy) {
         if (err) {
           req.flash('error', err.toString())
-          res.redirect('/student/fitzroy/new')
+          res.redirect('/students/fitzroy/new')
         } else {
           Fitzroy.update(
             { _id: { $in: savedFitzroy.kidsToAvoid }},
@@ -113,11 +134,11 @@ var studentController = {
             function (err) {
               if (err) {
                 req.flash('error', err.toString())
-                res.redirect('/student/fitzroy/new')
+                res.redirect('/students/fitzroy/new')
               } else {
                 req.flash('success', savedFitzroy.name + ' successfully signed up!')
                 res.redirect('/')
-                // res.redirect('/fitzroy')
+                // res.redirect('/students/fitzroy')
               }
             }
           )
@@ -130,14 +151,24 @@ var studentController = {
     
     new: function (req, res) {
       Tutor.find({}, function (err, allTutors) {
-        if (err) throw err
-        PostFitzroy.find({}, function (err, allPostFitzroys) {
-          if (err) throw err
-          res.render('student/postFitzroy/new', {
-            allTutors: allTutors,
-            allPostFitzroys: allPostFitzroys
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/new')
+          // res.redirect('/students/post-fitzroy')
+        } else {
+          PostFitzroy.find({}, function (err, allPostFitzroys) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/new')
+              // res.redirect('/students/post-fitzroy')
+            } else {
+              res.render('students/postFitzroy/new', {
+                allTutors: allTutors,
+                allPostFitzroys: allPostFitzroys
+              })
+            }
           })
-        })
+        }
       })
     },
 
@@ -158,7 +189,7 @@ var studentController = {
       newPostFitzroy.save(function (err, savedPostFitzroy) {
         if (err) {
           req.flash('error', err.toString())
-          res.redirect('/student/post-fitzroy/new')
+          res.redirect('/students/post-fitzroy/new')
         } else {
           PostFitzroy.update(
             { _id: { $in: savedPostFitzroy.kidsToAvoid }},
@@ -167,11 +198,11 @@ var studentController = {
             function (err) {
               if (err) {
                 req.flash('error', err.toString())
-                res.redirect('/student/post-fitzroy/new')
+                res.redirect('/students/post-fitzroy/new')
               } else {
                 req.flash('success', savedPostFitzroy.name + ' successfully signed up!')
                 res.redirect('/')
-                // res.redirect('/post-fitzroy')
+                // res.redirect('/students/post-fitzroy')
               }
             }
           )

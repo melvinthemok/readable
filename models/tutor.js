@@ -95,6 +95,7 @@ var TutorSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
+    enum: ['catchplus', 'tutor'],
     required: true,
     default: 'tutor'
   },

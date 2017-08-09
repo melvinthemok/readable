@@ -1,0 +1,34 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">history</h2>
+        <hr class="my-4">
+        <p>all sessions of ReadAble held</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <% if (allSaturdates.length > 0) { %>
+        <% allSaturdates.forEach(function (saturdate) { %>
+          <form action="/history/<%= saturdate._id %>?_method=DELETE" method="POST">
+            <div class="mb-1"><%= formatDate(saturdate.date) %>
+              <button class="btn btn-sm btn-danger float-right" type="submit" style="cursor:pointer;">Delete</button>
+            </div>
+          </form>
+        <% }) %>
+      <% } %>
+      <form action="/history" method="POST" class="my-5">
+        <div class="form-group">
+          <label for="date" class="mb-0">Add another session</label><br>
+          <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
+          <input class="form-control" id="date" type="date" name="date" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
+          <button class="btn btn-primary float-right mt-2" type="submit" style="cursor:pointer;">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

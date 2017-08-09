@@ -19,18 +19,20 @@
           var loggedIn = ""
           var loggedOut = ""
           var canCreateStudent= ""
+          var isAdmin = ""
           var currentUserName = ""
           if (currentUser) {
             loggedIn = "display:none; visibility:hidden;"
             if (currentUser.userType !== "catchPlus" && !currentUser.admin) {
-              canCreateStudent = "display:none; visibility hidden;"
+              canCreateStudent = "display:none; visibility: hidden;"
+            }
+            if (!currentUser.admin) {
+              isAdmin = "display:none; visibility: hidden;"
             }
             currentUserName = currentUser.name
-            currentUserId = currentUser.id
           } else if (!currentUser) {
             loggedOut = "display:none; visibility:hidden;"
             currentUserName = ""
-            currentUserId = ""
           }
           %>
             <a class="nav-item nav-link" href="/auth/signup" style="<%= loggedIn %>">sign up </a>
@@ -43,8 +45,11 @@
                 <h6 class="dropdown-header" style="<%= loggedOut %>"><em>view this Saturday's</em></h6>
                 <a class="dropdown-item" href="/group" style="<%= loggedOut %>">groups</a>-->
                 <h6 class="dropdown-header"><em>students</em></h6>
-                <a class="dropdown-item" href="/student/new" style="<%= canCreateStudent %>">sign up a new one</a>
+                <a class="dropdown-item" href="/students/new" style="<%= canCreateStudent %>">sign up a new one</a>
                 <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header" style="<%= isAdmin %>"><em>history</em></h6>
+                <a class="dropdown-item" href="/history" style="<%= isAdmin %>">all sessions held</a>
+                <div class="dropdown-divider" style="<%= isAdmin %>"></div>
                 <h6 class="dropdown-header"><em>stay don't go</em></h6>
                 <a class="dropdown-item" href="/auth/logout">log out</a>
               </div>
