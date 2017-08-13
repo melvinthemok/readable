@@ -111,9 +111,17 @@ var FitzroySchema = new mongoose.Schema({
   ],
   attendance: [
     {
+      tutor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tutor'
+      },
       date: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Saturdate'
+        ref: 'Saturdate',
+        required: [
+          true,
+          'please specify the date of attendance'
+        ]
       },
       book: {
         type: Number,

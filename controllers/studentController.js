@@ -61,9 +61,16 @@ var studentController = {
         intervention: req.body.intervention,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
-        attendance: req.body.saturdates.map(function (date) {
+        attendance: typeof req.body.saturdates === 'string'
+        ? req.body.preSchoolTutors === 'unknown'
+          ? { date: req.body.saturdates }
+          : { tutor: req.body.preSchoolTutors, date: req.body.saturdates }
+        : req.body.saturdates.map(function (date) {
           var obj = {}
           obj['date'] = date
+          req.body.preSchoolTutors[0] === 'unknown'
+          ? req.body.preSchoolTutors.shift()
+          : obj['tutor'] = req.body.preSchoolTutors.shift()
           return obj
         }),
         attending: false
@@ -145,9 +152,14 @@ var studentController = {
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
         attendance: typeof req.body.fitzroyBooks === 'string'
-          ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+          ? req.body.fitzroyTutors === 'unknown'
+            ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+            : { tutor: req.body.fitzroyTutors, book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
           : req.body.fitzroyBooks.map(function (book) {
             var obj = {}
+            req.body.fitzroyTutors[0] === 'unknown'
+            ? req.body.fitzroyTutors.shift()
+            : obj['tutor'] = req.body.fitzroyTutors.shift()
             obj['book'] = book
             obj['date'] = req.body.saturdates.shift()
             if (req.body.fitzroyCompleted) {
@@ -237,9 +249,16 @@ var studentController = {
         intervention: req.body.intervention,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
-        attendance: req.body.saturdates.map(function (date) {
+        attendance: typeof req.body.saturdates === 'string'
+        ? req.body.postFitzroyTutors === 'unknown'
+          ? { date: req.body.saturdates }
+          : { tutor: req.body.postFitzroyTutors, date: req.body.saturdates }
+        : req.body.saturdates.map(function (date) {
           var obj = {}
           obj['date'] = date
+          req.body.postFitzroyTutors[0] === 'unknown'
+          ? req.body.postFitzroyTutors.shift()
+          : obj['tutor'] = req.body.postFitzroyTutors.shift()
           return obj
         }),
         attending: false

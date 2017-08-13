@@ -90,6 +90,10 @@ var PreSchoolSchema = new mongoose.Schema({
   ],
   attendance: [
     {
+      tutor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tutor'
+      },
       date: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Saturdate'

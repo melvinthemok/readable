@@ -117,14 +117,43 @@
         <% } %>
         <div class="form-group">
           <label class="control-label mb-0">Attendance</label><br>
-          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student</small>
+          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student.<br>Select the tutor for this student at this session, or "Unknown" if unclear.</small>
           <% if (allSaturdates.length > 0) { %>
             <% allSaturdates.forEach(function (saturdate, index) { %>
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                  <input class="form-check-input mr-1" id="preSchool.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
                   <%= formatDate(saturdate.date) %>
                 </label>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                    (function (i) {
+                      var saturdatesCheckbox = document.getElementById('preSchool.' + i + '.date')
+                      var preSchoolTutorDiv = document.getElementById('preSchool.' + i + '.tutor')
+                      saturdatesCheckbox.onchange = function () {
+                        if (this.checked) {
+                          preSchoolTutorDiv.removeAttribute('style')
+                        } else {
+                          preSchoolTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
+                        }
+                      }
+                    }(<%= index %>))
+                  })
+                </script>
+                <div class="row ml-1">
+                  <div id="preSchool.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
+                    <label for="preSchool.<%= index %>.tutor" class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
+                    <select class="custom-select mb-3 ml-4" id="preSchool.<%= index %>.tutor" name="preSchoolTutors">
+                      <option value="" selected disabled hidden>Please select</option>
+                      <option value="unknown">Unknown</option>
+                      <% if (allTutors.length > 0) { %>
+                        <% allTutors.forEach(function (tutor) { %>
+                      <option value="<%= tutor.id %>"><%= tutor.name %></option>
+                        <% }) %>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
               </div>
             <% }) %>
           <% } %>
