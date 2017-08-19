@@ -15,7 +15,7 @@
       <% if (allSaturdates.length > 0) { %>
         <% allSaturdates.forEach(function (saturdate) { %>
           <form action="/history/<%= saturdate._id %>?_method=DELETE" method="POST">
-            <div class="mb-1"><%= formatDate(saturdate.date) %>
+            <div class="mb-1"><%= formatDateLong(saturdate.date) %>
               <button class="btn btn-sm btn-danger float-right" type="submit" style="cursor:pointer;">Delete</button>
             </div>
           </form>

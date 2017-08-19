@@ -3,34 +3,48 @@ var PreSchool = require('../models/preSchool')
 var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
 var Saturdate = require('../models/saturdate')
-var formatDate = require('../public/javascript/formatDate')
+var formatDateShort = require('../public/javascript/formatDateShort')
+var formatDateLong = require('../public/javascript/formatDateLong')
 
 var studentController = {
-  // later change to index view at 'students/' with links to different listalls and news
+  index: function (req, res) {
+    res.render('students/index')
+  },
+
   new: function (req, res) {
     res.render('students/new')
   },
 
   preSchool: {
     
+    index: function (req, res) {
+      PreSchool.find({}, function (err, allPreSchools) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students')
+        } else {
+          res.render('students/preSchool/index', {
+            allPreSchools: allPreSchools
+          })
+        }
+      })
+    },
+
     new: function (req, res) {
       Tutor.find({}, function (err, allTutors) {
         if (err) {
           req.flash('error', err.toString())
-          res.redirect('/students/new')
-          // res.redirect('/students/pre-school')
+          res.redirect('/students/pre-school')
         } else {
           PreSchool.find({}, function (err, allPreSchools) {
             if (err) {
               req.flash('error', err.toString())
-              res.redirect('/students/new')
-              // res.redirect('/students/pre-school')
+              res.redirect('/students/pre-school')
             } else {
               Saturdate.find({}, function (err, allSaturdates) {
                 if (err) {
                   req.flash('error', err.toString())
-                  res.redirect('/students/new')
-                  // res.redirect('/students/fitzroy')
+                  res.redirect('/students/pre-school')
                 } else {
                   res.render('students/preSchool/new', {
                     allTutors: allTutors,
@@ -40,7 +54,7 @@ var studentController = {
                       else if (date1.date > date2.date) return 1
                       else return 0
                     }),
-                    formatDate: formatDate
+                    formatDateLong: formatDateLong
                   })
                 }
               })
@@ -65,14 +79,16 @@ var studentController = {
         ? req.body.preSchoolTutors === 'unknown'
           ? { date: req.body.saturdates }
           : { tutor: req.body.preSchoolTutors, date: req.body.saturdates }
-        : req.body.saturdates.map(function (date) {
-          var obj = {}
-          obj['date'] = date
-          req.body.preSchoolTutors[0] === 'unknown'
-          ? req.body.preSchoolTutors.shift()
-          : obj['tutor'] = req.body.preSchoolTutors.shift()
-          return obj
-        }),
+        : req.body.saturdates
+          ? req.body.saturdates.map(function (date) {
+            var obj = {}
+            obj['date'] = date
+            req.body.preSchoolTutors[0] === 'unknown'
+            ? req.body.preSchoolTutors.shift()
+            : obj['tutor'] = req.body.preSchoolTutors.shift()
+            return obj
+          })
+          : [],
         attending: false
       })
       newPreSchool.save(function (err, savedPreSchool) {
@@ -90,8 +106,7 @@ var studentController = {
                 res.redirect('/students/pre-school/new')
               } else {
                 req.flash('success', savedPreSchool.name + ' successfully signed up!')
-                res.redirect('/')
-                // res.redirect('/students/pre-school')
+                res.redirect('/students/pre-school')
               }
             }
           )
@@ -102,24 +117,55 @@ var studentController = {
 
   fitzroy: {
 
+    index: function (req, res) {
+      Fitzroy.find({}, function (err, allFitzroys) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students')
+        } else {
+          res.render('students/fitzroy/index', {
+            allFitzroys: allFitzroys
+          })
+        }
+      })
+    },
+
+    show: function (req, res) {
+      Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/fitzroy')
+        } else {
+          Fitzroy.findById(req.params.id)
+            .populate('kidsToAvoid')
+            .populate('preferredTutors')
+            .exec(function (err, fitzroy) {
+              res.render('students/fitzroy/show', {
+                chosenFitzroy: chosenFitzroy,
+                fitzroyKidsToAvoid: fitzroy.kidsToAvoid,
+                fitzroyPreferredTutors: fitzroy.preferredTutors,
+                formatDateShort: formatDateShort
+              })
+            })
+        }
+      })
+    },
+
     new: function (req, res) {
       Tutor.find({}, function (err, allTutors) {
         if (err) {
           req.flash('error', err.toString())
-          res.redirect('/students/new')
-          // res.redirect('/students/fitzroy')
+          res.redirect('/students/fitzroy')
         } else {
           Fitzroy.find({}, function (err, allFitzroys) {
             if (err) {
               req.flash('error', err.toString())
-              res.redirect('/students/new')
-              // res.redirect('/students/fitzroy')
+              res.redirect('/students/fitzroy')
             } else {
               Saturdate.find({}, function (err, allSaturdates) {
                 if (err) {
                   req.flash('error', err.toString())
-                  res.redirect('/students/new')
-                  // res.redirect('/students/fitzroy')
+                  res.redirect('/students/fitzroy')
                 } else {
                   res.render('students/fitzroy/new', {
                     allTutors: allTutors,
@@ -129,7 +175,7 @@ var studentController = {
                       else if (date1.date > date2.date) return 1
                       else return 0
                     }),
-                    formatDate: formatDate
+                    formatDateLong: formatDateLong
                   })
                 }
               })
@@ -155,22 +201,24 @@ var studentController = {
           ? req.body.fitzroyTutors === 'unknown'
             ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
             : { tutor: req.body.fitzroyTutors, book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
-          : req.body.fitzroyBooks.map(function (book) {
-            var obj = {}
-            req.body.fitzroyTutors[0] === 'unknown'
-            ? req.body.fitzroyTutors.shift()
-            : obj['tutor'] = req.body.fitzroyTutors.shift()
-            obj['book'] = book
-            obj['date'] = req.body.saturdates.shift()
-            if (req.body.fitzroyCompleted) {
-              if (obj['book'] !== '0') {
-                typeof req.body.fitzroyCompleted === 'string'
-                  ? obj['completed'] = req.body.fitzroyCompleted
-                  : obj['completed'] = req.body.fitzroyCompleted.shift()
+          : req.body.fitzroyBooks
+            ? req.body.fitzroyBooks.map(function (book) {
+              var obj = {}
+              req.body.fitzroyTutors[0] === 'unknown'
+              ? req.body.fitzroyTutors.shift()
+              : obj['tutor'] = req.body.fitzroyTutors.shift()
+              obj['book'] = book
+              obj['date'] = req.body.saturdates.shift()
+              if (req.body.fitzroyCompleted) {
+                if (obj['book'] !== '0') {
+                  typeof req.body.fitzroyCompleted === 'string'
+                    ? obj['completed'] = req.body.fitzroyCompleted
+                    : obj['completed'] = req.body.fitzroyCompleted.shift()
+                }
               }
-            }
-            return obj
-          }),
+              return obj
+            })
+            : [],
         attending: false
       })
       newFitzroy.save(function (err, savedFitzroy) {
@@ -188,8 +236,7 @@ var studentController = {
                 res.redirect('/students/fitzroy/new')
               } else {
                 req.flash('success', savedFitzroy.name + ' successfully signed up!')
-                res.redirect('/')
-                // res.redirect('/students/fitzroy')
+                res.redirect('/students/fitzroy')
               }
             }
           )
@@ -200,24 +247,34 @@ var studentController = {
 
   postFitzroy: {
     
+    index: function (req, res) {
+      PostFitzroy.find({}, function (err, allPostFitzroys) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students')
+        } else {
+          res.render('students/postFitzroy/index', {
+            allPostFitzroys: allPostFitzroys
+          })
+        }
+      })
+    },
+
     new: function (req, res) {
       Tutor.find({}, function (err, allTutors) {
         if (err) {
           req.flash('error', err.toString())
-          res.redirect('/students/new')
-          // res.redirect('/students/post-fitzroy')
+          res.redirect('/students/post-fitzroy')
         } else {
           PostFitzroy.find({}, function (err, allPostFitzroys) {
             if (err) {
               req.flash('error', err.toString())
-              res.redirect('/students/new')
-              // res.redirect('/students/post-fitzroy')
+              res.redirect('/students/post-fitzroy')
             } else {
               Saturdate.find({}, function (err, allSaturdates) {
                 if (err) {
                   req.flash('error', err.toString())
-                  res.redirect('/students/new')
-                  // res.redirect('/students/fitzroy')
+                  res.redirect('/students/post-fitzroy')
                 } else {
                   res.render('students/postFitzroy/new', {
                     allTutors: allTutors,
@@ -227,7 +284,7 @@ var studentController = {
                       else if (date1.date > date2.date) return 1
                       else return 0
                     }),
-                    formatDate: formatDate
+                    formatDateLong: formatDateLong
                   })
                 }
               })
@@ -253,14 +310,16 @@ var studentController = {
         ? req.body.postFitzroyTutors === 'unknown'
           ? { date: req.body.saturdates }
           : { tutor: req.body.postFitzroyTutors, date: req.body.saturdates }
-        : req.body.saturdates.map(function (date) {
-          var obj = {}
-          obj['date'] = date
-          req.body.postFitzroyTutors[0] === 'unknown'
-          ? req.body.postFitzroyTutors.shift()
-          : obj['tutor'] = req.body.postFitzroyTutors.shift()
-          return obj
-        }),
+        : req.body.saturdates
+          ? req.body.saturdates.map(function (date) {
+            var obj = {}
+            obj['date'] = date
+            req.body.postFitzroyTutors[0] === 'unknown'
+            ? req.body.postFitzroyTutors.shift()
+            : obj['tutor'] = req.body.postFitzroyTutors.shift()
+            return obj
+          })
+          : [],
         attending: false
       })
       newPostFitzroy.save(function (err, savedPostFitzroy) {
@@ -278,8 +337,7 @@ var studentController = {
                 res.redirect('/students/post-fitzroy/new')
               } else {
                 req.flash('success', savedPostFitzroy.name + ' successfully signed up!')
-                res.redirect('/')
-                // res.redirect('/students/post-fitzroy')
+                res.redirect('/students/post-fitzroy')
               }
             }
           )

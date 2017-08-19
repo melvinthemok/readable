@@ -1,0 +1,69 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">post-fitzroy</h2>
+        <hr class="my-4">
+        <p>overview</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var filter = document.getElementById('filter')
+          var filterResult = document.getElementById('filter-result')
+          var result = <%- JSON.stringify(allPostFitzroys) %>
+          if (document.getElementById('filter')) {
+            filter.onchange = function () {
+              if (this.value === 'all') {
+                result = <%- JSON.stringify(allPostFitzroys) %>
+              } else if (this.value === 'oneOnOne') {
+                result = result.filter(function (postFitzroy) {
+                  return postFitzroy.oneOnOne
+                })
+              } else if (this.value === 'intervention') {
+                result = result.filter(function(postFitzroy) {
+                  return postFitzroy.intervention
+                })
+              }
+              filterResult.innerHTML = ''
+              result.forEach(function (postFitzroy) {
+                var li = document.createElement('li')
+                li.classList.add('list-group-item')
+                li.appendChild(document.createTextNode(postFitzroy.name))
+                filterResult.appendChild(li)
+              })
+            }
+          }
+        })
+      </script>
+      <% if (allPostFitzroys.length > 0) { %>
+      <select id="filter" class="custom-select mb-2">
+        <option value="all" selected>All students</option>
+        <% if (allPostFitzroys.some(function (postFitzroy) {
+          return postFitzroy.oneOnOne
+        })) { %>
+          <option value="oneOnOne">One-on-one attention</option>
+        <% } %>
+        <% if (allPostFitzroys.some(function (postFitzroy) {
+          return postFitzroy.intervention
+        })) { %>
+          <option value="intervention">Intervention owing to absenteeism</option>
+        <% } %>
+      </select>
+      <% } %>
+      <ul id="filter-result" class="list-group">
+      <% if (allPostFitzroys.length > 0) { %>
+        <% allPostFitzroys.forEach(function (postFitzroy) { %>
+          <li class="list-group-item"><%= postFitzroy.name %></li>  
+        <% }) %>
+      <% } %>
+      </ul><br>
+      <a class="btn btn-primary mb-4" href="/students/post-fitzroy/new">Sign up a new student</a>
+    </div>
+  </div>
+</div>

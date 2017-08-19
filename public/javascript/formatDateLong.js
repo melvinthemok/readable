@@ -1,4 +1,4 @@
-function formatDate(date) {
+function formatDateLong(date) {
   var dayOfWeek = date.getDay()
   var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   var dayOfMonth = date.getDate()
@@ -8,4 +8,4 @@ function formatDate(date) {
   return dayNames[dayOfWeek] + ', ' + dayOfMonth + ' ' + monthNames[monthIndex] + ' ' + year
 }
 
-module.exports = formatDate
+module.exports = formatDateLong

@@ -1,5 +1,5 @@
 var Saturdate = require('../models/saturdate')
-var formatDate = require('../public/javascript/formatDate')
+var formatDateLong = require('../public/javascript/formatDateLong')
 
 var saturdateController = {
   listAll: function (req, res) {
@@ -14,7 +14,7 @@ var saturdateController = {
             else if (date1.date > date2.date) return 1
             else return 0
           }),
-          formatDate: formatDate
+          formatDateLong: formatDateLong
         })
       }
     })
@@ -29,7 +29,7 @@ var saturdateController = {
         req.flash('error', err.toString())
         res.redirect('/history')
       } else {
-        req.flash('success', formatDate(savedSaturdate.date) + ' successfully added!')
+        req.flash('success', formatDateLong(savedSaturdate.date) + ' successfully added!')
         res.redirect('/history')
       }
     })
@@ -41,7 +41,7 @@ var saturdateController = {
         req.flash('error', err.toString())
         res.redirect('/history')
       } else {
-        req.flash('success', formatDate(chosenSaturdate.date) + ' successfully deleted!')
+        req.flash('success', formatDateLong(chosenSaturdate.date) + ' successfully deleted!')
         res.redirect('/history')
       }
     })
