@@ -1,0 +1,60 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4"><%= formatDateLong(chosenSaturdate.date) %></h2>
+        <hr class="my-4">
+        <p>past ReadAble session</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3 list-group">
+      <h3>pre-school</h3>
+        <% if (allPreSchools.length > 0) { %>
+          <% allPreSchools.forEach(function (preSchool) { %>
+            <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= preSchool.id %>"><%= preSchool.name %></a>
+          <% }) %>
+        <% } else { %>
+            <p>No students attended this session</p>
+        <% } %>
+      <h3 class="mt-5">fitzroy</h3>
+        <% if (allFitzroys.length > 0) { %>
+          <% allFitzroys.forEach(function (fitzroy) { %>
+            <a class="list-group-item list-group-item-action" href="/students/fitzroy/<%= fitzroy.id %>">
+              <%= fitzroy.name %>
+              <% var badgeStyle = "" %>
+              <% fitzroy.attendance.filter(function (indivAttendance) { %>
+                <% return indivAttendance.date.id.toString() === chosenSaturdate.id.toString() %>
+              <% }).forEach(function (indivAtten) { %>
+                <% if (indivAtten.completed === false) { %>
+                  <% badgeStyle = "badge-warning" %>
+                <% } else { %>
+                  <% badgeStyle = "badge-success" %>
+                <% } %>
+                &nbsp<span class="badge badge-pill <%= badgeStyle %>"><%= indivAtten.book %></span>
+                <% if (indivAtten.tutor) { %>
+                  &nbsp<span class="badge badge-pill badge-default"><%= indivAtten.tutor.name %></span>
+                <% } %>
+              <% }) %>
+            </a>
+          <% }) %>
+        <% } else { %>
+            <p>No students attended this session</p>
+        <% } %>
+      <h3 class="mt-5">postFitzroy</h3>
+        <% if (allPostFitzroys.length > 0) { %>
+          <% allPostFitzroys.forEach(function (postFitzroy) { %>
+            <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= postFitzroy.id %>"><%= postFitzroy.name %></a>
+          <% }) %>
+        <% } else { %>
+            <p>No students attended this session</p>
+        <% } %>
+    <form action="/history/<%= chosenSaturdate._id %>?_method=DELETE" method="POST">
+      <button class="btn btn-danger mt-5" type="submit" style="cursor:pointer;">Delete this session</button>
+    </form>
+    </div>
+  </div>
+</div>

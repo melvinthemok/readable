@@ -1,8 +1,12 @@
 var Saturdate = require('../models/saturdate')
+var Fitzroy = require('../models/fitzroy')
+var PreSchool = require('../models/preSchool')
+var PostFitzroy = require('../models/postFitzroy')
+var Tutor = require('../models/tutor')
 var formatDateLong = require('../public/client_side_helpers/formatDateLong')
 
 var saturdateController = {
-  listAll: function (req, res) {
+  index: function (req, res) {
     Saturdate.find({}, function (err, allSaturdates) {
       if (err) {
         req.flash('error', err.toString())
@@ -15,6 +19,89 @@ var saturdateController = {
             else return 0
           }),
           formatDateLong: formatDateLong
+        })
+      }
+    })
+  },
+
+  show: function (req, res) {
+    Saturdate.findById(req.params.id, function (err, chosenSaturdate) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/')
+      } else {
+        PreSchool.find({}, function (err, allPreSchools) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/')
+          } else {
+            PreSchool.find({})
+              .populate({
+                path: 'attendance.date',
+                model: 'Saturdate'
+              })
+              .populate({
+                path: 'attendance.tutor',
+                model: 'Tutor'
+              })
+              .exec(function (err, preSchools) {
+                Fitzroy.find({}, function (err, allFitzroys) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/')
+                  } else {
+                    Fitzroy.find({})
+                      .populate({
+                        path: 'attendance.date',
+                        model: 'Saturdate'
+                      })
+                      .populate({
+                        path: 'attendance.tutor',
+                        model: 'Tutor'
+                      })
+                      .exec(function (err, fitzroys) {
+                        PostFitzroy.find({}, function (err, allPostFitzroys) {
+                          if (err) {
+                            req.flash('error', err.toString())
+                            res.redirect('/')
+                          } else {
+                            PostFitzroy.find({})
+                              .populate({
+                                path: 'attendance.date',
+                                model: 'Saturdate'
+                              })
+                              .populate({
+                                path: 'attendance.tutor',
+                                model: 'Tutor'
+                              })
+                              .exec(function (err, postFitzroys) {
+                                res.render('history/show', {
+                                  chosenSaturdate: chosenSaturdate,
+                                  allPreSchools: preSchools.filter(function (preSchool) {
+                                    return preSchool.attendance.some(function (indivAttendance) {
+                                      return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
+                                    })
+                                  }),
+                                  allFitzroys: fitzroys.filter(function (fitzroy) {
+                                    return fitzroy.attendance.some(function (indivAttendance) {
+                                      return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
+                                    })
+                                  }),
+                                  allPostFitzroys: postFitzroys.filter(function (postFitzroy) {
+                                    return postFitzroy.attendance.some(function (indivAttendance) {
+                                      return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
+                                    })
+                                  }),
+                                  formatDateLong: formatDateLong
+                                })
+                              })
+                          }
+                        })
+                      })
+                  }
+                })
+              })
+          }
         })
       }
     })

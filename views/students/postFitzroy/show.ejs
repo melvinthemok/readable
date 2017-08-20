@@ -30,10 +30,10 @@
         <% } else { %>
           <p>Does <strong>not</strong> require intervention owing to frequent absenteeism</p>
         <% } %>
-        <% if (postFitzroyKidsToAvoid.length > 0) { %>
+        <% if (chosenPostFitzroy.kidsToAvoid.length > 0) { %>
           <p>Should not be grouped with 
             <span>
-            <% postFitzroyKidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
+            <% chosenPostFitzroy.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
               <% if (array.length === 1 || index === array.length - 2) { %>
                 <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
               <% } else if (index === array.length - 1) { %>
@@ -45,10 +45,15 @@
             </span>
           </p>
         <% } %>
-        <% if (postFitzroyPreferredTutors.length > 0) { %>
-          <p>Prefers being taught by
+        <% if (chosenPostFitzroy.preferredTutors.length > 0) { %>
+          <p>
+            <% if (chosenPostFitzroy.preferredTutors.length === 1) { %>
+              <strong>Favourite tutor:</strong>
+            <% } else { %>
+              <strong>Favourite tutors:</strong>
+            <% } %>
             <span>
-            <% postFitzroyPreferredTutors.forEach(function(preferredTutor, index, array) { %>
+            <% chosenPostFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
               <% if (array.length === 1 || index === array.length - 2) { %>
                 <%= preferredTutor.name %>
               <% } else if (index === array.length - 1) { %>
@@ -59,6 +64,18 @@
             <% }) %>
             </span>
           </p>
+        <% } %>
+        <% if (chosenPostFitzroy.attendance.length > 0) { %>
+          <p>Attended on:</p>
+          <div class="list-group">
+          <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
+            <a class="list-group-item list-group-item-action" href="/history/<%= indivAttendance.date.id %>"><%= formatDateShort(indivAttendance.date.date) %>
+              <% if (indivAttendance.tutor) { %>
+                taught by <%= indivAttendance.tutor.name %>
+              <% } %>
+            </a>
+          <% }) %>
+          </div>
         <% } %>
       </div>
     </div>

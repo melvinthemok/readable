@@ -30,10 +30,10 @@
         <% } else { %>
           <p>Does <strong>not</strong> require intervention owing to frequent absenteeism</p>
         <% } %>
-        <% if (fitzroyKidsToAvoid.length > 0) { %>
+        <% if (chosenFitzroy.kidsToAvoid.length > 0) { %>
           <p>Should not be grouped with 
             <span>
-            <% fitzroyKidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
+            <% chosenFitzroy.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
               <% if (array.length === 1 || index === array.length - 2) { %>
                 <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
               <% } else if (index === array.length - 1) { %>
@@ -45,10 +45,15 @@
             </span>
           </p>
         <% } %>
-        <% if (fitzroyPreferredTutors.length > 0) { %>
-          <p>Prefers being taught by
+        <% if (chosenFitzroy.preferredTutors.length > 0) { %>
+          <p>
+          <% if (chosenFitzroy.preferredTutors.length === 1) { %>
+            <strong>Favourite tutor:</strong>
+          <% } else { %>
+            <strong>Favourite tutors:</strong>
+          <% } %>
             <span>
-            <% fitzroyPreferredTutors.forEach(function(preferredTutor, index, array) { %>
+            <% chosenFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
               <% if (array.length === 1 || index === array.length - 2) { %>
                 <%= preferredTutor.name %>
               <% } else if (index === array.length - 1) { %>
@@ -59,6 +64,46 @@
             <% }) %>
             </span>
           </p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="d-flex flex-wrap justify-content-left mb-4">
+        <% if (chosenFitzroy.attendance.length > 0) { %>
+          <% [...new Set(chosenFitzroy.attendance.map(item => item.book))].sort(function (a, b) { %>
+            <% return a - b %>
+          <% }).forEach(function (indivBook) { %>
+            <div class="card m-2" style="width: 21rem;">
+              <div class="card-header">
+                <% if (indivBook === 0) { %>
+                  Other activities
+                <% } else { %>
+                  Book <%= indivBook %>
+                <% } %>
+              </div>
+              <div class="card-block">
+                <% var badgeStyle = "" %>
+                <% chosenFitzroy.attendance.filter(function (bookAttendance) { %>
+                  <% return bookAttendance.book === indivBook %>
+                <% }).forEach(function (indivAttendance) { %>
+                  <% if (indivAttendance.completed === false) { %>
+                    <% badgeStyle = "badge-warning" %>
+                  <% } else { %>
+                    <% badgeStyle = "badge-success" %>
+                  <% } %>
+                  <a href="/history/<%= indivAttendance.date.id %>"><span class="badge badge-pill <%= badgeStyle %>"><%= formatDateShort(indivAttendance.date.date) %></span></a>
+                  <% if (indivAttendance.tutor) { %>
+                    <span class="badge badge-pill badge-default"><%= indivAttendance.tutor.name %></span>
+                  <% } %>
+                  <br>
+                <% }) %>
+              </div>
+            </div>
+          <% }) %>
         <% } %>
       </div>
     </div>

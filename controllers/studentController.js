@@ -39,11 +39,17 @@ var studentController = {
           PreSchool.findById(req.params.id)
             .populate('kidsToAvoid')
             .populate('preferredTutors')
+            .populate({
+              path: 'attendance.date',
+              model: 'Saturdate'
+            })
+            .populate({
+              path: 'attendance.tutor',
+              model: 'Tutor'
+            })
             .exec(function (err, preSchool) {
               res.render('students/preSchool/show', {
-                chosenPreSchool: chosenPreSchool,
-                preSchoolKidsToAvoid: preSchool.kidsToAvoid,
-                preSchoolPreferredTutors: preSchool.preferredTutors,
+                chosenPreSchool: preSchool,
                 formatDateShort: formatDateShort
               })
             })
@@ -160,11 +166,17 @@ var studentController = {
           Fitzroy.findById(req.params.id)
             .populate('kidsToAvoid')
             .populate('preferredTutors')
+            .populate({
+              path: 'attendance.date',
+              model: 'Saturdate'
+            })
+            .populate({
+              path: 'attendance.tutor',
+              model: 'Tutor'
+            })
             .exec(function (err, fitzroy) {
               res.render('students/fitzroy/show', {
-                chosenFitzroy: chosenFitzroy,
-                fitzroyKidsToAvoid: fitzroy.kidsToAvoid,
-                fitzroyPreferredTutors: fitzroy.preferredTutors,
+                chosenFitzroy: fitzroy,
                 formatDateShort: formatDateShort
               })
             })
@@ -290,11 +302,17 @@ var studentController = {
           PostFitzroy.findById(req.params.id)
             .populate('kidsToAvoid')
             .populate('preferredTutors')
+            .populate({
+              path: 'attendance.date',
+              model: 'Saturdate'
+            })
+            .populate({
+              path: 'attendance.tutor',
+              model: 'Tutor'
+            })
             .exec(function (err, postFitzroy) {
               res.render('students/postFitzroy/show', {
-                chosenPostFitzroy: chosenPostFitzroy,
-                postFitzroyKidsToAvoid: postFitzroy.kidsToAvoid,
-                postFitzroyPreferredTutors: postFitzroy.preferredTutors,
+                chosenPostFitzroy: postFitzroy,
                 formatDateShort: formatDateShort
               })
             })
