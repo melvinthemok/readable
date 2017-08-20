@@ -3,8 +3,8 @@ var PreSchool = require('../models/preSchool')
 var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
 var Saturdate = require('../models/saturdate')
-var formatDateShort = require('../public/javascript/formatDateShort')
-var formatDateLong = require('../public/javascript/formatDateLong')
+var formatDateShort = require('../public/client_side_helpers/formatDateShort')
+var formatDateLong = require('../public/client_side_helpers/formatDateLong')
 
 var studentController = {
   index: function (req, res) {
@@ -26,6 +26,27 @@ var studentController = {
           res.render('students/preSchool/index', {
             allPreSchools: allPreSchools
           })
+        }
+      })
+    },
+
+    show: function (req, res) {
+      PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/pre-school')
+        } else {
+          PreSchool.findById(req.params.id)
+            .populate('kidsToAvoid')
+            .populate('preferredTutors')
+            .exec(function (err, preSchool) {
+              res.render('students/preSchool/show', {
+                chosenPreSchool: chosenPreSchool,
+                preSchoolKidsToAvoid: preSchool.kidsToAvoid,
+                preSchoolPreferredTutors: preSchool.preferredTutors,
+                formatDateShort: formatDateShort
+              })
+            })
         }
       })
     },
@@ -256,6 +277,27 @@ var studentController = {
           res.render('students/postFitzroy/index', {
             allPostFitzroys: allPostFitzroys
           })
+        }
+      })
+    },
+
+    show: function (req, res) {
+      PostFitzroy.findById(req.params.id, function (err, chosenPostFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/post-fitzroy')
+        } else {
+          PostFitzroy.findById(req.params.id)
+            .populate('kidsToAvoid')
+            .populate('preferredTutors')
+            .exec(function (err, postFitzroy) {
+              res.render('students/postFitzroy/show', {
+                chosenPostFitzroy: chosenPostFitzroy,
+                postFitzroyKidsToAvoid: postFitzroy.kidsToAvoid,
+                postFitzroyPreferredTutors: postFitzroy.preferredTutors,
+                formatDateShort: formatDateShort
+              })
+            })
         }
       })
     },

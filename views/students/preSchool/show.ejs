@@ -1,0 +1,66 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4"><%= chosenPreSchool.name %></h2>
+        <hr class="my-4">
+        <p class="mb-1">pre-school student</p>
+        <p>
+          <span class="badge badge-pill badge-primary"><%= chosenPreSchool.gender %></span>
+          <span class="badge badge-pill badge-primary"><%= chosenPreSchool.age %> years old</span>
+          <span class="badge badge-pill badge-primary"><%= chosenPreSchool.schoolLevel %></span>
+          <span class="badge badge-pill badge-primary">family group <%= chosenPreSchool.family %></span>
+          <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenPreSchool.startDate) %></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <div>
+        <% if (chosenPreSchool.oneOnOne) { %>
+          <p><strong>Needs</strong> one-on-one attention</p>
+        <% } else { %>
+          <p>Does <strong>not</strong> need one-on-one attention</p>
+        <% } %>
+        <% if (chosenPreSchool.intervention) { %>
+          <p><strong>Requires</strong> intervention owing to frequent absenteeism</p>
+        <% } else { %>
+          <p>Does <strong>not</strong> require intervention owing to frequent absenteeism</p>
+        <% } %>
+        <% if (preSchoolKidsToAvoid.length > 0) { %>
+          <p>Should not be grouped with 
+            <span>
+            <% preSchoolKidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
+              <% if (array.length === 1 || index === array.length - 2) { %>
+                <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
+              <% } else if (index === array.length - 1) { %>
+                and <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
+              <% } else { %>
+                <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,
+              <% } %>
+            <% }) %>
+            </span>
+          </p>
+        <% } %>
+        <% if (preSchoolPreferredTutors.length > 0) { %>
+          <p>Prefers being taught by
+            <span>
+            <% preSchoolPreferredTutors.forEach(function(preferredTutor, index, array) { %>
+              <% if (array.length === 1 || index === array.length - 2) { %>
+                <%= preferredTutor.name %>
+              <% } else if (index === array.length - 1) { %>
+                and <%= preferredTutor.name %>
+              <% } else { %>
+                <%= preferredTutor.name %>,
+              <% } %>
+            <% }) %>
+            </span>
+          </p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -32,10 +32,10 @@
               }
               filterResult.innerHTML = ''
               result.forEach(function (postFitzroy) {
-                var li = document.createElement('li')
-                li.classList.add('list-group-item')
-                li.appendChild(document.createTextNode(postFitzroy.name))
-                filterResult.appendChild(li)
+                var a = document.createElement('a')
+                a.classList.add('list-group-item')
+                a.appendChild(document.createTextNode(postFitzroy.name))
+                filterResult.appendChild(a)
               })
             }
           }
@@ -56,13 +56,13 @@
         <% } %>
       </select>
       <% } %>
-      <ul id="filter-result" class="list-group">
+      <div id="filter-result" class="list-group">
       <% if (allPostFitzroys.length > 0) { %>
         <% allPostFitzroys.forEach(function (postFitzroy) { %>
-          <li class="list-group-item"><%= postFitzroy.name %></li>  
+          <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= postFitzroy.id %>"><%= postFitzroy.name %></a>  
         <% }) %>
       <% } %>
-      </ul><br>
+      </div><br>
       <a class="btn btn-primary mb-4" href="/students/post-fitzroy/new">Sign up a new student</a>
     </div>
   </div>

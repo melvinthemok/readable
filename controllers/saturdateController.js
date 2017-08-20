@@ -1,5 +1,5 @@
 var Saturdate = require('../models/saturdate')
-var formatDateLong = require('../public/javascript/formatDateLong')
+var formatDateLong = require('../public/client_side_helpers/formatDateLong')
 
 var saturdateController = {
   listAll: function (req, res) {
