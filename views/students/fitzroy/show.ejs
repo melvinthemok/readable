@@ -55,11 +55,17 @@
             <span>
             <% chosenFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
               <% if (array.length === 1 || index === array.length - 2) { %>
-                <%= preferredTutor.name %>
+                <a href="/tutors/<%= preferredTutor.id %>" style="text-decoration: none;">
+                  <%= preferredTutor.name %>
+                </a>
               <% } else if (index === array.length - 1) { %>
-                and <%= preferredTutor.name %>
+                and <a href="/tutors/<%= preferredTutor.id %>" style="text-decoration: none;">
+                  <%= preferredTutor.name %>
+                </a>
               <% } else { %>
-                <%= preferredTutor.name %>,
+                <a href="/tutors/<%= preferredTutor.id %>" style="text-decoration: none;">
+                  <%= preferredTutor.name %>,
+                </a>
               <% } %>
             <% }) %>
             </span>
@@ -97,7 +103,9 @@
                   <% } %>
                   <a href="/history/<%= indivAttendance.date.id %>"><span class="badge badge-pill <%= badgeStyle %>"><%= formatDateShort(indivAttendance.date.date) %></span></a>
                   <% if (indivAttendance.tutor) { %>
-                    <span class="badge badge-pill badge-default"><%= indivAttendance.tutor.name %></span>
+                    <a href="/tutors/<%= indivAttendance.tutor.id %>" style="text-decoration: none;">
+                      <span class="badge badge-pill badge-default"><%= indivAttendance.tutor.name %></span>
+                    </a>
                   <% } %>
                   <br>
                 <% }) %>

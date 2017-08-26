@@ -6,6 +6,7 @@ var mongoose = require('mongoose')
 var auth = require('./routes/authRouter')
 var saturdate = require('./routes/saturdateRouter')
 var student = require ('./routes/studentRouter')
+var tutor = require ('./routes/tutorRouter')
 // var attend = require('./routes/attendRouter')
 // var group = require('./routes/groupRouter')
 var ejsLint = require('ejs-lint')
@@ -56,8 +57,9 @@ app.get('/', function (req, res) {
 })
 
 app.use('/auth', auth)
-app.use('/history', isLoggedIn, isAdmin, saturdate)
 app.use('/students', isLoggedIn, student)
+app.use('/tutors', isLoggedIn, tutor)
+app.use('/history', isLoggedIn, isAdmin, saturdate)
 // app.use('/attend', attend)
 // app.use('/group', group)
 

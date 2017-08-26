@@ -31,30 +31,28 @@ var studentController = {
     },
 
     show: function (req, res) {
-      PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
-        if (err) {
-          req.flash('error', err.toString())
-          res.redirect('/students/pre-school')
-        } else {
-          PreSchool.findById(req.params.id)
-            .populate('kidsToAvoid')
-            .populate('preferredTutors')
-            .populate({
-              path: 'attendance.date',
-              model: 'Saturdate'
+      PreSchool.findById(req.params.id)
+        .populate('kidsToAvoid')
+        .populate('preferredTutors')
+        .populate({
+          path: 'attendance.date',
+          model: 'Saturdate'
+        })
+        .populate({
+          path: 'attendance.tutor',
+          model: 'Tutor'
+        })
+        .exec(function (err, chosenPreSchool) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/students/pre-school')
+          } else {
+            res.render('students/preSchool/show', {
+              chosenPreSchool: chosenPreSchool,
+              formatDateShort: formatDateShort
             })
-            .populate({
-              path: 'attendance.tutor',
-              model: 'Tutor'
-            })
-            .exec(function (err, preSchool) {
-              res.render('students/preSchool/show', {
-                chosenPreSchool: preSchool,
-                formatDateShort: formatDateShort
-              })
-            })
-        }
-      })
+          }
+        })
     },
 
     new: function (req, res) {
@@ -158,30 +156,28 @@ var studentController = {
     },
 
     show: function (req, res) {
-      Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
-        if (err) {
-          req.flash('error', err.toString())
-          res.redirect('/students/fitzroy')
-        } else {
-          Fitzroy.findById(req.params.id)
-            .populate('kidsToAvoid')
-            .populate('preferredTutors')
-            .populate({
-              path: 'attendance.date',
-              model: 'Saturdate'
+      Fitzroy.findById(req.params.id)
+        .populate('kidsToAvoid')
+        .populate('preferredTutors')
+        .populate({
+          path: 'attendance.date',
+          model: 'Saturdate'
+        })
+        .populate({
+          path: 'attendance.tutor',
+          model: 'Tutor'
+        })
+        .exec(function (err, chosenFitzroy) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/students/fitzroy')
+          } else {
+            res.render('students/fitzroy/show', {
+              chosenFitzroy: chosenFitzroy,
+              formatDateShort: formatDateShort
             })
-            .populate({
-              path: 'attendance.tutor',
-              model: 'Tutor'
-            })
-            .exec(function (err, fitzroy) {
-              res.render('students/fitzroy/show', {
-                chosenFitzroy: fitzroy,
-                formatDateShort: formatDateShort
-              })
-            })
-        }
-      })
+          }
+        })
     },
 
     new: function (req, res) {
@@ -294,30 +290,28 @@ var studentController = {
     },
 
     show: function (req, res) {
-      PostFitzroy.findById(req.params.id, function (err, chosenPostFitzroy) {
-        if (err) {
-          req.flash('error', err.toString())
-          res.redirect('/students/post-fitzroy')
-        } else {
-          PostFitzroy.findById(req.params.id)
-            .populate('kidsToAvoid')
-            .populate('preferredTutors')
-            .populate({
-              path: 'attendance.date',
-              model: 'Saturdate'
+      PostFitzroy.findById(req.params.id)
+        .populate('kidsToAvoid')
+        .populate('preferredTutors')
+        .populate({
+          path: 'attendance.date',
+          model: 'Saturdate'
+        })
+        .populate({
+          path: 'attendance.tutor',
+          model: 'Tutor'
+        })
+        .exec(function (err, chosenPostFitzroy) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/students/post-fitzroy')
+          } else {
+            res.render('students/postFitzroy/show', {
+              chosenPostFitzroy: chosenPostFitzroy,
+              formatDateShort: formatDateShort
             })
-            .populate({
-              path: 'attendance.tutor',
-              model: 'Tutor'
-            })
-            .exec(function (err, postFitzroy) {
-              res.render('students/postFitzroy/show', {
-                chosenPostFitzroy: postFitzroy,
-                formatDateShort: formatDateShort
-              })
-            })
-        }
-      })
+          }
+        })
     },
 
     new: function (req, res) {

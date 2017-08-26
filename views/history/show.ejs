@@ -14,7 +14,34 @@
     <div class="col-sm-6 offset-sm-3 list-group">
       <h3>pre-school</h3>
         <% if (allPreSchools.length > 0) { %>
-          <% allPreSchools.forEach(function (preSchool) { %>
+          <% allPreSchools.sort(function (preSchool1, preSchool2) { %>
+            <% function findChosenSaturdate (indivAttend) { %>
+              <% return indivAttend.date.id.toString() === chosenSaturdate.id.toString() %>
+            <% } %>
+            <% var indivAttend1 = preSchool1.attendance.filter(findChosenSaturdate) %>
+            <% var indivAttend2 = preSchool2.attendance.filter(findChosenSaturdate) %>
+            <% if (indivAttend1[0].tutor && indivAttend2[0].tutor) { %>
+              <% if (indivAttend1[0].tutor < indivAttend2[0].tutor) { %>
+                <% return -1 %>
+              <% } else if (indivAttend1[0].tutor > indivAttend2[0].tutor) { %>
+                <% return 1 %>
+              <% } else { %>
+                <% return 0 %>
+              <% } %>
+            <% } else if (indivAttend1[0].tutor && !indivAttend2[0].tutor) { %>
+              <% return 1 %>
+            <% } else if (indivAttend2[0].tutor && !indivAttend1[0].tutor) { %>
+              <% return -1 %>
+            <% } else { %>
+              <% if (indivAttend1[0].id < indivAttend2[0].id) { %>
+                <% return -1 %>
+              <% } else if (indivAttend1[0].id > indivAttend2[0].id) { %>
+                <% return 1 %>
+              <% } else { %>
+                <% return 0 %>
+              <% } %>
+            <% } %>
+          <% }).forEach(function (preSchool) { %>
             <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= preSchool.id %>"><%= preSchool.name %></a>
           <% }) %>
         <% } else { %>
@@ -22,9 +49,38 @@
         <% } %>
       <h3 class="mt-5">fitzroy</h3>
         <% if (allFitzroys.length > 0) { %>
-          <% allFitzroys.forEach(function (fitzroy) { %>
-            <a class="list-group-item list-group-item-action" href="/students/fitzroy/<%= fitzroy.id %>">
-              <%= fitzroy.name %>
+          <% allFitzroys.sort(function (fitzroy1, fitzroy2) { %>
+            <% function findChosenSaturdate (indivAttend) { %>
+              <% return indivAttend.date.id === chosenSaturdate.id %>
+            <% } %>
+            <% var indivAttend1 = fitzroy1.attendance.filter(findChosenSaturdate) %>
+            <% var indivAttend2 = fitzroy2.attendance.filter(findChosenSaturdate) %>
+            <% if (indivAttend1[0].tutor && indivAttend2[0].tutor) { %>
+              <% if (indivAttend1[0].tutor < indivAttend2[0].tutor) { %>
+                <% return -1 %>
+              <% } else if (indivAttend1[0].tutor > indivAttend2[0].tutor) { %>
+                <% return 1 %>
+              <% } else { %>
+                <% return 0 %>
+              <% } %>
+            <% } else if (indivAttend1[0].tutor && !indivAttend2[0].tutor) { %>
+              <% return 1 %>
+            <% } else if (indivAttend2[0].tutor && !indivAttend1[0].tutor) { %>
+              <% return -1 %>
+            <% } else { %>
+              <% if (indivAttend1[0].id < indivAttend2[0].id) { %>
+                <% return -1 %>
+              <% } else if (indivAttend1[0].id > indivAttend2[0].id) { %>
+                <% return 1 %>
+              <% } else { %>
+                <% return 0 %>
+              <% } %>
+            <% } %>
+          <% }).forEach(function (fitzroy) { %>
+            <div class="list-group-item">
+              <a href="/students/fitzroy/<%= fitzroy.id %>">
+                <%= fitzroy.name %>
+              </a>
               <% var badgeStyle = "" %>
               <% fitzroy.attendance.filter(function (indivAttendance) { %>
                 <% return indivAttendance.date.id.toString() === chosenSaturdate.id.toString() %>
@@ -34,19 +90,51 @@
                 <% } else { %>
                   <% badgeStyle = "badge-success" %>
                 <% } %>
-                &nbsp<span class="badge badge-pill <%= badgeStyle %>"><%= indivAtten.book %></span>
+                &nbsp &nbsp<span class="badge badge-pill <%= badgeStyle %>"><%= indivAtten.book %></span>
                 <% if (indivAtten.tutor) { %>
-                  &nbsp<span class="badge badge-pill badge-default"><%= indivAtten.tutor.name %></span>
+                  &nbsp &nbsp
+                  <a href="/tutors/<%= indivAtten.tutor.id %>" style="text-decoration: none;">
+                    <span class="badge badge-pill badge-default" style="vertical-align: text-bottom;">
+                      <%= indivAtten.tutor.name %>
+                    </span>
+                  </a>
                 <% } %>
               <% }) %>
-            </a>
+            </div>
           <% }) %>
         <% } else { %>
             <p>No students attended this session</p>
         <% } %>
       <h3 class="mt-5">postFitzroy</h3>
         <% if (allPostFitzroys.length > 0) { %>
-          <% allPostFitzroys.forEach(function (postFitzroy) { %>
+          <% allPostFitzroys.sort(function (postFitzroy1, postFitzroy2) { %>
+            <% function findChosenSaturdate (indivAttend) { %>
+              <% return indivAttend.date.id.toString() === chosenSaturdate.id.toString() %>
+            <% } %>
+            <% var indivAttend1 = postFitzroy1.attendance.filter(findChosenSaturdate) %>
+            <% var indivAttend2 = postFitzroy2.attendance.filter(findChosenSaturdate) %>
+            <% if (indivAttend1[0].tutor && indivAttend2[0].tutor) { %>
+              <% if (indivAttend1[0].tutor < indivAttend2[0].tutor) { %>
+                <% return -1 %>
+              <% } else if (indivAttend1[0].tutor > indivAttend2[0].tutor) { %>
+                <% return 1 %>
+              <% } else { %>
+                <% return 0 %>
+              <% } %>
+            <% } else if (indivAttend1[0].tutor && !indivAttend2[0].tutor) { %>
+              <% return 1 %>
+            <% } else if (indivAttend2[0].tutor && !indivAttend1[0].tutor) { %>
+              <% return -1 %>
+            <% } else { %>
+              <% if (indivAttend1[0].id < indivAttend2[0].id) { %>
+                <% return -1 %>
+              <% } else if (indivAttend1[0].id > indivAttend2[0].id) { %>
+                <% return 1 %>
+              <% } else { %>
+                <% return 0 %>
+              <% } %>
+            <% } %>
+          <% }).forEach(function (postFitzroy) { %>
             <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= postFitzroy.id %>"><%= postFitzroy.name %></a>
           <% }) %>
         <% } else { %>

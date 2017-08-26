@@ -1,0 +1,26 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4"><%= chosenTutor.name %></h2>
+        <hr class="my-4">
+        <p class="mb-1">tutor</p>
+        <p>
+          <a href="mailto:<%= chosenTutor.email %>?cc=pam.tham@gmail.com&subject=Hello%20from%20ReadAble" style="text-decoration: none;">
+            <span class="badge badge-pill badge-primary"><%= chosenTutor.email %></span>
+          </a>
+          <span class="badge badge-pill badge-primary"><%= chosenTutor.phone %></span>
+          <span class="badge badge-pill badge-primary"><%= chosenTutor.gender %></span>
+          <span class="badge badge-pill badge-primary"><%= chosenTutor.age %></span>
+          <span class="badge badge-pill badge-primary"><%= chosenTutor.experience %></span>
+          <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenTutor.startDate) %></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+  <% console.log('allPreschools are', allPreSchools) %>
+  <% console.log('allFitzroys are', allFitzroys) %>
+  <% console.log('allPostFitzroys are', allPostFitzroys) %>
+</div>
