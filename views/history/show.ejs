@@ -9,11 +9,12 @@
     </div>
   </div>
 </div>
-<div class="container">
+<div class="container mb-5">
   <div class="row">
-    <div class="col-sm-6 offset-sm-3 list-group">
-      <h3>pre-school</h3>
+    <div class="col-sm-6 offset-sm-3">
+      <h3 class="lead">pre-school</h3>
         <% if (allPreSchools.length > 0) { %>
+          <div class="list-group">
           <% allPreSchools.sort(function (preSchool1, preSchool2) { %>
             <% function findChosenSaturdate (indivAttend) { %>
               <% return indivAttend.date.id.toString() === chosenSaturdate.id.toString() %>
@@ -42,13 +43,31 @@
               <% } %>
             <% } %>
           <% }).forEach(function (preSchool) { %>
-            <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= preSchool.id %>"><%= preSchool.name %></a>
+            <div class="list-group-item">
+              <a href="/students/pre-school/<%= preSchool.id %>">
+                <%= preSchool.name %>
+              </a>
+              <% preSchool.attendance.filter(function (indivAttendance) { %>
+                <% return indivAttendance.date.id.toString() === chosenSaturdate.id.toString() %>
+              <% }).forEach(function (indivAtten) { %>
+                <% if (indivAtten.tutor) { %>
+                  &nbsp &nbsp
+                  <a href="/tutors/<%= indivAtten.tutor.id %>" style="text-decoration: none;">
+                    <span class="badge badge-pill badge-default" style="vertical-align: text-bottom;">
+                      <%= indivAtten.tutor.name %>
+                    </span>
+                  </a>
+                <% } %>
+              <% }) %>
+            </div>
           <% }) %>
+          </div>
         <% } else { %>
             <p>No students attended this session</p>
         <% } %>
-      <h3 class="mt-5">fitzroy</h3>
+      <h3 class="mt-5 lead">fitzroy</h3>
         <% if (allFitzroys.length > 0) { %>
+        <div class="list-group">
           <% allFitzroys.sort(function (fitzroy1, fitzroy2) { %>
             <% function findChosenSaturdate (indivAttend) { %>
               <% return indivAttend.date.id === chosenSaturdate.id %>
@@ -102,11 +121,13 @@
               <% }) %>
             </div>
           <% }) %>
+        </div>
         <% } else { %>
             <p>No students attended this session</p>
         <% } %>
-      <h3 class="mt-5">postFitzroy</h3>
+      <h3 class="mt-5 lead">postFitzroy</h3>
         <% if (allPostFitzroys.length > 0) { %>
+        <div class="list-group">
           <% allPostFitzroys.sort(function (postFitzroy1, postFitzroy2) { %>
             <% function findChosenSaturdate (indivAttend) { %>
               <% return indivAttend.date.id.toString() === chosenSaturdate.id.toString() %>
@@ -135,8 +156,25 @@
               <% } %>
             <% } %>
           <% }).forEach(function (postFitzroy) { %>
-            <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= postFitzroy.id %>"><%= postFitzroy.name %></a>
+            <div class="list-group-item">
+              <a href="/students/post-fitzroy/<%= postFitzroy.id %>">
+                <%= postFitzroy.name %>
+              </a>
+              <% postFitzroy.attendance.filter(function (indivAttendance) { %>
+                <% return indivAttendance.date.id.toString() === chosenSaturdate.id.toString() %>
+              <% }).forEach(function (indivAtten) { %>
+                <% if (indivAtten.tutor) { %>
+                  &nbsp &nbsp
+                  <a href="/tutors/<%= indivAtten.tutor.id %>" style="text-decoration: none;">
+                    <span class="badge badge-pill badge-default" style="vertical-align: text-bottom;">
+                      <%= indivAtten.tutor.name %>
+                    </span>
+                  </a>
+                <% } %>
+              <% }) %>
+            </div>
           <% }) %>
+        </div>
         <% } else { %>
             <p>No students attended this session</p>
         <% } %>

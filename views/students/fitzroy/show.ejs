@@ -49,23 +49,17 @@
           <p>
           <% if (chosenFitzroy.preferredTutors.length === 1) { %>
             <strong>Favourite tutor:</strong>
-          <% } else { %>
+          <% } else if (chosenFitzroy.preferredTutors.length > 1) { %>
             <strong>Favourite tutors:</strong>
           <% } %>
             <span>
             <% chosenFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
               <% if (array.length === 1 || index === array.length - 2) { %>
-                <a href="/tutors/<%= preferredTutor.id %>" style="text-decoration: none;">
-                  <%= preferredTutor.name %>
-                </a>
+                <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
               <% } else if (index === array.length - 1) { %>
-                and <a href="/tutors/<%= preferredTutor.id %>" style="text-decoration: none;">
-                  <%= preferredTutor.name %>
-                </a>
+                and <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
               <% } else { %>
-                <a href="/tutors/<%= preferredTutor.id %>" style="text-decoration: none;">
-                  <%= preferredTutor.name %>,
-                </a>
+                <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>,
               <% } %>
             <% }) %>
             </span>

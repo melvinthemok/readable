@@ -49,17 +49,17 @@
           <p>
             <% if (chosenPostFitzroy.preferredTutors.length === 1) { %>
               <strong>Favourite tutor:</strong>
-            <% } else { %>
+            <% } else if (chosenPostFitzroy.preferredTutors.length > 1) { %>
               <strong>Favourite tutors:</strong>
             <% } %>
             <span>
             <% chosenPostFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
               <% if (array.length === 1 || index === array.length - 2) { %>
-                <%= preferredTutor.name %>
+                <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
               <% } else if (index === array.length - 1) { %>
-                and <%= preferredTutor.name %>
+                and <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
               <% } else { %>
-                <%= preferredTutor.name %>,
+                <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>,
               <% } %>
             <% }) %>
             </span>
@@ -69,11 +69,19 @@
           <p>Attended on:</p>
           <div class="list-group">
           <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
-            <a class="list-group-item list-group-item-action" href="/history/<%= indivAttendance.date.id %>"><%= formatDateShort(indivAttendance.date.date) %>
+            <div class="list-group-item">
+              <a href="/history/<%= indivAttendance.date.id %>">
+                <%= formatDateShort(indivAttendance.date.date) %>
+              </a>
               <% if (indivAttendance.tutor) { %>
-                taught by <%= indivAttendance.tutor.name %>
+                &nbsp &nbsp
+                  <a href="/tutors/<%= indivAttendance.tutor.id %>">
+                    <span class="badge badge-pill badge-default" style="vertical-align: text-bottom;">
+                      <%= indivAttendance.tutor.name %>
+                    </span>
+                  </a>
               <% } %>
-            </a>
+            </div>
           <% }) %>
           </div>
         <% } %>
