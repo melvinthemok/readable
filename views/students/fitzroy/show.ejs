@@ -4,7 +4,7 @@
       <div class="col-sm-6 offset-sm-3">
         <h2 class="display-4"><%= chosenFitzroy.name %></h2>
         <hr class="my-4">
-        <p class="mb-1">fitzroy student</p>
+        <p class="mb-1"><a href="/students/fitzroy">fitzroy</a> student</p>
         <p>
           <span class="badge badge-pill badge-primary"><%= chosenFitzroy.gender %></span>
           <span class="badge badge-pill badge-primary"><%= chosenFitzroy.age %> years old</span>
@@ -90,15 +90,21 @@
                 <% chosenFitzroy.attendance.filter(function (bookAttendance) { %>
                   <% return bookAttendance.book === indivBook %>
                 <% }).forEach(function (indivAttendance) { %>
-                  <% if (indivAttendance.completed === false) { %>
+                  <% if (!indivAttendance.completed) { %>
                     <% badgeStyle = "badge-warning" %>
                   <% } else { %>
                     <% badgeStyle = "badge-success" %>
                   <% } %>
-                  <a href="/history/<%= indivAttendance.date.id %>"><span class="badge badge-pill <%= badgeStyle %>"><%= formatDateShort(indivAttendance.date.date) %></span></a>
+                  <a href="/history/<%= indivAttendance.date.id %>" style="text-decoration: none;">
+                    <span class="badge badge-pill <%= badgeStyle %>">
+                      <%= formatDateShort(indivAttendance.date.date) %>
+                    </span>
+                  </a>
                   <% if (indivAttendance.tutor) { %>
                     <a href="/tutors/<%= indivAttendance.tutor.id %>" style="text-decoration: none;">
-                      <span class="badge badge-pill badge-default"><%= indivAttendance.tutor.name %></span>
+                      <span class="badge badge-pill badge-default">
+                        <%= indivAttendance.tutor.name %>
+                      </span>
                     </a>
                   <% } %>
                   <br>
@@ -106,6 +112,8 @@
               </div>
             </div>
           <% }) %>
+        <% } else { %>
+          <p>No sessions yet</p>
         <% } %>
       </div>
     </div>

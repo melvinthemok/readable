@@ -4,7 +4,7 @@
       <div class="col-sm-6 offset-sm-3">
         <h2 class="display-4"><%= chosenPreSchool.name %></h2>
         <hr class="my-4">
-        <p class="mb-1">pre-school student</p>
+        <p class="mb-1"><a href="/students/pre-school">pre-school</a> student</p>
         <p>
           <span class="badge badge-pill badge-primary"><%= chosenPreSchool.gender %></span>
           <span class="badge badge-pill badge-primary"><%= chosenPreSchool.age %> years old</span>
@@ -84,6 +84,8 @@
             </div>
           <% }) %>
           </div>
+        <% } else { %>
+          <p>No sessions yet</p>
         <% } %>
       </div>
     </div>
