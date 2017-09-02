@@ -69,14 +69,16 @@
           <p>Attended on:</p>
           <div class="list-group">
           <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
-            <div class="list-group-item">
+            <div class="list-group-item justify-content-between">
               <a href="/history/<%= indivAttendance.date.id %>">
-                <%= formatDateShort(indivAttendance.date.date) %>
+                <span class="badge badge-pill badge-default">
+                  <%= formatDateShort(indivAttendance.date.date) %>
+                </span>
               </a>
               <% if (indivAttendance.tutor) { %>
                 &nbsp &nbsp
                   <a href="/tutors/<%= indivAttendance.tutor.id %>">
-                    <span class="badge badge-pill badge-default" style="vertical-align: text-bottom;">
+                    <span class="badge badge-pill badge-default">
                       <%= indivAttendance.tutor.name %>
                     </span>
                   </a>

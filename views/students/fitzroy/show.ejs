@@ -86,29 +86,32 @@
                 <% } %>
               </div>
               <div class="card-block">
-                <% var badgeStyle = "" %>
-                <% chosenFitzroy.attendance.filter(function (bookAttendance) { %>
-                  <% return bookAttendance.book === indivBook %>
-                <% }).forEach(function (indivAttendance) { %>
-                  <% if (!indivAttendance.completed) { %>
-                    <% badgeStyle = "badge-warning" %>
-                  <% } else { %>
-                    <% badgeStyle = "badge-success" %>
-                  <% } %>
-                  <a href="/history/<%= indivAttendance.date.id %>" style="text-decoration: none;">
-                    <span class="badge badge-pill <%= badgeStyle %>">
-                      <%= formatDateShort(indivAttendance.date.date) %>
-                    </span>
-                  </a>
-                  <% if (indivAttendance.tutor) { %>
-                    <a href="/tutors/<%= indivAttendance.tutor.id %>" style="text-decoration: none;">
-                      <span class="badge badge-pill badge-default">
-                        <%= indivAttendance.tutor.name %>
-                      </span>
-                    </a>
-                  <% } %>
-                  <br>
-                <% }) %>
+                <div class="list-group">
+                  <% var badgeStyle = "" %>
+                  <% chosenFitzroy.attendance.filter(function (bookAttendance) { %>
+                    <% return bookAttendance.book === indivBook %>
+                  <% }).forEach(function (indivAttendance) { %>
+                    <div class="list-group-item justify-content-between">
+                      <% if (!indivAttendance.completed) { %>
+                        <% badgeStyle = "badge-warning" %>
+                      <% } else { %>
+                        <% badgeStyle = "badge-success" %>
+                      <% } %>
+                      <a href="/history/<%= indivAttendance.date.id %>">
+                        <span class="badge badge-pill <%= badgeStyle %>">
+                          <%= formatDateShort(indivAttendance.date.date) %>
+                        </span>
+                      </a>
+                      <% if (indivAttendance.tutor) { %>
+                        <a href="/tutors/<%= indivAttendance.tutor.id %>">
+                          <span class="badge badge-pill badge-default">
+                            <%= indivAttendance.tutor.name %>
+                          </span>
+                        </a>
+                      <% } %>
+                    </div>
+                  <% }) %>
+                </div>
               </div>
             </div>
           <% }) %>
