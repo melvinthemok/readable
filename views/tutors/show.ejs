@@ -4,7 +4,7 @@
       <div class="col-sm-6 offset-sm-3">
         <h2 class="display-4"><%= chosenTutor.name %></h2>
         <hr class="my-4">
-        <p class="mb-1">tutor</p>
+        <p class="mb-1"><a href="/tutors">tutor</a></p>
         <p>
           <a href="mailto:<%= chosenTutor.email %>?cc=pam.tham@gmail.com&subject=Hello%20from%20ReadAble" style="text-decoration: none;">
             <span class="badge badge-pill badge-primary"><%= chosenTutor.email %></span>
@@ -12,9 +12,9 @@
           <span class="badge badge-pill badge-primary"><%= chosenTutor.phone %></span>
           <span class="badge badge-pill badge-primary"><%= chosenTutor.gender %></span>
           <span class="badge badge-pill badge-primary"><%= chosenTutor.age %></span>
-          <span class="badge badge-pill badge-primary"><%= chosenTutor.experience %></span>
           <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenTutor.startDate) %></span>
         </p>
+        <p><%= chosenTutor.experience %></p>
       </div>
     </div>
   </div>

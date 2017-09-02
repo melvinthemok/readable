@@ -70,6 +70,13 @@ var PreSchoolSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
+  generalComment: {
+    type: String,
+    maxlength: [
+      500,
+      'please keep this general comment within 500 characters'
+    ]
+  },
   preferredTutors: {
     type: [
       {

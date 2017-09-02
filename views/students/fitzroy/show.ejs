@@ -19,52 +19,62 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <div>
-        <% if (chosenFitzroy.oneOnOne) { %>
-          <p><strong>Needs</strong> one-on-one attention</p>
-        <% } else { %>
-          <p>Does <strong>not</strong> need one-on-one attention</p>
-        <% } %>
-        <% if (chosenFitzroy.intervention) { %>
-          <p><strong>Requires</strong> intervention owing to frequent absenteeism</p>
-        <% } else { %>
-          <p>Does <strong>not</strong> require intervention owing to frequent absenteeism</p>
-        <% } %>
-        <% if (chosenFitzroy.kidsToAvoid.length > 0) { %>
-          <p>Should not be grouped with 
-            <span>
-            <% chosenFitzroy.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
-              <% if (array.length === 1 || index === array.length - 2) { %>
-                <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
-              <% } else if (index === array.length - 1) { %>
-                and <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
-              <% } else { %>
-                <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,
+      <div class="card m-2">
+        <div class="card-header">
+          Notes
+        </div>
+        <div class="card-block">
+          <div class="list-group">
+            <% if (chosenFitzroy.oneOnOne) { %>
+              <div class="list-group-item">Needs one-on-one attention</div>
+            <% } else { %>
+              <div class="list-group-item">Does not need one-on-one attention</div>
+            <% } %>
+            <% if (chosenFitzroy.intervention) { %>
+              <div class="list-group-item">Requires intervention for absenteeism</div>
+            <% } else { %>
+              <div class="list-group-item">Does not require intervention for absenteeism</div>
+            <% } %>
+            <% if (chosenFitzroy.generalComment) { %>
+              <div class="list-group-item"><%= chosenFitzroy.generalComment %></div>
+            <% } %>
+            <% if (chosenFitzroy.kidsToAvoid.length > 0) { %>
+              <div class="list-group-item">Should not be grouped with&nbsp
+                <span>
+                <% chosenFitzroy.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
+                  <% if (array.length === 1 || index === array.length - 2) { %>
+                    <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>&nbsp
+                  <% } else if (index === array.length - 1) { %>
+                    and <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
+                  <% } else { %>
+                    <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,&nbsp
+                  <% } %>
+                <% }) %>
+                </span>
+              </div>
+            <% } %>
+            <% if (chosenFitzroy.preferredTutors.length > 0) { %>
+              <div class="list-group-item">
+              <% if (chosenFitzroy.preferredTutors.length === 1) { %>
+                Favourite tutor:&nbsp
+              <% } else if (chosenFitzroy.preferredTutors.length > 1) { %>
+                Favourite tutors:&nbsp
               <% } %>
-            <% }) %>
-            </span>
-          </p>
-        <% } %>
-        <% if (chosenFitzroy.preferredTutors.length > 0) { %>
-          <p>
-          <% if (chosenFitzroy.preferredTutors.length === 1) { %>
-            <strong>Favourite tutor:</strong>
-          <% } else if (chosenFitzroy.preferredTutors.length > 1) { %>
-            <strong>Favourite tutors:</strong>
-          <% } %>
-            <span>
-            <% chosenFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
-              <% if (array.length === 1 || index === array.length - 2) { %>
-                <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
-              <% } else if (index === array.length - 1) { %>
-                and <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
-              <% } else { %>
-                <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>,
-              <% } %>
-            <% }) %>
-            </span>
-          </p>
-        <% } %>
+                <span>
+                <% chosenFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
+                  <% if (array.length === 1 || index === array.length - 2) { %>
+                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>&nbsp
+                  <% } else if (index === array.length - 1) { %>
+                    and <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
+                  <% } else { %>
+                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>,&nbsp
+                  <% } %>
+                <% }) %>
+                </span>
+              </div>
+            <% } %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

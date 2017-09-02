@@ -98,6 +98,7 @@ var studentController = {
         startDate: req.body.startDate,
         oneOnOne: req.body.oneOnOne,
         intervention: req.body.intervention,
+        generalComment: req.body.generalComment,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
         attendance: typeof req.body.saturdates === 'string'
@@ -224,6 +225,7 @@ var studentController = {
         startDate: req.body.startDate,
         oneOnOne: req.body.oneOnOne,
         intervention: req.body.intervention,
+        generalComment: req.body.generalComment,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
         attendance: typeof req.body.fitzroyBooks === 'string'
@@ -358,6 +360,7 @@ var studentController = {
         startDate: req.body.startDate,
         oneOnOne: req.body.oneOnOne,
         intervention: req.body.intervention,
+        generalComment: req.body.generalComment,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
         attendance: typeof req.body.saturdates === 'string'

@@ -19,76 +19,94 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <div>
-        <% if (chosenPostFitzroy.oneOnOne) { %>
-          <p><strong>Needs</strong> one-on-one attention</p>
-        <% } else { %>
-          <p>Does <strong>not</strong> need one-on-one attention</p>
-        <% } %>
-        <% if (chosenPostFitzroy.intervention) { %>
-          <p><strong>Requires</strong> intervention owing to frequent absenteeism</p>
-        <% } else { %>
-          <p>Does <strong>not</strong> require intervention owing to frequent absenteeism</p>
-        <% } %>
-        <% if (chosenPostFitzroy.kidsToAvoid.length > 0) { %>
-          <p>Should not be grouped with 
-            <span>
-            <% chosenPostFitzroy.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
-              <% if (array.length === 1 || index === array.length - 2) { %>
-                <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
-              <% } else if (index === array.length - 1) { %>
-                and <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
-              <% } else { %>
-                <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,
-              <% } %>
-            <% }) %>
-            </span>
-          </p>
-        <% } %>
-        <% if (chosenPostFitzroy.preferredTutors.length > 0) { %>
-          <p>
-            <% if (chosenPostFitzroy.preferredTutors.length === 1) { %>
-              <strong>Favourite tutor:</strong>
-            <% } else if (chosenPostFitzroy.preferredTutors.length > 1) { %>
-              <strong>Favourite tutors:</strong>
-            <% } %>
-            <span>
-            <% chosenPostFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
-              <% if (array.length === 1 || index === array.length - 2) { %>
-                <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
-              <% } else if (index === array.length - 1) { %>
-                and <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
-              <% } else { %>
-                <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>,
-              <% } %>
-            <% }) %>
-            </span>
-          </p>
-        <% } %>
-        <% if (chosenPostFitzroy.attendance.length > 0) { %>
-          <p>Attended on:</p>
+
+      <div class="card m-2 mb-3">
+        <div class="card-header">
+          Notes
+        </div>
+        <div class="card-block">
           <div class="list-group">
-          <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
-            <div class="list-group-item justify-content-between">
-              <a href="/history/<%= indivAttendance.date.id %>">
-                <span class="badge badge-pill badge-default">
-                  <%= formatDateShort(indivAttendance.date.date) %>
+            <% if (chosenPostFitzroy.oneOnOne) { %>
+              <div class="list-group-item">Needs one-on-one attention</div>
+            <% } else { %>
+              <div class="list-group-item">Does not need one-on-one attention</div>
+            <% } %>
+            <% if (chosenPostFitzroy.intervention) { %>
+              <div class="list-group-item">Requires intervention for absenteeism</div>
+            <% } else { %>
+              <div class="list-group-item">Does not require intervention for absenteeism</div>
+            <% } %>
+            <% if (chosenPostFitzroy.generalComment) { %>
+              <div class="list-group-item"><%= chosenPostFitzroy.generalComment %></div>
+            <% } %>
+            <% if (chosenPostFitzroy.kidsToAvoid.length > 0) { %>
+              <div class="list-group-item">Should not be grouped with&nbsp
+                <span>
+                <% chosenPostFitzroy.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
+                  <% if (array.length === 1 || index === array.length - 2) { %>
+                    <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>&nbsp
+                  <% } else if (index === array.length - 1) { %>
+                    and <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
+                  <% } else { %>
+                    <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,&nbsp
+                  <% } %>
+                <% }) %>
                 </span>
-              </a>
-              <% if (indivAttendance.tutor) { %>
-                &nbsp &nbsp
-                  <a href="/tutors/<%= indivAttendance.tutor.id %>">
+              </div>
+            <% } %>
+            <% if (chosenPostFitzroy.preferredTutors.length > 0) { %>
+              <div class="list-group-item">
+                <% if (chosenPostFitzroy.preferredTutors.length === 1) { %>
+                  Favourite tutor:&nbsp
+                <% } else if (chosenPostFitzroy.preferredTutors.length > 1) { %>
+                  Favourite tutors:&nbsp
+                <% } %>
+                <span>
+                <% chosenPostFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
+                  <% if (array.length === 1 || index === array.length - 2) { %>
+                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>&nbsp
+                  <% } else if (index === array.length - 1) { %>
+                    and <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
+                  <% } else { %>
+                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>,&nbsp
+                  <% } %>
+                <% }) %>
+                </span>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="card m-2">
+        <div class="card-header">
+          Attendance
+        </div>
+        <div class="card-block">
+          <div class="list-group">
+            <% if (chosenPostFitzroy.attendance.length > 0) { %>
+              <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
+                <div class="list-group-item justify-content-between">
+                  <a href="/history/<%= indivAttendance.date.id %>">
                     <span class="badge badge-pill badge-default">
-                      <%= indivAttendance.tutor.name %>
+                      <%= formatDateShort(indivAttendance.date.date) %>
                     </span>
                   </a>
-              <% } %>
-            </div>
-          <% }) %>
+                  <% if (indivAttendance.tutor) { %>
+                    &nbsp &nbsp
+                      <a href="/tutors/<%= indivAttendance.tutor.id %>">
+                        <span class="badge badge-pill badge-default">
+                          <%= indivAttendance.tutor.name %>
+                        </span>
+                      </a>
+                  <% } %>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <div class="list-group-item">No sessions yet</div>
+            <% } %>
           </div>
-        <% } else { %>
-          <p>No sessions yet</p>
-        <% } %>
+        </div>
       </div>
     </div>
   </div>
