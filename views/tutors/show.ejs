@@ -25,21 +25,23 @@
       <a href="/students/pre-school"><h4 class="mt-5 mb-4">pre-school</h4></a>
       <% if (allPreSchools.length > 0) { %>
         <p>
-          This tutor is <strong>preferred</strong> by
           <% var psPreferred = allPreSchools.filter(function (preSchool) { %>
             <% return preSchool.preferredTutors.some(function (tutor) { %>
               <% return tutor.equals(chosenTutor.id) %>
             <% }) %>
           <% }) %>
-          <% psPreferred.forEach(function (psP, index, array) { %>
-            <% if (array.length === 1 || index === array.length - 2) { %>
-              <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>
-            <% } else if (index === array.length - 1) { %>
-              and <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>
-            <% } else { %>
-              <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>,
-            <% } %>
-          <% }) %>
+          <% if (psPreferred.length > 0) { %>
+            This tutor is <strong>preferred</strong> by
+            <% psPreferred.forEach(function (psP, index, array) { %>
+              <% if (array.length === 1 || index === array.length - 2) { %>
+                <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>
+              <% } else if (index === array.length - 1) { %>
+                and <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>
+              <% } else { %>
+                <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>,
+              <% } %>
+            <% }) %>
+          <% } %>
         </p>
         <% var psUniqueDates = [...new Set(allPreSchools.map(function (preSchool) { %>
           <% return preSchool.attendance.map(function (indivAtten) { %>
@@ -75,21 +77,23 @@
       <a href="/students/fitzroy"><h4 class="mt-5 mb-4">fitzroy</h4></a>
       <% if (allFitzroys.length > 0) { %>
         <p>
-          This tutor is <strong>preferred</strong> by
           <% var fPreferred = allFitzroys.filter(function (fitzroy) { %>
             <% return fitzroy.preferredTutors.some(function (tutor) { %>
               <% return tutor.equals(chosenTutor.id) %>
             <% }) %>
           <% }) %>
-          <% fPreferred.forEach(function (fP, index, array) { %>
-            <% if (array.length === 1 || index === array.length - 2) { %>
-              <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>
-            <% } else if (index === array.length - 1) { %>
-              and <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>
-            <% } else { %>
-              <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>,
-            <% } %>
-          <% }) %>
+          <% if (fPreferred.length > 0) { %>
+            This tutor is <strong>preferred</strong> by
+            <% fPreferred.forEach(function (fP, index, array) { %>
+              <% if (array.length === 1 || index === array.length - 2) { %>
+                <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>
+              <% } else if (index === array.length - 1) { %>
+                and <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>
+              <% } else { %>
+                <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>,
+              <% } %>
+            <% }) %>
+          <% } %>
         </p>
         <% var fUniqueDates = [...new Set(allFitzroys.map(function (fitzroy) { %>
           <% return fitzroy.attendance.map(function (indivAtten) { %>
@@ -142,21 +146,23 @@
       <a href="/students/post-fitzroy"><h4 class="mt-5 mb-4">post-fitzroy</h4></a>
       <% if (allPostFitzroys.length > 0) { %>
         <p>
-          This tutor is <strong>preferred</strong> by
           <% var pfPreferred = allPostFitzroys.filter(function (postFitzroy) { %>
             <% return postFitzroy.preferredTutors.some(function (tutor) { %>
               <% return tutor.equals(chosenTutor.id) %>
             <% }) %>
           <% }) %>
-          <% pfPreferred.forEach(function (pfP, index, array) { %>
-            <% if (array.length === 1 || index === array.length - 2) { %>
-              <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>
-            <% } else if (index === array.length - 1) { %>
-              and <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>
-            <% } else { %>
-              <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>,
-            <% } %>
-          <% }) %>
+          <% if (pfPreferred.length > 0) { %>
+            This tutor is <strong>preferred</strong> by
+            <% pfPreferred.forEach(function (pfP, index, array) { %>
+              <% if (array.length === 1 || index === array.length - 2) { %>
+                <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>
+              <% } else if (index === array.length - 1) { %>
+                and <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>
+              <% } else { %>
+                <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>,
+              <% } %>
+            <% }) %>
+          <% } %>
         </p>
         <% var pfUniqueDates = [...new Set(allPostFitzroys.map(function (postFitzroy) { %>
           <% return postFitzroy.attendance.map(function (indivAtten) { %>

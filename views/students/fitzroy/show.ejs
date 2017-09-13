@@ -18,7 +18,7 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-sm-6 offset-sm-3">
+    <div class="col-sm-8 offset-sm-2">
       <div class="card m-2">
         <div class="card-header">
           Notes
@@ -63,11 +63,11 @@
                 <span>
                 <% chosenFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
                   <% if (array.length === 1 || index === array.length - 2) { %>
-                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>&nbsp
+                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>&nbsp;
                   <% } else if (index === array.length - 1) { %>
                     and <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
                   <% } else { %>
-                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>,&nbsp
+                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>,&nbsp;
                   <% } %>
                 <% }) %>
                 </span>

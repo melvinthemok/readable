@@ -1,0 +1,129 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">comments</h2>
+        <hr class="my-4">
+        <p>add a new comment</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/comments" method="POST" class="mb-5">
+        <div class="form-group">
+          <label for="date">Date</label><br>
+          <select class="custom-select" id="date" name="date">
+            <option value="" selected disabled hidden>Please select</option>
+            <% if (allSaturdates.length > 0) { %>
+              <% allSaturdates.forEach(function (saturdate) { %>
+                <option value="<%= saturdate.id %>"><%= formatDateLong(saturdate.date) %></option>
+              <% }) %>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tutor">Tutor</label><br>
+          <select class="custom-select" id="tutor" name="tutor">
+            <option value="" selected disabled hidden>Please select</option>
+            <% if (allTutors.length > 0) { %>
+              <% allTutors.forEach(function (tutor) { %>
+                <option value="<%= tutor.id %>"><%= tutor.name %></option>
+              <% }) %>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="program">Students</label><br>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input id="allPreSchoolsRadio" class="form-check-input mr-1" type="radio" name="program" value="preSchool">
+              pre-school
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input id="allFitzroysRadio" class="form-check-input mr-1" type="radio" name="program" value="fitzroy">
+              fitzroy
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input id="allPostFitzroysRadio" class="form-check-input mr-1" type="radio" name="program" value="postFitzroy">
+              post-fitzroy
+            </label>
+          </div>
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var allPreSchoolsRadio = document.getElementById('allPreSchoolsRadio')
+            var allPreSchoolsCheckboxes = document.getElementById('allPreSchoolsCheckboxes')
+            allPreSchoolsRadio.onclick = function () {
+              if (this.checked) {
+                allPreSchoolsCheckboxes.removeAttribute('style')
+                allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              }
+            }
+            var allFitzroysRadio = document.getElementById('allFitzroysRadio')
+            var allFitzroysCheckboxes = document.getElementById('allFitzroysCheckboxes')
+            allFitzroysRadio.onclick = function () {
+              if (this.checked) {
+                allFitzroysCheckboxes.removeAttribute('style')
+                allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              }
+            }
+            var allPostFitzroysRadio = document.getElementById('allPostFitzroysRadio')
+            var allPostFitzroysCheckboxes = document.getElementById('allPostFitzroysCheckboxes')
+            allPostFitzroysRadio.onclick = function () {
+              if (this.checked) {
+                allPostFitzroysCheckboxes.removeAttribute('style')
+                allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              }
+            }
+          })
+        </script>
+        <div id="allPreSchoolsCheckboxes" class="form-group" style="display:none; visibility:hidden">
+          <% allPreSchools.forEach(function (preSchool) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input mr-1" type="checkbox" name="preSchools" value="<%= preSchool.id %>">
+                <%= preSchool.name %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+        <div id="allFitzroysCheckboxes" class="form-group" style="display:none; visibility:hidden">
+          <% allFitzroys.forEach(function (fitzroy) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input mr-1" type="checkbox" name="fitzroys" value="<%= fitzroy.id %>">
+                <%= fitzroy.name %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+        <div id="allPostFitzroysCheckboxes" class="form-group" style="display:none; visibility:hidden">
+          <% allPostFitzroys.forEach(function (postFitzroy) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input mr-1" type="checkbox" name="postFitzroys" value="<%= postFitzroy.id %>">
+                <%= postFitzroy.name %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+        <div class="form-group">
+          <label for="contents" class="mb-0">Comment</label><br>
+          <textarea id="contents" class="form-control" name="contents" rows="5" placeholder="Insert your comment here"></textarea>
+        </div>
+        <br>
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -28,7 +28,7 @@ var saturdateController = {
     Saturdate.findById(req.params.id, function (err, chosenSaturdate) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/')
+        res.redirect('/history')
       } else {
         PreSchool.find({})
           .populate({
@@ -42,7 +42,7 @@ var saturdateController = {
           .exec(function (err, allPreSchools) {
             if (err) {
               req.flash('error', err.toString())
-              res.redirect('/')
+              res.redirect('/history')
             } else {
               Fitzroy.find({})
                 .populate({
@@ -56,7 +56,7 @@ var saturdateController = {
                 .exec(function (err, allFitzroys) {
                   if (err) {
                     req.flash('error', err.toString())
-                    res.redirect('/')
+                    res.redirect('/history')
                   } else {
                     PostFitzroy.find({})
                       .populate({
@@ -70,7 +70,7 @@ var saturdateController = {
                       .exec(function (err, allPostFitzroys) {
                         if (err) {
                           req.flash('error', err.toString())
-                          res.redirect('/')
+                          res.redirect('/history')
                         } else {
                           res.render('history/show', {
                             chosenSaturdate: chosenSaturdate,

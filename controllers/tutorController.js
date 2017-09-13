@@ -12,7 +12,11 @@ var tutorController = {
         res.redirect('/')
       } else {
         res.render('tutors/index', {
-          allTutors: allTutors
+          allTutors: allTutors.sort(function (tutor1, tutor2) {
+            if (tutor1.name < tutor2.name) return -1
+            else if (tutor1.name > tutor2.name) return 1
+            else return 0
+          })
         })
       }
     })
@@ -22,7 +26,7 @@ var tutorController = {
     Tutor.findById(req.params.id, function (err, chosenTutor) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/')
+        res.redirect('/tutors')
       } else {
         PreSchool.find({})
         .populate('preferredTutors')
@@ -37,7 +41,7 @@ var tutorController = {
         .exec(function (err, allPreSchools) {
           if (err) {
             req.flash('error', err.toString())
-            res.redirect('/')
+            res.redirect('/tutors')
           } else {
             Fitzroy.find({})
               .populate('preferredTutors')
@@ -52,7 +56,7 @@ var tutorController = {
               .exec(function (err, allFitzroys) {
                 if (err) {
                   req.flash('error', err.toString())
-                  res.redirect('/')
+                  res.redirect('/tutors')
                 } else {
                   PostFitzroy.find({})
                     .populate('preferredTutors')
@@ -67,7 +71,7 @@ var tutorController = {
                     .exec(function (err, allPostFitzroys) {
                       if (err) {
                         req.flash('error', err.toString())
-                        res.redirect('/')
+                        res.redirect('/tutors')
                       } else {
                         res.render('tutors/show', {
                           chosenTutor: chosenTutor,
@@ -114,10 +118,10 @@ var tutorController = {
     Tutor.findByIdAndRemove(req.params.id, function (err, chosenTutor) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/tutor')
+        res.redirect('/tutors')
       } else {
         req.flash('success', chosenTutor.name + ' successfully deleted!')
-        res.redirect('/tutor')
+        res.redirect('/tutors')
       }
     })
   }
