@@ -43,7 +43,7 @@ var CommentSchema = new mongoose.Schema({
     ],
     required: [
       true,
-      'please include some contents within this comment'
+      'the comment cannot be blank'
     ]
   }
 })

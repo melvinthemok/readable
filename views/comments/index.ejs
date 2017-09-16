@@ -32,15 +32,9 @@
                   <% return psComment.date === psUniqueDate %>
                 <% }) %>
                 <% thisDatePSComments.forEach(function (thisDatePSComment) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDatePSComment.id %>" style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDatePSComment.id %>">
                     <% thisDatePSComment.preSchools.forEach(function (preSchool, index, array) { %>
-                      <% if (array.length === 1 || index === array.length - 2) { %>
-                        <%= preSchool.name %>
-                      <% } else if (index === array.length - 1) { %>
-                        and <%= preSchool.name %>
-                      <% } else { %>
-                        <%= preSchool.name %>,
-                      <% } %>
+                      <%= preSchool.name %><br />
                     <% }) %>
                     <span class="badge badge-pill badge-default float-right" style="margin-top: 3px">
                       <%= thisDatePSComment.tutor.name %>
@@ -76,17 +70,11 @@
                   <% return fComment.date === fUniqueDate %>
                 <% }) %>
                 <% thisDateFComments.forEach(function (thisDateFComment) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDateFComment.id %>" style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                    <% thisDateFComment.fitzroys.forEach(function (fitzroy, index, array) { %>
-                      <% if (array.length === 1 || index === array.length - 2) { %>
-                        <%= fitzroy.name %>
-                      <% } else if (index === array.length - 1) { %>
-                        and <%= fitzroy.name %>
-                      <% } else { %>
-                        <%= fitzroy.name %>,
-                      <% } %>
+                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDateFComment.id %>">
+                    <% thisDateFComment.fitzroys.forEach(function (fitzroy) { %>
+                      <%= fitzroy.name %><br/>
                     <% }) %>
-                    <span class="badge badge-pill badge-default float-right" style="margin-top: 3px">
+                    <span class="badge badge-pill badge-default">
                       <%= thisDateFComment.tutor.name %>
                     </span>
                   </a>
@@ -120,15 +108,9 @@
                   <% return pfComment.date === pfUniqueDate %>
                 <% }) %>
                 <% thisDatePFComments.forEach(function (thisDatePFComment) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDatePFComment.id %>" style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                    <% thisDatePFComment.postFitzroys.forEach(function (postFitzroy, index, array) { %>
-                      <% if (array.length === 1 || index === array.length - 2) { %>
-                        <%= postFitzroy.name %>
-                      <% } else if (index === array.length - 1) { %>
-                        and <%= postFitzroy.name %>
-                      <% } else { %>
-                        <%= postFitzroy.name %>,
-                      <% } %>
+                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDatePFComment.id %>">
+                    <% thisDatePFComment.postFitzroys.forEach(function (postFitzroy) { %>
+                      <%= postFitzroy.name %><br />
                     <% }) %>
                     <span class="badge badge-pill badge-default float-right" style="margin-top: 3px">
                       <%= thisDatePFComment.tutor.name %>

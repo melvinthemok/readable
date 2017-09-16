@@ -1,0 +1,180 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">comments</h2>
+        <hr class="my-4">
+        <p>edit this comment</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/comments/update/<%= chosenComment._id %>?_method=PUT" method="POST" class="mb-5">
+        <div class="form-group">
+          <label for="date">Date</label><br>
+          <select class="custom-select" id="date" name="date">
+            <% if (allSaturdates.length > 0) { %>
+              <% allSaturdates.forEach(function (saturdate) { %>
+                <% if (saturdate.id === chosenComment.date.id) { %>
+                  <option selected value="<%= saturdate.id %>"><%= formatDateLong(saturdate.date) %></option>
+                <% } else { %>
+                  <option value="<%= saturdate.id %>"><%= formatDateLong(saturdate.date) %></option>
+                <% } %>
+              <% }) %>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tutor">Tutor</label><br>
+          <select class="custom-select" id="tutor" name="tutor">
+            <% if (allTutors.length > 0) { %>
+              <% allTutors.forEach(function (tutor) { %>
+                <% if (tutor.id === chosenComment.tutor.id) { %>
+                  <option selected value="<%= tutor.id %>"><%= tutor.name %></option>
+                <% } else { %>
+                  <option value="<%= tutor.id %>"><%= tutor.name %></option>
+                <% } %>
+              <% }) %>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="program">Students</label><br>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <% if (chosenComment.preSchools.length > 0) { %>
+                <input checked id="allPreSchoolsRadio" class="form-check-input mr-1" type="radio" name="program" value="preSchool">
+              <% } else { %>
+                <input id="allPreSchoolsRadio" class="form-check-input mr-1" type="radio" name="program" value="preSchool">
+              <% } %>
+              pre-school
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <% if (chosenComment.fitzroys.length > 0) { %>
+                <input checked id="allFitzroysRadio" class="form-check-input mr-1" type="radio" name="program" value="fitzroy">
+              <% } else { %>
+                <input id="allFitzroysRadio" class="form-check-input mr-1" type="radio" name="program" value="fitzroy">
+              <% } %>
+              fitzroy
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <% if (chosenComment.postFitzroys.length > 0) { %>
+                <input checked id="allPostFitzroysRadio" class="form-check-input mr-1" type="radio" name="program" value="postFitzroy">
+              <% } else { %>
+                <input id="allPostFitzroysRadio" class="form-check-input mr-1" type="radio" name="program" value="postFitzroy">
+              <% } %>
+              post-fitzroy
+            </label>
+          </div>
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var allPreSchoolsRadio = document.getElementById('allPreSchoolsRadio')
+            var allPreSchoolsCheckboxes = document.getElementById('allPreSchoolsCheckboxes')
+            if (allPreSchoolsRadio.checked) {
+              allPreSchoolsCheckboxes.removeAttribute('style')
+              allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+            }
+            allPreSchoolsRadio.onclick = function () {
+              if (this.checked) {
+                allPreSchoolsCheckboxes.removeAttribute('style')
+                allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              }
+            }
+            var allFitzroysRadio = document.getElementById('allFitzroysRadio')
+            var allFitzroysCheckboxes = document.getElementById('allFitzroysCheckboxes')
+            if (allFitzroysRadio.checked) {
+              allFitzroysCheckboxes.removeAttribute('style')
+              allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+            }
+            allFitzroysRadio.onclick = function () {
+              if (this.checked) {
+                allFitzroysCheckboxes.removeAttribute('style')
+                allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              }
+            }
+            var allPostFitzroysRadio = document.getElementById('allPostFitzroysRadio')
+            var allPostFitzroysCheckboxes = document.getElementById('allPostFitzroysCheckboxes')
+            if (allPostFitzroysRadio.checked) {
+              allPostFitzroysCheckboxes.removeAttribute('style')
+              allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+            }
+            allPostFitzroysRadio.onclick = function () {
+              if (this.checked) {
+                allPostFitzroysCheckboxes.removeAttribute('style')
+                allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              }
+            }
+          })
+        </script>
+        <div id="allPreSchoolsCheckboxes" class="form-group" style="display:none; visibility:hidden">
+          <% allPreSchools.forEach(function (preSchool) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <% if (chosenComment.preSchools.some(function (preSch) { %>
+                  <% return preSch.id === preSchool.id %>
+                <% })) { %>
+                  <input checked class="form-check-input mr-1" type="checkbox" name="preSchools" value="<%= preSchool.id %>">
+                <% } else { %>
+                  <input class="form-check-input mr-1" type="checkbox" name="preSchools" value="<%= preSchool.id %>">
+                <% } %>
+                <%= preSchool.name %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+        <div id="allFitzroysCheckboxes" class="form-group" style="display:none; visibility:hidden">
+          <% allFitzroys.forEach(function (fitzroy) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <% if (chosenComment.fitzroys.some(function (fitz) { %>
+                  <% return fitz.id === fitzroy.id %>
+                <% })) { %>
+                  <input checked class="form-check-input mr-1" type="checkbox" name="fitzroys" value="<%= fitzroy.id %>">
+                <% } else { %>
+                  <input class="form-check-input mr-1" type="checkbox" name="fitzroys" value="<%= fitzroy.id %>">
+                <% } %>
+                <%= fitzroy.name %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+        <div id="allPostFitzroysCheckboxes" class="form-group" style="display:none; visibility:hidden">
+          <% allPostFitzroys.forEach(function (postFitzroy) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <% if (chosenComment.postFitzroys.some(function (postFitz) { %>
+                  <% return postFitz.id === postFitzroy.id %>
+                <% })) { %>
+                  <input checked class="form-check-input mr-1" type="checkbox" name="postFitzroys" value="<%= postFitzroy.id %>">
+                <% } else { %>
+                  <input class="form-check-input mr-1" type="checkbox" name="postFitzroys" value="<%= postFitzroy.id %>">
+                <% } %>
+                <%= postFitzroy.name %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+        <div class="form-group">
+          <label for="contents" class="mb-0">Comment</label><br>
+          <textarea id="contents" class="form-control" name="contents" rows="5"><%= chosenComment.contents %></textarea>
+        </div>
+        <br>
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Update</button>
+      </form>
+    </div>
+  </div>
+</div>

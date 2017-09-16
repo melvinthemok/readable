@@ -112,6 +112,15 @@
                           <%= formatDateShort(indivAttendance.date.date) %>
                         </span>
                       </a>
+                      <% allComments.filter(function (comment) { %>
+                        <% return comment.date.id === indivAttendance.date.id %>
+                      <% }).forEach(function (comment) { %>
+                        <a href="/comments/<%= comment.id %>" data-toggle="tooltip" title="<%= comment.contents %>">
+                          <span class="badge badge-pill badge-info">
+                            ' '
+                          </span>
+                        </a>
+                      <% }) %>
                       <% if (indivAttendance.tutor) { %>
                         <a href="/tutors/<%= indivAttendance.tutor.id %>">
                           <span class="badge badge-pill badge-default">

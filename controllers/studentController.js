@@ -3,6 +3,7 @@ var PreSchool = require('../models/preSchool')
 var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
 var Saturdate = require('../models/saturdate')
+var Comment = require('../models/comment')
 var formatDateShort = require('../public/client_side_helpers/formatDateShort')
 var formatDateLong = require('../public/client_side_helpers/formatDateLong')
 
@@ -173,10 +174,25 @@ var studentController = {
             req.flash('error', err.toString())
             res.redirect('/students/fitzroy')
           } else {
-            res.render('students/fitzroy/show', {
-              chosenFitzroy: chosenFitzroy,
-              formatDateShort: formatDateShort
-            })
+            Comment.find({})
+              .populate('date')
+              .populate('fitzroys')
+              .exec(function (err, allComments) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/fitzroy')
+                } else {
+                  res.render('students/fitzroy/show', {
+                    chosenFitzroy: chosenFitzroy,
+                    allComments: allComments.filter(function (comment) {
+                      return comment.fitzroys.some(function(fitzroy) {
+                        return fitzroy.equals(chosenFitzroy.id)
+                      })
+                    }),
+                    formatDateShort: formatDateShort
+                  })
+                }
+              })
           }
         })
     },

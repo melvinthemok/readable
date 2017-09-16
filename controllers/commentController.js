@@ -33,17 +33,23 @@ var commentController = {
   },
 
   show: function (req, res) {
-    Comment.findById(req.params.id, function (err, chosenComment) {
-      if (err) {
-        req.flash('error', err.toString())
-        res.redirect('/comments')
-      } else {
-        res.render('comments/show', {
-          chosenComment: chosenComment,
-          formatDateLong: formatDateLong
-        })
-      }
-    })
+    Comment.findById(req.params.id)
+      .populate('date')
+      .populate('tutor')
+      .populate('preSchools')
+      .populate('fitzroys')
+      .populate('postFitzroys')
+      .exec(function (err, chosenComment) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/comments')
+        } else {
+          res.render('comments/show', {
+            chosenComment: chosenComment,
+            formatDateLong: formatDateLong
+          })
+        }
+      })
   },
 
   new: function (req, res) {
@@ -112,6 +118,85 @@ var commentController = {
       } else {
         req.flash('success', 'Comment successfully added!')
         res.redirect('/comments')
+      }
+    })
+  },
+
+  edit: function (req, res) {
+    Tutor.find({}, function (err, allTutors) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/comments')
+      } else {
+        PreSchool.find({}, function (err, allPreSchools) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/comments')
+          } else {
+            Fitzroy.find({}, function (err, allFitzroys) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/comments')
+              } else {
+                PostFitzroy.find({}, function (err, allPostFitzroys) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/comments')
+                  } else {
+                    Saturdate.find({}, function (err, allSaturdates) {
+                      if (err) {
+                        req.flash('error', err.toString())
+                        res.redirect('/comments')
+                      } else {
+                        Comment.findById(req.params.id)
+                          .populate('date')
+                          .populate('tutor')
+                          .populate('preSchools')
+                          .populate('fitzroys')
+                          .populate('postFitzroys')
+                          .exec(function (err, chosenComment) {
+                            if (err) {
+                              req.flash('error', err.toString())
+                              res.redirect('/comments')
+                            } else {
+                              res.render('comments/edit', {
+                                allTutors: allTutors,
+                                allPreSchools: allPreSchools,
+                                allFitzroys: allFitzroys,
+                                allPostFitzroys: allPostFitzroys,
+                                allSaturdates: allSaturdates,
+                                chosenComment: chosenComment,
+                                formatDateLong: formatDateLong
+                              })
+                            }
+                          })
+                      }
+                    })
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+    })
+  },
+
+  update: function (req, res) {
+    Comment.findOneAndUpdate({ _id: req.params.id}, {
+      date: req.body.date,
+      tutor: req.body.tutor,
+      preSchools: req.body.preSchools || [],
+      fitzroys: req.body.fitzroys || [],
+      postFitzroys: req.body.postFitzroys || [],
+      contents: req.body.contents
+    }, { runValidators: true }, function (err, chosenComment) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/comments/edit/' + req.params.id)
+      } else {
+        req.flash('success', 'Comment successfully updated!')
+        res.redirect('/comments/' + chosenComment.id)
       }
     })
   },

@@ -1,0 +1,52 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">comments</h2>
+        <hr class="my-4">
+        <p class="mb-1">by <a href="/tutors/<%= chosenComment.tutor.id %>"><%= chosenComment.tutor.name %></a> on <a href="/history/<%= chosenComment.date.id %>"><%= formatDateLong(chosenComment.date.date) %></a></p>
+        <p>
+          <% if (chosenComment.preSchools.length > 0) { %>
+            <% chosenComment.preSchools.forEach(function (preSchool) { %>
+              <a href="/students/pre-school/<%= preSchool.id %>"><span class="badge badge-pill badge-primary"><%= preSchool.name %></span></a>
+            <% }) %>
+          <% } %>
+          <% if (chosenComment.fitzroys.length > 0) { %>
+            <% chosenComment.fitzroys.forEach(function (fitzroy) { %>
+              <a href="/students/fitzroy/<%= fitzroy.id %>"><span class="badge badge-pill badge-primary"><%= fitzroy.name %></span></a>
+            <% }) %>
+          <% } %>
+          <% if (chosenComment.postFitzroys.length > 0) { %>
+            <% chosenComment.postFitzroys.forEach(function (postFitzroy) { %>
+              <a href="/students/post-fitzroy/<%= postFitzroy.id %>"><span class="badge badge-pill badge-primary"><%= postFitzroy.name %></span></a>
+            <% }) %>
+          <% } %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <div class="card m-2">
+        <div class="card-header">
+          Comment
+        </div>
+        <div class="card-block">
+          <%= chosenComment.contents %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+  <div class="col-sm-6 offset-sm-3 my-5">
+    <div class="row">
+      <a class="btn btn-primary mr-3 mb-3" href="/comments/edit/<%= chosenComment._id %>">Edit this comment</a>
+      <form action="/comments/<%= chosenComment._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger" type="submit" style="cursor:pointer;">Delete this comment</button>
+      </form>
+    </div>
+  </div>
+</div>
