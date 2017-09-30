@@ -1,6 +1,6 @@
 var Tutor = require('../models/tutor')
 var CatchPlus = require('../models/catchPlus')
-var passport = require('../config/ppconfig')
+var passport = require('../config/pp-config')
 require('dotenv').config({ silent: true })
 
 var authController = {
