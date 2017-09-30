@@ -77,50 +77,73 @@
         <script>
           document.addEventListener('DOMContentLoaded', function () {
             var allPreSchoolsRadio = document.getElementById('allPreSchoolsRadio')
-            var allPreSchoolsCheckboxes = document.getElementById('allPreSchoolsCheckboxes')
+            var allPreSchoolsCheckboxesDiv = document.getElementById('allPreSchoolsCheckboxesDiv')
+            var allPreSchoolsCheckboxes = allPreSchoolsCheckboxesDiv.getElementsByTagName('input')
+            var allFitzroysRadio = document.getElementById('allFitzroysRadio')
+            var allFitzroysCheckboxesDiv = document.getElementById('allFitzroysCheckboxesDiv')
+            var allFitzroysCheckboxes = allFitzroysCheckboxesDiv.getElementsByTagName('input')
+            var allPostFitzroysRadio = document.getElementById('allPostFitzroysRadio')
+            var allPostFitzroysCheckboxesDiv = document.getElementById('allPostFitzroysCheckboxesDiv')
+            var allPostFitzroysCheckboxes = allPostFitzroysCheckboxesDiv.getElementsByTagName('input')
+            
             if (allPreSchoolsRadio.checked) {
-              allPreSchoolsCheckboxes.removeAttribute('style')
-              allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
-              allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+              allPreSchoolsCheckboxesDiv.removeAttribute('style')
+              allFitzroysCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
+              allPostFitzroysCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
             }
+            if (allFitzroysRadio.checked) {
+              allFitzroysCheckboxesDiv.removeAttribute('style')
+              allPreSchoolsCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
+              allPostFitzroysCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
+            }
+            if (allPostFitzroysRadio.checked) {
+              allPostFitzroysCheckboxesDiv.removeAttribute('style')
+              allPreSchoolsCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
+              allFitzroysCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
+            }
+
             allPreSchoolsRadio.onclick = function () {
               if (this.checked) {
-                allPreSchoolsCheckboxes.removeAttribute('style')
-                allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
-                allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allPreSchoolsCheckboxesDiv.removeAttribute('style')
+                Array.prototype.forEach.call(allFitzroysCheckboxes, function (checkbox) {
+                  checkbox.checked = false
+                })
+                allFitzroysCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
+                Array.prototype.forEach.call(allPostFitzroysCheckboxes, function (checkbox) {
+                  checkbox.checked = false
+                })
+                allPostFitzroysCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
               }
-            }
-            var allFitzroysRadio = document.getElementById('allFitzroysRadio')
-            var allFitzroysCheckboxes = document.getElementById('allFitzroysCheckboxes')
-            if (allFitzroysRadio.checked) {
-              allFitzroysCheckboxes.removeAttribute('style')
-              allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
-              allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
             }
             allFitzroysRadio.onclick = function () {
               if (this.checked) {
-                allFitzroysCheckboxes.removeAttribute('style')
-                allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
-                allPostFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allFitzroysCheckboxesDiv.removeAttribute('style')
+                Array.prototype.forEach.call(allPreSchoolsCheckboxes, function (checkbox) {
+                  checkbox.checked = false
+                })
+                allPreSchoolsCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
+                Array.prototype.forEach.call(allPostFitzroysCheckboxes, function (checkbox) {
+                  checkbox.checked = false
+                })
+                allPostFitzroysCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
               }
-            }
-            var allPostFitzroysRadio = document.getElementById('allPostFitzroysRadio')
-            var allPostFitzroysCheckboxes = document.getElementById('allPostFitzroysCheckboxes')
-            if (allPostFitzroysRadio.checked) {
-              allPostFitzroysCheckboxes.removeAttribute('style')
-              allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
-              allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
             }
             allPostFitzroysRadio.onclick = function () {
               if (this.checked) {
-                allPostFitzroysCheckboxes.removeAttribute('style')
-                allPreSchoolsCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
-                allFitzroysCheckboxes.setAttribute('style', 'display:none; visibility:hidden')
+                allPostFitzroysCheckboxesDiv.removeAttribute('style')
+                Array.prototype.forEach.call(allPreSchoolsCheckboxes, function (checkbox) {
+                  checkbox.checked = false
+                })
+                allPreSchoolsCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
+                Array.prototype.forEach.call(allFitzroysCheckboxes, function (checkbox) {
+                  checkbox.checked = false
+                })
+                allFitzroysCheckboxesDiv.setAttribute('style', 'display:none; visibility:hidden')
               }
             }
           })
         </script>
-        <div id="allPreSchoolsCheckboxes" class="form-group" style="display:none; visibility:hidden">
+        <div id="allPreSchoolsCheckboxesDiv" class="form-group" style="display:none; visibility:hidden">
           <% allPreSchools.forEach(function (preSchool) { %>
             <div class="form-check">
               <label class="form-check-label">
@@ -136,7 +159,7 @@
             </div>
           <% }) %>
         </div>
-        <div id="allFitzroysCheckboxes" class="form-group" style="display:none; visibility:hidden">
+        <div id="allFitzroysCheckboxesDiv" class="form-group" style="display:none; visibility:hidden">
           <% allFitzroys.forEach(function (fitzroy) { %>
             <div class="form-check">
               <label class="form-check-label">
@@ -152,7 +175,7 @@
             </div>
           <% }) %>
         </div>
-        <div id="allPostFitzroysCheckboxes" class="form-group" style="display:none; visibility:hidden">
+        <div id="allPostFitzroysCheckboxesDiv" class="form-group" style="display:none; visibility:hidden">
           <% allPostFitzroys.forEach(function (postFitzroy) { %>
             <div class="form-check">
               <label class="form-check-label">

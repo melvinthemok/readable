@@ -149,11 +149,11 @@
                     (function (i) {
                       var saturdatesCheckbox = document.getElementById('fitzroy.' + i + '.date')
                       var fitzroyTutorDiv = document.getElementById('fitzroy.' + i + '.tutor')
-                      var fitzroyTutorSelect = fitzroyTutorDiv.getElementsByTagName("select")[0]
+                      var fitzroyTutorSelect = fitzroyTutorDiv.getElementsByTagName('select')[0]
                       var fitzroyBookDiv = document.getElementById('fitzroy.' + i + '.book')
-                      var fitzroyBookSelect = fitzroyBookDiv.getElementsByTagName("select")[0]
+                      var fitzroyBookSelect = fitzroyBookDiv.getElementsByTagName('select')[0]
                       var fitzroyCompletedDiv = document.getElementById('fitzroy.' + i + '.completed')
-                      var fitzroyCompletedSelect = fitzroyCompletedDiv.getElementsByTagName("select")[0]
+                      var fitzroyCompletedSelect = fitzroyCompletedDiv.getElementsByTagName('select')[0]
                       saturdatesCheckbox.onchange = function () {
                         if (this.checked) {
                           if (fitzroyTutorSelect.hasChildNodes() && fitzroyTutorSelect.firstChild.value === "" && fitzroyTutorSelect.childNodes[1] === "") {

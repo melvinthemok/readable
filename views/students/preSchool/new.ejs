@@ -134,10 +134,20 @@
                     (function (i) {
                       var saturdatesCheckbox = document.getElementById('preSchool.' + i + '.date')
                       var preSchoolTutorDiv = document.getElementById('preSchool.' + i + '.tutor')
+                      var preSchoolTutorSelect = preSchoolTutorDiv.getElementsByTagName("select")[0]
                       saturdatesCheckbox.onchange = function () {
                         if (this.checked) {
+                          if (preSchoolTutorSelect.hasChildNodes() && preSchoolTutorSelect.firstChild.value === "" && preSchoolTutorSelect.childNodes[1] === "") {
+                            preSchoolTutorSelect.remove(preSchoolTutorSelect.firstChild)
+                          }
                           preSchoolTutorDiv.removeAttribute('style')
                         } else {
+                          if (preSchoolTutorSelect.hasChildNodes()) {
+                            var blank = new Option("Please select", "", true, true)
+                            blank.setAttribute('disabled', true)
+                            blank.setAttribute('hidden', true)
+                            preSchoolTutorSelect.insertBefore(blank, preSchoolTutorSelect.firstChild)
+                          }
                           preSchoolTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
                         }
                       }
