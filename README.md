@@ -20,7 +20,7 @@
 
 4. Run the app
 
-   `yarn start`
+   `yarn dev-start`
 
 ## Deployment
 
