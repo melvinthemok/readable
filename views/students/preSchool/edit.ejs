@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6 offset-sm-3">
-        <h2 class="display-4">fitzroy</h2>
+        <h2 class="display-4">pre-school</h2>
         <hr class="my-4">
         <p>edit this student's details</p>
       </div>
@@ -12,16 +12,16 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <form action="/students/fitzroy/update/<%= chosenFitzroy._id %>?_method=PUT" method="POST" class="mb-5">
+      <form action="/students/pre-school/update/<%= chosenPreSchool._id %>?_method=PUT" method="POST" class="mb-5">
         <div id="name-form-group" class="form-group">
           <label for="name">Name</label>
-          <input id="name" class="form-control" type="text" name="name" value="<%= chosenFitzroy.name %>">
+          <input id="name" class="form-control" type="text" name="name" value="<%= chosenPreSchool.name %>">
           <small id="nameLengthMessage" class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group">
           <label for="gender">Gender</label><br>
           <select class="custom-select" id="gender" name="gender">
-            <% if (chosenFitzroy.gender === 'male') { %>
+            <% if (chosenPreSchool.gender === 'male') { %>
               <option selected value="male">Male</option>
               <option value="female">Female</option>
             <% } else { %>
@@ -34,7 +34,7 @@
           <label for="age">Age</label><br>
           <select class="custom-select" id="age" name="age">
             <% for (var i = 5; i < 21; i++) { %>
-              <% if (chosenFitzroy.age === i) { %>
+              <% if (chosenPreSchool.age === i) { %>
                 <option selected value="<%= i %>"><%= i %></option>
               <% } else { %>
                 <option value="<%= i %>"><%= i %></option>
@@ -45,77 +45,77 @@
         <div class="form-group">
           <label for="family">Family code</label><br>
           <select class="custom-select" id="family" name="family">
-            <% if (!chosenFitzroy.family) { %>
+            <% if (!chosenPreSchool.family) { %>
               <option selected value="Unknown">Unknown</option>
             <% } else { %>
               <option value="Unknown">Unknown</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'A4') { %>
+            <% if (chosenPreSchool.family === 'A4') { %>
               <option selected value="A4">A4</option>
             <% } else { %>
               <option value="A4">A4</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'B6') { %>
+            <% if (chosenPreSchool.family === 'B6') { %>
               <option selected value="B6">B6</option>
             <% } else { %>
               <option value="B6">B6</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'C3') { %>
+            <% if (chosenPreSchool.family === 'C3') { %>
               <option selected value="C3">C3</option>
             <% } else { %>
               <option value="C3">C3</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'D4') { %>
+            <% if (chosenPreSchool.family === 'D4') { %>
               <option selected value="D4">D4</option>
             <% } else { %>
               <option value="D4">D4</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'E4') { %>
+            <% if (chosenPreSchool.family === 'E4') { %>
               <option selected value="E4">E4</option>
             <% } else { %>
               <option value="E4">E4</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'F2') { %>
+            <% if (chosenPreSchool.family === 'F2') { %>
               <option selected value="F2">F2</option>
             <% } else { %>
               <option value="F2">F2</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'G2') { %>
+            <% if (chosenPreSchool.family === 'G2') { %>
               <option selected value="G2">G2</option>
             <% } else { %>
               <option value="G2">G2</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'H4') { %>
+            <% if (chosenPreSchool.family === 'H4') { %>
               <option selected value="H4">H4</option>
             <% } else { %>
               <option value="H4">H4</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'J3') { %>
+            <% if (chosenPreSchool.family === 'J3') { %>
               <option selected value="J3">J3</option>
             <% } else { %>
               <option value="J3">J3</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'K3') { %>
+            <% if (chosenPreSchool.family === 'K3') { %>
               <option selected value="K3">K3</option>
             <% } else { %>
               <option value="K3">K3</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'L2') { %>
+            <% if (chosenPreSchool.family === 'L2') { %>
               <option selected value="L2">L2</option>
             <% } else { %>
               <option value="L2">L2</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'M2') { %>
+            <% if (chosenPreSchool.family === 'M2') { %>
               <option selected value="M2">M2</option>
             <% } else { %>
               <option value="M2">M2</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'X2') { %>
+            <% if (chosenPreSchool.family === 'X2') { %>
               <option selected value="X2">X2</option>
             <% } else { %>
               <option value="X2">X2</option>
             <% } %>
-            <% if (chosenFitzroy.family === 'Z4') { %>
+            <% if (chosenPreSchool.family === 'Z4') { %>
               <option selected value="Z4">Z4</option>
             <% } else { %>
               <option value="Z4">Z4</option>
@@ -123,39 +123,15 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="schoolLevel">School level</label><br>
-          <select class="custom-select" id="schoolLevel" name="schoolLevel">
-            <% if (chosenFitzroy.schoolLevel === 'Pre-primary') { %>
-              <option selected value="Pre-primary">Pre-primary</option>
-            <% } else { %>
-              <option value="Pre-primary">Pre-primary</option>
-            <% } %>
-            <% for (var j = 1; j < 7; j++) { %>
-              <% if (chosenFitzroy.schoolLevel === 'Primary ' + j) { %>
-                <option selected value="Primary <%= j %>">Primary <%= j %></option>
-              <% } else { %>
-                <option value="Primary <%= j %>">Primary <%= j %></option>
-              <% } %>
-            <% } %>
-            <% for (var k = 1; k < 6; k++) { %>
-              <% if (chosenFitzroy.schoolLevel === 'Secondary ' + k) { %>
-                <option selected value="Secondary <%= k %>">Secondary <%= k %></option>
-              <% } else { %>
-                <option value="Secondary <%= k %>">Secondary <%= k %></option>
-              <% } %>
-            <% } %>
-          </select>
-        </div>
-        <div class="form-group">
           <label for="startDate" class="mb-0">When did this student join ReadAble?</label><br>
           <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
-          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= chosenFitzroy.startDate.getFullYear() %>-<%= (chosenFitzroy.startDate.getMonth()+1).toString().length < 2 ? '0' + (chosenFitzroy.startDate.getMonth()+1).toString() : (chosenFitzroy.startDate.getMonth()+1).toString() %>-<%= (chosenFitzroy.startDate.getDate()).toString().length < 2 ? '0' + (chosenFitzroy.startDate.getDate()).toString() : (chosenFitzroy.startDate.getDate()).toString() %>">
+          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= chosenPreSchool.startDate.getFullYear() %>-<%= (chosenPreSchool.startDate.getMonth()+1).toString().length < 2 ? '0' + (chosenPreSchool.startDate.getMonth()+1).toString() : (chosenPreSchool.startDate.getMonth()+1).toString() %>-<%= (chosenPreSchool.startDate.getDate()).toString().length < 2 ? '0' + (chosenPreSchool.startDate.getDate()).toString() : (chosenPreSchool.startDate.getDate()).toString() %>">
         </div>
         <div class="form-group">
           <label for="oneOnOne">Needs one-on-one attention?</label><br>
           <div class="form-check">
             <label class="form-check-label">
-              <% if (chosenFitzroy.oneOnOne) { %>
+              <% if (chosenPreSchool.oneOnOne) { %>
                 <input checked class="form-check-input mr-1" type="radio" name="oneOnOne" value="true">
               <% } else { %>
                 <input class="form-check-input mr-1" type="radio" name="oneOnOne" value="true">
@@ -165,7 +141,7 @@
           </div>
           <div class="form-check">
             <label class="form-check-label">
-              <% if (!chosenFitzroy.oneOnOne) { %>
+              <% if (!chosenPreSchool.oneOnOne) { %>
                 <input checked class="form-check-input mr-1" type="radio" name="oneOnOne" value="false" checked>
               <% } else { %>
                 <input class="form-check-input mr-1" type="radio" name="oneOnOne" value="false" checked>
@@ -178,7 +154,7 @@
           <label for="intervention">Requires intervention owing to frequent absenteeism?</label><br>
           <div class="form-check">
             <label class="form-check-label">
-              <% if (chosenFitzroy.intervention) { %>
+              <% if (chosenPreSchool.intervention) { %>
                 <input checked class="form-check-input mr-1" type="radio" name="intervention" value="true">
               <% } else { %>
                 <input class="form-check-input mr-1" type="radio" name="intervention" value="true">
@@ -188,7 +164,7 @@
           </div>
           <div class="form-check">
             <label class="form-check-label">
-              <% if (!chosenFitzroy.intervention) { %>
+              <% if (!chosenPreSchool.intervention) { %>
                 <input checked class="form-check-input mr-1" type="radio" name="intervention" value="false" checked>
               <% } else { %>
                 <input class="form-check-input mr-1" type="radio" name="intervention" value="false" checked>
@@ -199,7 +175,7 @@
         </div>
         <div class="form-group">
           <label for="generalComment" class="mb-0">Any general comment?</label><br>
-          <textarea id="generalComment" class="form-control" name="generalComment" rows="5"><%= chosenFitzroy.generalComment %></textarea>
+          <textarea id="generalComment" class="form-control" name="generalComment" rows="5"><%= chosenPreSchool.generalComment %></textarea>
         </div>
         <% if (allTutors.length > 0) { %>
         <div class="form-group">
@@ -207,7 +183,7 @@
           <% allTutors.forEach(function (tutor) { %>
             <div class="form-check">
               <label class="form-check-label">
-                <% if (chosenFitzroy.preferredTutors.some(function (preferred) { %>
+                <% if (chosenPreSchool.preferredTutors.some(function (preferred) { %>
                   <% return preferred.id === tutor.id %>
                 <% })) { %>
                   <input checked class="form-check-input mr-1" type="checkbox" name="preferredTutors" value="<%= tutor.id %>">
@@ -220,14 +196,14 @@
           <% }) %>
         </div>
         <% } %>
-        <% if (allFitzroys.length > 0) { %>
+        <% if (allPreSchools.length > 0) { %>
         <div class="form-group">
           <label class="control-label">Any student(s) to avoid?</label><br>
-          <% allFitzroys.forEach(function (student) { %>
-              <% if (student.id !== chosenFitzroy.id) { %>
+          <% allPreSchools.forEach(function (student) { %>
+              <% if (student.id !== chosenPreSchool.id) { %>
               <div class="form-check">
                 <label class="form-check-label">
-                  <% if (chosenFitzroy.kidsToAvoid.some(function (kid) { %>
+                  <% if (chosenPreSchool.kidsToAvoid.some(function (kid) { %>
                     <% return kid.id === student.id %>
                   <% })) { %>
                     <input checked class="form-check-input mr-1" type="checkbox" name="kidsToAvoid" value="<%= student.id %>">
@@ -243,87 +219,57 @@
         <% } %>
         <div class="form-group">
           <label class="control-label mb-0">Attendance</label><br>
-          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student.<br>Select the tutor for this student at this session, or "Unknown" if unclear.<br>Select the Fitzroy book level covered during each session, or whether the student did some other activity.<br>If a Fitzroy book was covered, indicate whether that book level was completed.</small>
+          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student.<br>Select the tutor for this student at this session, or "Unknown" if unclear.</small>
           <% if (allSaturdates.length > 0) { %>
             <% allSaturdates.forEach(function (saturdate, index) { %>
               <div class="form-check">
                 <label class="form-check-label">
-                  <% if (chosenFitzroy.attendance.some(function (indivAtten) { %>
+                  <% if (chosenPreSchool.attendance.some(function (indivAtten) { %>
                     <% return indivAtten.date.id === saturdate.id %>
                   <% })) { %>
-                    <input checked class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                    <input checked class="form-check-input mr-1" id="preSchool.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
                   <% } else { %>
-                    <input class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                    <input class="form-check-input mr-1" id="preSchool.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
                   <% } %>
                   <%= formatDateLong(saturdate.date) %>
                 </label>
                 <script>
                   document.addEventListener('DOMContentLoaded', function () {
                     (function (i) {
-                      var saturdatesCheckbox = document.getElementById('fitzroy.' + i + '.date')
-                      var fitzroyTutorDiv = document.getElementById('fitzroy.' + i + '.tutor')
-                      var fitzroyTutorSelect = fitzroyTutorDiv.getElementsByTagName('select')[0]
-                      var fitzroyBookDiv = document.getElementById('fitzroy.' + i + '.book')
-                      var fitzroyBookSelect = fitzroyBookDiv.getElementsByTagName('select')[0]
-                      var fitzroyCompletedDiv = document.getElementById('fitzroy.' + i + '.completed')
-                      var fitzroyCompletedSelect = fitzroyCompletedDiv.getElementsByTagName('select')[0]
+                      var saturdatesCheckbox = document.getElementById('preSchool.' + i + '.date')
+                      var preSchoolTutorDiv = document.getElementById('preSchool.' + i + '.tutor')
+                      var preSchoolTutorSelect = preSchoolTutorDiv.getElementsByTagName('select')[0]
                       if (saturdatesCheckbox.checked) {
-                        fitzroyTutorDiv.removeAttribute('style')
-                        fitzroyBookDiv.removeAttribute('style')
-                        fitzroyCompletedDiv.removeAttribute('style')
+                        preSchoolTutorDiv.removeAttribute('style')
                       } else {
-                        fitzroyTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
-                        fitzroyBookDiv.setAttribute('style', 'display:none; visibility:hidden')
-                        fitzroyCompletedDiv.setAttribute('style', 'display:none; visibility:hidden')
+                        preSchoolTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
                       }
                       saturdatesCheckbox.onchange = function () {
                         if (this.checked) {
-                          if (fitzroyTutorSelect.hasChildNodes() && fitzroyTutorSelect.firstChild.value === "" && fitzroyTutorSelect.childNodes[1] === "") {
-                            fitzroyTutorSelect.remove(fitzroyTutorSelect.firstChild)
+                          if (preSchoolTutorSelect.hasChildNodes() && preSchoolTutorSelect.firstChild.value === "" && preSchoolTutorSelect.childNodes[1] === "") {
+                            preSchoolTutorSelect.remove(preSchoolTutorSelect.firstChild)
                           }
-                          fitzroyTutorDiv.removeAttribute('style')
-                          if (fitzroyBookSelect.hasChildNodes() && fitzroyBookSelect.firstChild.value === "" && fitzroyBookSelect.childNodes[1] === "") {
-                            fitzroyBookSelect.remove(fitzroyBookSelect.firstChild)
-                          }
-                          fitzroyBookDiv.removeAttribute('style')
-                          if (fitzroyCompletedSelect.hasChildNodes() && fitzroyCompletedSelect.firstChild.value === "" && fitzroyCompletedSelect.childNodes[1] === "") {
-                            fitzroyCompletedSelect.remove(fitzroyCompletedSelect.firstChild)
-                          }
-                          fitzroyCompletedDiv.removeAttribute('style')
+                          preSchoolTutorDiv.removeAttribute('style')
                         } else {
-                          if (fitzroyTutorSelect.hasChildNodes()) {
+                          if (preSchoolTutorSelect.hasChildNodes()) {
                             var blank = new Option("Please select", "", true, true)
                             blank.setAttribute('disabled', true)
                             blank.setAttribute('hidden', true)
-                            fitzroyTutorSelect.insertBefore(blank, fitzroyTutorSelect.firstChild)
+                            preSchoolTutorSelect.insertBefore(blank, preSchoolTutorSelect.firstChild)
                           }
-                          fitzroyTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
-                          if (fitzroyBookSelect.hasChildNodes()) {
-                            var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
-                            blank.setAttribute('hidden', true)
-                            fitzroyBookSelect.insertBefore(blank, fitzroyBookSelect.firstChild)
-                          }
-                          fitzroyBookDiv.setAttribute('style', 'display:none; visibility:hidden')
-                          if (fitzroyCompletedSelect.hasChildNodes()) {
-                            var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
-                            blank.setAttribute('hidden', true)
-                            fitzroyCompletedSelect.insertBefore(blank, fitzroyCompletedSelect.firstChild)
-                          }
-                          fitzroyCompletedDiv.setAttribute('style', 'display:none; visibility:hidden')
+                          preSchoolTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
                         }
                       }
                     }(<%= index %>))
                   })
                 </script>
-                <% var selectedAttendance = chosenFitzroy.attendance.find(function (indivAtten) { %>
+                <% var selectedAttendance = chosenPreSchool.attendance.find(function (indivAtten) { %>
                   <% return indivAtten.date.id === saturdate.id %>
                 <% }) %>
                 <div class="row ml-1">
-                  <div id="fitzroy.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
+                  <div id="preSchool.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
                     <label class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
-                    <select class="custom-select ml-4" name="fitzroyTutors">
+                    <select class="custom-select ml-4" name="preSchoolTutors">
                       <% if (!selectedAttendance) { %>
                         <option value="" selected disabled hidden>Please select</option>
                       <% } %>
@@ -340,46 +286,6 @@
                             <option value="<%= tutor.id %>"><%= tutor.name %></option>
                           <% } %>
                         <% }) %>
-                      <% } %>
-                    </select>
-                  </div>
-                </div>
-                <div class="row ml-1">
-                  <div id="fitzroy.<%= index %>.book" class="form-group mb-0" style="display: none; visibility: hidden">
-                    <label class="text-muted mb-0 mt-1 ml-4"><small>Fitzroy Book Level</small></label><br>
-                    <select class="custom-select ml-4" name="fitzroyBooks">
-                      <% if (!selectedAttendance) { %>
-                        <option value="" selected disabled hidden>Please select</option>
-                      <% } %>
-                      <% if (selectedAttendance && selectedAttendance.book && selectedAttendance.book === 0) { %>
-                        <option selected value="0">Other activity</option>
-                      <% } else { %>
-                        <option value="0">Other activity</option>
-                      <% } %>
-                      <% for (var l = 1; l < 61; l++) { %>
-                        <% if (selectedAttendance && selectedAttendance.book && selectedAttendance.book === l) { %>
-                          <option selected value="<%= l %>"><%= l %></option>
-                        <% } else { %>
-                          <option value="<%= l %>"><%= l %></option>
-                        <% } %>
-                      <% } %>
-                    </select>
-                  </div>
-                  <div id="fitzroy.<%= index %>.completed" class="form-group" style="display: none; visibility: hidden;">
-                    <label class="text-muted mb-0 mt-1 ml-4"><small>Book completed?</small></label><br>
-                    <select class="custom-select ml-4" name="fitzroyCompleted">
-                      <% if (!selectedAttendance || (selectedAttendance && typeof selectedAttendance.completed === 'undefined')) { %>
-                        <option value="" selected disabled hidden>Please select</option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                      <% } %>
-                      <% if (selectedAttendance && selectedAttendance.completed === true) { %>
-                        <option selected value="true">Yes</option>
-                        <option value="false">No</option>
-                      <% } %>
-                      <% if (selectedAttendance && selectedAttendance.completed === false) { %>
-                        <option value="true">Yes</option>
-                        <option selected value="false">No</option>
                       <% } %>
                     </select>
                   </div>

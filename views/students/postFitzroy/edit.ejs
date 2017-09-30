@@ -1,0 +1,333 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">post-fitzroy</h2>
+        <hr class="my-4">
+        <p>edit this student's details</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/students/post-fitzroy/update/<%= chosenPostFitzroy._id %>?_method=PUT" method="POST" class="mb-5">
+        <div id="name-form-group" class="form-group">
+          <label for="name">Name</label>
+          <input id="name" class="form-control" type="text" name="name" value="<%= chosenPostFitzroy.name %>">
+          <small id="nameLengthMessage" class="form-text form-control-feedback"></small>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label><br>
+          <select class="custom-select" id="gender" name="gender">
+            <% if (chosenPostFitzroy.gender === 'male') { %>
+              <option selected value="male">Male</option>
+              <option value="female">Female</option>
+            <% } else { %>
+              <option value="male">Male</option>
+              <option selected value="female">Female</option>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label><br>
+          <select class="custom-select" id="age" name="age">
+            <% for (var i = 5; i < 21; i++) { %>
+              <% if (chosenPostFitzroy.age === i) { %>
+                <option selected value="<%= i %>"><%= i %></option>
+              <% } else { %>
+                <option value="<%= i %>"><%= i %></option>
+              <% } %>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="family">Family code</label><br>
+          <select class="custom-select" id="family" name="family">
+            <% if (!chosenPostFitzroy.family) { %>
+              <option selected value="Unknown">Unknown</option>
+            <% } else { %>
+              <option value="Unknown">Unknown</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'A4') { %>
+              <option selected value="A4">A4</option>
+            <% } else { %>
+              <option value="A4">A4</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'B6') { %>
+              <option selected value="B6">B6</option>
+            <% } else { %>
+              <option value="B6">B6</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'C3') { %>
+              <option selected value="C3">C3</option>
+            <% } else { %>
+              <option value="C3">C3</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'D4') { %>
+              <option selected value="D4">D4</option>
+            <% } else { %>
+              <option value="D4">D4</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'E4') { %>
+              <option selected value="E4">E4</option>
+            <% } else { %>
+              <option value="E4">E4</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'F2') { %>
+              <option selected value="F2">F2</option>
+            <% } else { %>
+              <option value="F2">F2</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'G2') { %>
+              <option selected value="G2">G2</option>
+            <% } else { %>
+              <option value="G2">G2</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'H4') { %>
+              <option selected value="H4">H4</option>
+            <% } else { %>
+              <option value="H4">H4</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'J3') { %>
+              <option selected value="J3">J3</option>
+            <% } else { %>
+              <option value="J3">J3</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'K3') { %>
+              <option selected value="K3">K3</option>
+            <% } else { %>
+              <option value="K3">K3</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'L2') { %>
+              <option selected value="L2">L2</option>
+            <% } else { %>
+              <option value="L2">L2</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'M2') { %>
+              <option selected value="M2">M2</option>
+            <% } else { %>
+              <option value="M2">M2</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'X2') { %>
+              <option selected value="X2">X2</option>
+            <% } else { %>
+              <option value="X2">X2</option>
+            <% } %>
+            <% if (chosenPostFitzroy.family === 'Z4') { %>
+              <option selected value="Z4">Z4</option>
+            <% } else { %>
+              <option value="Z4">Z4</option>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="schoolLevel">School level</label><br>
+          <select class="custom-select" id="schoolLevel" name="schoolLevel">
+            <% if (chosenPostFitzroy.schoolLevel === 'Pre-primary') { %>
+              <option selected value="Pre-primary">Pre-primary</option>
+            <% } else { %>
+              <option value="Pre-primary">Pre-primary</option>
+            <% } %>
+            <% for (var j = 1; j < 7; j++) { %>
+              <% if (chosenPostFitzroy.schoolLevel === 'Primary ' + j) { %>
+                <option selected value="Primary <%= j %>">Primary <%= j %></option>
+              <% } else { %>
+                <option value="Primary <%= j %>">Primary <%= j %></option>
+              <% } %>
+            <% } %>
+            <% for (var k = 1; k < 6; k++) { %>
+              <% if (chosenPostFitzroy.schoolLevel === 'Secondary ' + k) { %>
+                <option selected value="Secondary <%= k %>">Secondary <%= k %></option>
+              <% } else { %>
+                <option value="Secondary <%= k %>">Secondary <%= k %></option>
+              <% } %>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="startDate" class="mb-0">When did this student join ReadAble?</label><br>
+          <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
+          <input class="form-control" id="startDate" type="date" name="startDate" value="<%= chosenPostFitzroy.startDate.getFullYear() %>-<%= (chosenPostFitzroy.startDate.getMonth()+1).toString().length < 2 ? '0' + (chosenPostFitzroy.startDate.getMonth()+1).toString() : (chosenPostFitzroy.startDate.getMonth()+1).toString() %>-<%= (chosenPostFitzroy.startDate.getDate()).toString().length < 2 ? '0' + (chosenPostFitzroy.startDate.getDate()).toString() : (chosenPostFitzroy.startDate.getDate()).toString() %>">
+        </div>
+        <div class="form-group">
+          <label for="oneOnOne">Needs one-on-one attention?</label><br>
+          <div class="form-check">
+            <label class="form-check-label">
+              <% if (chosenPostFitzroy.oneOnOne) { %>
+                <input checked class="form-check-input mr-1" type="radio" name="oneOnOne" value="true">
+              <% } else { %>
+                <input class="form-check-input mr-1" type="radio" name="oneOnOne" value="true">
+              <% } %>
+              Yes
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <% if (!chosenPostFitzroy.oneOnOne) { %>
+                <input checked class="form-check-input mr-1" type="radio" name="oneOnOne" value="false" checked>
+              <% } else { %>
+                <input class="form-check-input mr-1" type="radio" name="oneOnOne" value="false" checked>
+              <% } %>
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="intervention">Requires intervention owing to frequent absenteeism?</label><br>
+          <div class="form-check">
+            <label class="form-check-label">
+              <% if (chosenPostFitzroy.intervention) { %>
+                <input checked class="form-check-input mr-1" type="radio" name="intervention" value="true">
+              <% } else { %>
+                <input class="form-check-input mr-1" type="radio" name="intervention" value="true">
+              <% } %>
+              Yes
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <% if (!chosenPostFitzroy.intervention) { %>
+                <input checked class="form-check-input mr-1" type="radio" name="intervention" value="false" checked>
+              <% } else { %>
+                <input class="form-check-input mr-1" type="radio" name="intervention" value="false" checked>
+              <% } %>
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="generalComment" class="mb-0">Any general comment?</label><br>
+          <textarea id="generalComment" class="form-control" name="generalComment" rows="5"><%= chosenPostFitzroy.generalComment %></textarea>
+        </div>
+        <% if (allTutors.length > 0) { %>
+        <div class="form-group">
+          <label class="control-label">Preferred tutor(s) (up to 3)</label><br>
+          <% allTutors.forEach(function (tutor) { %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <% if (chosenPostFitzroy.preferredTutors.some(function (preferred) { %>
+                  <% return preferred.id === tutor.id %>
+                <% })) { %>
+                  <input checked class="form-check-input mr-1" type="checkbox" name="preferredTutors" value="<%= tutor.id %>">
+                <% } else { %>
+                  <input class="form-check-input mr-1" type="checkbox" name="preferredTutors" value="<%= tutor.id %>">
+                <% } %>
+                <%= tutor.name %>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+        <% } %>
+        <% if (allPostFitzroys.length > 0) { %>
+        <div class="form-group">
+          <label class="control-label">Any student(s) to avoid?</label><br>
+          <% allPostFitzroys.forEach(function (student) { %>
+              <% if (student.id !== chosenPostFitzroy.id) { %>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <% if (chosenPostFitzroy.kidsToAvoid.some(function (kid) { %>
+                    <% return kid.id === student.id %>
+                  <% })) { %>
+                    <input checked class="form-check-input mr-1" type="checkbox" name="kidsToAvoid" value="<%= student.id %>">
+                  <% } else { %>
+                    <input class="form-check-input mr-1" type="checkbox" name="kidsToAvoid" value="<%= student.id %>">
+                  <% } %>
+                  <%= student.name %>
+                </label>
+              </div>
+            <% } %>
+          <% }) %>
+        </div>
+        <% } %>
+        <div class="form-group">
+          <label class="control-label mb-0">Attendance</label><br>
+          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student.<br>Select the tutor for this student at this session, or "Unknown" if unclear.</small>
+          <% if (allSaturdates.length > 0) { %>
+            <% allSaturdates.forEach(function (saturdate, index) { %>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <% if (chosenPostFitzroy.attendance.some(function (indivAtten) { %>
+                    <% return indivAtten.date.id === saturdate.id %>
+                  <% })) { %>
+                    <input checked class="form-check-input mr-1" id="postFitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                  <% } else { %>
+                    <input class="form-check-input mr-1" id="postFitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                  <% } %>
+                  <%= formatDateLong(saturdate.date) %>
+                </label>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                    (function (i) {
+                      var saturdatesCheckbox = document.getElementById('postFitzroy.' + i + '.date')
+                      var postFitzroyTutorDiv = document.getElementById('postFitzroy.' + i + '.tutor')
+                      var postFitzroyTutorSelect = postFitzroyTutorDiv.getElementsByTagName('select')[0]
+                      if (saturdatesCheckbox.checked) {
+                        postFitzroyTutorDiv.removeAttribute('style')
+                      } else {
+                        postFitzroyTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
+                      }
+                      saturdatesCheckbox.onchange = function () {
+                        if (this.checked) {
+                          if (postFitzroyTutorSelect.hasChildNodes() && postFitzroyTutorSelect.firstChild.value === "" && postFitzroyTutorSelect.childNodes[1] === "") {
+                            postFitzroyTutorSelect.remove(postFitzroyTutorSelect.firstChild)
+                          }
+                          postFitzroyTutorDiv.removeAttribute('style')
+                        } else {
+                          if (postFitzroyTutorSelect.hasChildNodes()) {
+                            var blank = new Option("Please select", "", true, true)
+                            blank.setAttribute('disabled', true)
+                            blank.setAttribute('hidden', true)
+                            postFitzroyTutorSelect.insertBefore(blank, postFitzroyTutorSelect.firstChild)
+                          }
+                          postFitzroyTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
+                        }
+                      }
+                    }(<%= index %>))
+                  })
+                </script>
+                <% var selectedAttendance = chosenPostFitzroy.attendance.find(function (indivAtten) { %>
+                  <% return indivAtten.date.id === saturdate.id %>
+                <% }) %>
+                <div class="row ml-1">
+                  <div id="postFitzroy.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
+                    <label class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
+                    <select class="custom-select ml-4" name="postFitzroyTutors">
+                      <% if (!selectedAttendance) { %>
+                        <option value="" selected disabled hidden>Please select</option>
+                      <% } %>
+                      <% if (selectedAttendance && !selectedAttendance.tutor) { %>
+                        <option selected value="unknown">Unknown</option>
+                      <% } else { %>
+                        <option value="unknown">Unknown</option>
+                      <% } %>
+                      <% if (allTutors.length > 0) { %>
+                        <% allTutors.forEach(function (tutor) { %>
+                          <% if (selectedAttendance && selectedAttendance.tutor && selectedAttendance.tutor.id === tutor.id) { %>
+                            <option selected value="<%= tutor.id %>"><%= tutor.name %></option>
+                          <% } else { %>
+                            <option value="<%= tutor.id %>"><%= tutor.name %></option>
+                          <% } %>
+                        <% }) %>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          <% } %>
+        </div><br>
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<%
+  var javaScriptFiles = [
+    'nameLengthCheck'
+  ]
+  javaScriptFiles.forEach(function (file) {
+%>
+<script type="text/javascript" src="/client_side_helpers/<%= file %>.js"></script>
+<%  })  %>

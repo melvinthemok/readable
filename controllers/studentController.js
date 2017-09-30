@@ -139,7 +139,121 @@ var studentController = {
           )
         }
       })
-    }
+    },
+
+    edit: function (req, res) {
+      Tutor.find({}, function (err, allTutors) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/pre-school')
+        } else {
+          PreSchool.find({}, function (err, allPreSchools) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/pre-school')
+            } else {
+              Saturdate.find({}, function (err, allSaturdates) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/pre-school')
+                } else {
+                  PreSchool.findById(req.params.id)
+                    .populate('preferredTutors')
+                    .populate('kidsToAvoid')
+                    .populate({
+                      path: 'attendance.date',
+                      model: 'Saturdate'
+                    })
+                    .populate({
+                      path: 'attendance.tutor',
+                      model: 'Tutor'
+                    })
+                    .exec(function (err, chosenPreSchool) {
+                      if (err) {
+                        req.flash('error', err.toString())
+                        res.redirect('/students/pre-school')
+                      } else {
+                        res.render('students/preSchool/edit', {
+                          allTutors: allTutors,
+                          allPreSchools: allPreSchools,
+                          allSaturdates: allSaturdates.sort(function (date1, date2) {
+                            if (date1.date < date2.date) return -1
+                            else if (date1.date > date2.date) return 1
+                            else return 0
+                          }),
+                          chosenPreSchool: chosenPreSchool,
+                          formatDateLong: formatDateLong
+                        })
+                      }
+                    })
+                }
+              })
+            }
+          })
+        }
+      })
+    },
+
+    update: function (req, res) {
+      PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
+        chosenPreSchool.name = req.body.name
+        chosenPreSchool.gender = req.body.gender
+        chosenPreSchool.age = req.body.age
+        chosenPreSchool.family = req.body.family
+        chosenPreSchool.startDate = req.body.startDate
+        chosenPreSchool.oneOnOne = req.body.oneOnOne
+        chosenPreSchool.intervention = req.body.intervention
+        chosenPreSchool.generalComment = req.body.generalComment
+        chosenPreSchool.preferredTutors = req.body.preferredTutors || []
+        chosenPreSchool.kidsToAvoid = req.body.kidsToAvoid || []
+        chosenPreSchool.attendance = typeof req.body.saturdates === 'string'
+          ? req.body.preSchoolTutors === 'unknown'
+            ? { date: req.body.saturdates }
+            : { tutor: req.body.preSchoolTutors, date: req.body.saturdates }
+          : req.body.saturdates
+            ? req.body.saturdates.map(function (date) {
+              var obj = {}
+              obj['date'] = date
+              req.body.preSchoolTutors[0] === 'unknown'
+              ? req.body.preSchoolTutors.shift()
+              : obj['tutor'] = req.body.preSchoolTutors.shift()
+              return obj
+            })
+            : []
+        chosenPreSchool.attending = false
+        chosenPreSchool.save(function (err) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/students/pre-school/edit/' + req.params.id)
+          }
+        })
+        PreSchool.update(
+          { _id: { $in: chosenPreSchool.kidsToAvoid }},
+          { $addToSet: { kidsToAvoid: chosenPreSchool.id }},
+          { multi: true },
+          function (err) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/pre-school/edit/' + req.params.id)
+            } else {
+              PreSchool.update(
+                { _id: { $nin: chosenPreSchool.kidsToAvoid }},
+                { $pull: { kidsToAvoid: chosenPreSchool.id }},
+                { multi: true },
+                function (err) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/pre-school/edit/' + req.params.id)
+                  } else {
+                    req.flash('success', chosenPreSchool.name + '\'s details successfully updated!')
+                    res.redirect('/students/pre-school/' + chosenPreSchool.id)
+                  }
+                })
+            }
+          }
+        )
+      })
+    }    
   },
 
   fitzroy: {
@@ -383,38 +497,34 @@ var studentController = {
         chosenFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
+            res.redirect('/students/fitzroy/edit/' + req.params.id)
           }
         })
-        if (err) {
-          req.flash('error', err.toString())
-          res.redirect('/students/fitzroy/edit/' + req.params.id)
-        } else {
-          Fitzroy.update(
-            { _id: { $in: chosenFitzroy.kidsToAvoid }},
-            { $addToSet: { kidsToAvoid: chosenFitzroy.id }},
-            { multi: true },
-            function (err) {
-              if (err) {
-                req.flash('error', err.toString())
-                res.redirect('/students/fitzroy/edit/' + req.params.id)
-              } else {
-                Fitzroy.update(
-                  { _id: { $nin: chosenFitzroy.kidsToAvoid }},
-                  { $pull: { kidsToAvoid: chosenFitzroy.id }},
-                  { multi: true },
-                  function (err) {
-                    if (err) {
-                      req.flash('error', err.toString())
-                      res.redirect('/students/fitzroy/edit/' + req.params.id)
-                    } else {
-                      req.flash('success', chosenFitzroy.name + '\'s details successfully updated!')
-                      res.redirect('/students/fitzroy/' + chosenFitzroy.id)
-                    }
-                  })
-              }
+        Fitzroy.update(
+          { _id: { $in: chosenFitzroy.kidsToAvoid }},
+          { $addToSet: { kidsToAvoid: chosenFitzroy.id }},
+          { multi: true },
+          function (err) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/fitzroy/edit/' + req.params.id)
+            } else {
+              Fitzroy.update(
+                { _id: { $nin: chosenFitzroy.kidsToAvoid }},
+                { $pull: { kidsToAvoid: chosenFitzroy.id }},
+                { multi: true },
+                function (err) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/fitzroy/edit/' + req.params.id)
+                  } else {
+                    req.flash('success', chosenFitzroy.name + '\'s details successfully updated!')
+                    res.redirect('/students/fitzroy/' + chosenFitzroy.id)
+                  }
+                })
             }
-          )
-        }
+          }
+        )
       })
     }
   },
@@ -542,6 +652,121 @@ var studentController = {
             }
           )
         }
+      })
+    },
+
+    edit: function (req, res) {
+      Tutor.find({}, function (err, allTutors) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/post-fitzroy')
+        } else {
+          PostFitzroy.find({}, function (err, allPostFitzroys) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/post-fitzroy')
+            } else {
+              Saturdate.find({}, function (err, allSaturdates) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/post-fitzroy')
+                } else {
+                  PostFitzroy.findById(req.params.id)
+                    .populate('preferredTutors')
+                    .populate('kidsToAvoid')
+                    .populate({
+                      path: 'attendance.date',
+                      model: 'Saturdate'
+                    })
+                    .populate({
+                      path: 'attendance.tutor',
+                      model: 'Tutor'
+                    })
+                    .exec(function (err, chosenPostFitzroy) {
+                      if (err) {
+                        req.flash('error', err.toString())
+                        res.redirect('/students/post-fitzroy')
+                      } else {
+                        res.render('students/postFitzroy/edit', {
+                          allTutors: allTutors,
+                          allPostFitzroys: allPostFitzroys,
+                          allSaturdates: allSaturdates.sort(function (date1, date2) {
+                            if (date1.date < date2.date) return -1
+                            else if (date1.date > date2.date) return 1
+                            else return 0
+                          }),
+                          chosenPostFitzroy: chosenPostFitzroy,
+                          formatDateLong: formatDateLong
+                        })
+                      }
+                    })
+                }
+              })
+            }
+          })
+        }
+      })
+    },
+
+    update: function (req, res) {
+      PostFitzroy.findById(req.params.id, function (err, chosenPostFitzroy) {
+        chosenPostFitzroy.name = req.body.name
+        chosenPostFitzroy.gender = req.body.gender
+        chosenPostFitzroy.age = req.body.age
+        chosenPostFitzroy.family = req.body.family
+        chosenPostFitzroy.schoolLevel = req.body.schoolLevel
+        chosenPostFitzroy.startDate = req.body.startDate
+        chosenPostFitzroy.oneOnOne = req.body.oneOnOne
+        chosenPostFitzroy.intervention = req.body.intervention
+        chosenPostFitzroy.generalComment = req.body.generalComment
+        chosenPostFitzroy.preferredTutors = req.body.preferredTutors || []
+        chosenPostFitzroy.kidsToAvoid = req.body.kidsToAvoid || []
+        chosenPostFitzroy.attendance = typeof req.body.saturdates === 'string'
+          ? req.body.postFitzroyTutors === 'unknown'
+            ? { date: req.body.saturdates }
+            : { tutor: req.body.postFitzroyTutors, date: req.body.saturdates }
+          : req.body.saturdates
+            ? req.body.saturdates.map(function (date) {
+              var obj = {}
+              obj['date'] = date
+              req.body.postFitzroyTutors[0] === 'unknown'
+              ? req.body.postFitzroyTutors.shift()
+              : obj['tutor'] = req.body.postFitzroyTutors.shift()
+              return obj
+            })
+            : []
+        chosenPostFitzroy.attending = false
+        chosenPostFitzroy.save(function (err) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/students/post-fitzroy/edit/' + req.params.id)
+          }
+        })
+        PostFitzroy.update(
+          { _id: { $in: chosenPostFitzroy.kidsToAvoid }},
+          { $addToSet: { kidsToAvoid: chosenPostFitzroy.id }},
+          { multi: true },
+          function (err) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/post-fitzroy/edit/' + req.params.id)
+            } else {
+              PostFitzroy.update(
+                { _id: { $nin: chosenPostFitzroy.kidsToAvoid }},
+                { $pull: { kidsToAvoid: chosenPostFitzroy.id }},
+                { multi: true },
+                function (err) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/post-fitzroy/edit/' + req.params.id)
+                  } else {
+                    req.flash('success', chosenPostFitzroy.name + '\'s details successfully updated!')
+                    res.redirect('/students/post-fitzroy/' + chosenPostFitzroy.id)
+                  }
+                })
+            }
+          }
+        )
       })
     }
   }

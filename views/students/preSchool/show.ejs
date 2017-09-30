@@ -18,10 +18,9 @@
     </div>
   </div>
 </div>
-<div class="container">
+<div class="container mb-5">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      
       <div class="card m-2 mb-3">
         <div class="card-header">
           Notes
@@ -46,11 +45,11 @@
                 <span>
                 <% chosenPreSchool.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
                   <% if (array.length === 1 || index === array.length - 2) { %>
-                    <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>&nbsp
+                    <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
                   <% } else if (index === array.length - 1) { %>
                     and <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
                   <% } else { %>
-                    <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,&nbsp
+                    <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,
                   <% } %>
                 <% }) %>
                 </span>
@@ -79,7 +78,6 @@
           </div>
         </div>
       </div>
-
       <div class="card m-2">
         <div class="card-header">
           Attendance
@@ -109,7 +107,13 @@
           </div>
         </div>
       </div>
-
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <a href="/students/pre-school/edit/<%= chosenPreSchool.id %>"><button class="btn btn-primary float-right" type="button" style="cursor:pointer;">Edit</button></a>
     </div>
   </div>
 </div>

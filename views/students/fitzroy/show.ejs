@@ -45,11 +45,11 @@
                 <span>
                 <% chosenFitzroy.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
                   <% if (array.length === 1 || index === array.length - 2) { %>
-                    <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>&nbsp
+                    <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
                   <% } else if (index === array.length - 1) { %>
                     and <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
                   <% } else { %>
-                    <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,&nbsp
+                    <a href="/students/fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>,
                   <% } %>
                 <% }) %>
                 </span>
