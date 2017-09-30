@@ -149,16 +149,46 @@
                     (function (i) {
                       var saturdatesCheckbox = document.getElementById('fitzroy.' + i + '.date')
                       var fitzroyTutorDiv = document.getElementById('fitzroy.' + i + '.tutor')
+                      var fitzroyTutorSelect = fitzroyTutorDiv.getElementsByTagName("select")[0]
                       var fitzroyBookDiv = document.getElementById('fitzroy.' + i + '.book')
+                      var fitzroyBookSelect = fitzroyBookDiv.getElementsByTagName("select")[0]
                       var fitzroyCompletedDiv = document.getElementById('fitzroy.' + i + '.completed')
+                      var fitzroyCompletedSelect = fitzroyCompletedDiv.getElementsByTagName("select")[0]
                       saturdatesCheckbox.onchange = function () {
                         if (this.checked) {
+                          if (fitzroyTutorSelect.hasChildNodes() && fitzroyTutorSelect.firstChild.value === "" && fitzroyTutorSelect.childNodes[1] === "") {
+                            fitzroyTutorSelect.remove(fitzroyTutorSelect.firstChild)
+                          }
                           fitzroyTutorDiv.removeAttribute('style')
+                          if (fitzroyBookSelect.hasChildNodes() && fitzroyBookSelect.firstChild.value === "" && fitzroyBookSelect.childNodes[1] === "") {
+                            fitzroyBookSelect.remove(fitzroyBookSelect.firstChild)
+                          }
                           fitzroyBookDiv.removeAttribute('style')
+                          if (fitzroyCompletedSelect.hasChildNodes() && fitzroyCompletedSelect.firstChild.value === "" && fitzroyCompletedSelect.childNodes[1] === "") {
+                            fitzroyCompletedSelect.remove(fitzroyCompletedSelect.firstChild)
+                          }
                           fitzroyCompletedDiv.removeAttribute('style')
                         } else {
+                          if (fitzroyTutorSelect.hasChildNodes()) {
+                            var blank = new Option("Please select", "", true, true)
+                            blank.setAttribute('disabled', true)
+                            blank.setAttribute('hidden', true)
+                            fitzroyTutorSelect.insertBefore(blank, fitzroyTutorSelect.firstChild)
+                          }
                           fitzroyTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
+                          if (fitzroyBookSelect.hasChildNodes()) {
+                            var blank = new Option("Please select", "", true, true)
+                            blank.setAttribute('disabled', true)
+                            blank.setAttribute('hidden', true)
+                            fitzroyBookSelect.insertBefore(blank, fitzroyBookSelect.firstChild)
+                          }
                           fitzroyBookDiv.setAttribute('style', 'display:none; visibility:hidden')
+                          if (fitzroyCompletedSelect.hasChildNodes()) {
+                            var blank = new Option("Please select", "", true, true)
+                            blank.setAttribute('disabled', true)
+                            blank.setAttribute('hidden', true)
+                            fitzroyCompletedSelect.insertBefore(blank, fitzroyCompletedSelect.firstChild)
+                          }
                           fitzroyCompletedDiv.setAttribute('style', 'display:none; visibility:hidden')
                         }
                       }
@@ -167,8 +197,8 @@
                 </script>
                 <div class="row ml-1">
                   <div id="fitzroy.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
-                    <label for="fitzroy.<%= index %>.tutor" class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
-                    <select class="custom-select ml-4" id="fitzroy.<%= index %>.tutor" name="fitzroyTutors">
+                    <label class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
+                    <select class="custom-select ml-4" name="fitzroyTutors">
                       <option value="" selected disabled hidden>Please select</option>
                       <option value="unknown">Unknown</option>
                       <% if (allTutors.length > 0) { %>
@@ -181,8 +211,8 @@
                 </div>
                 <div class="row ml-1">
                   <div id="fitzroy.<%= index %>.book" class="form-group mb-0" style="display: none; visibility: hidden">
-                    <label for="fitzroy.<%= index %>.book" class="text-muted mb-0 mt-1 ml-4"><small>Fitzroy Book Level</small></label><br>
-                    <select class="custom-select ml-4" id="fitzroy.<%= index %>.book" name="fitzroyBooks">
+                    <label class="text-muted mb-0 mt-1 ml-4"><small>Fitzroy Book Level</small></label><br>
+                    <select class="custom-select ml-4" name="fitzroyBooks">
                       <option value="" selected disabled hidden>Please select</option>
                       <option value="0">Other activity</option>
                       <% for (var l = 1; l < 61; l++) { %>
@@ -191,8 +221,8 @@
                     </select>
                   </div>
                   <div id="fitzroy.<%= index %>.completed" class="form-group" style="display: none; visibility: hidden;">
-                    <label for="fitzroy.<%= index %>.completed" class="text-muted mb-0 mt-1 ml-4"><small>Book completed?</small></label><br>
-                    <select class="custom-select ml-4" id="fitzroy.<%= index %>.completed" name="fitzroyCompleted">
+                    <label class="text-muted mb-0 mt-1 ml-4"><small>Book completed?</small></label><br>
+                    <select class="custom-select ml-4" name="fitzroyCompleted">
                       <option value="" selected disabled hidden>Please select</option>
                       <option value="true">Yes</option>
                       <option value="false">No</option>

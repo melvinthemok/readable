@@ -125,7 +125,7 @@ var studentController = {
         } else {
           PreSchool.update(
             { _id: { $in: savedPreSchool.kidsToAvoid }},
-            { $addToSet: { kidsToAvoid: savedPreSchool.id } },
+            { $addToSet: { kidsToAvoid: savedPreSchool.id }},
             { multi: true },
             function (err) {
               if (err) {
@@ -289,6 +289,139 @@ var studentController = {
           )
         }
       })
+    },
+
+    edit: function (req, res) {
+      Tutor.find({}, function (err, allTutors) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/fitzroy')
+        } else {
+          Fitzroy.find({}, function (err, allFitzroys) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/fitzroy')
+            } else {
+              Saturdate.find({}, function (err, allSaturdates) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/fitzroy')
+                } else {
+                  Fitzroy.findById(req.params.id)
+                    .populate('preferredTutors')
+                    .populate('kidsToAvoid')
+                    .populate({
+                      path: 'attendance.date',
+                      model: 'Saturdate'
+                    })
+                    .populate({
+                      path: 'attendance.tutor',
+                      model: 'Tutor'
+                    })
+                    .exec(function (err, chosenFitzroy) {
+                      if (err) {
+                        req.flash('error', err.toString())
+                        res.redirect('/students/fitzroy')
+                      } else {
+                        res.render('students/fitzroy/edit', {
+                          allTutors: allTutors,
+                          allFitzroys: allFitzroys,
+                          allSaturdates: allSaturdates.sort(function (date1, date2) {
+                            if (date1.date < date2.date) return -1
+                            else if (date1.date > date2.date) return 1
+                            else return 0
+                          }),
+                          chosenFitzroy: chosenFitzroy,
+                          formatDateLong: formatDateLong
+                        })
+                      }
+                    })
+                }
+              })
+            }
+          })
+        }
+      })
+    },
+
+    update: function (req, res) {
+      Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
+        console.log('dates', req.body.saturdates)
+        console.log('books', req.body.fitzroyBooks)
+        console.log('tutors', req.body.fitzroyTutors)
+        console.log('completed', req.body.fitzroyCompleted)
+        chosenFitzroy.name = req.body.name
+        chosenFitzroy.gender = req.body.gender
+        chosenFitzroy.age = req.body.age
+        chosenFitzroy.family = req.body.family
+        chosenFitzroy.schoolLevel = req.body.schoolLevel
+        chosenFitzroy.startDate = req.body.startDate
+        chosenFitzroy.oneOnOne = req.body.oneOnOne
+        chosenFitzroy.intervention = req.body.intervention
+        chosenFitzroy.generalComment = req.body.generalComment
+        chosenFitzroy.preferredTutors = req.body.preferredTutors || []
+        chosenFitzroy.kidsToAvoid = req.body.kidsToAvoid || []
+        chosenFitzroy.attendance = typeof req.body.fitzroyBooks === 'string'
+          ? req.body.fitzroyTutors === 'unknown'
+            ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+            : { tutor: req.body.fitzroyTutors, book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+          : req.body.fitzroyBooks
+            ? req.body.fitzroyBooks.map(function (book) {
+              var obj = {}
+              req.body.fitzroyTutors[0] === 'unknown'
+              ? req.body.fitzroyTutors.shift()
+              : obj['tutor'] = req.body.fitzroyTutors.shift()
+              obj['book'] = book
+              obj['date'] = req.body.saturdates.shift()
+              if (req.body.fitzroyCompleted) {
+                if (obj['book'] !== '0') {
+                  typeof req.body.fitzroyCompleted === 'string'
+                    ? obj['completed'] = req.body.fitzroyCompleted
+                    : obj['completed'] = req.body.fitzroyCompleted.shift()
+                }
+              }
+              return obj
+            })
+            : []
+        chosenFitzroy.attending = false
+        chosenFitzroy.save(function (err) {
+          if (err) {
+            req.flash('error', err.toString())
+          }
+        })
+        console.log('savedFitzroy', chosenFitzroy)
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/fitzroy/edit/' + req.params.id)
+        } else {
+          Fitzroy.update(
+            { _id: { $in: chosenFitzroy.kidsToAvoid }},
+            { $addToSet: { kidsToAvoid: chosenFitzroy.id }},
+            { multi: true },
+            function (err) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/students/fitzroy/edit/' + req.params.id)
+              } else {
+                Fitzroy.update(
+                  { _id: { $nin: chosenFitzroy.kidsToAvoid }},
+                  { $pull: { kidsToAvoid: chosenFitzroy.id }},
+                  { multi: true },
+                  function (err) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/fitzroy/edit/' + req.params.id)
+                    } else {
+                      console.log('chosenFitzroy', chosenFitzroy)
+                      req.flash('success', chosenFitzroy.name + '\'s details successfully updated!')
+                      res.redirect('/students/fitzroy/' + chosenFitzroy.id)
+                    }
+                  })
+              }
+            }
+          )
+        }
+      })
     }
   },
 
@@ -402,7 +535,7 @@ var studentController = {
         } else {
           PostFitzroy.update(
             { _id: { $in: savedPostFitzroy.kidsToAvoid }},
-            { $addToSet: { kidsToAvoid: savedPostFitzroy.id } },
+            { $addToSet: { kidsToAvoid: savedPostFitzroy.id }},
             { multi: true },
             function (err) {
               if (err) {

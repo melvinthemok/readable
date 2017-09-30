@@ -104,10 +104,6 @@ var FitzroySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tutor'
       }
-    ],
-    validate: [
-      preferredTutorsArrayLimit, 
-      'each student should have a maximum of 3 preferred tutors'
     ]
   },
   kidsToAvoid: [
@@ -144,22 +140,15 @@ var FitzroySchema = new mongoose.Schema({
       }
     }
   ],
-  comments: [
-    // Shift to attendance?
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comments'
-    }
-  ],
   attending: {
     type: Boolean,
     required: true
   }
 })
 
-function preferredTutorsArrayLimit (val) {
-  return val.length <= 3
-}
+FitzroySchema.path('preferredTutors').validate(function (preferredTutors) {
+  return preferredTutors.length <= 3 || Object.prototype.toString.call(preferredTutors) !== '[object Array]'
+}, 'each student should have a maximum of 3 preferred tutors')
 
 FitzroySchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
