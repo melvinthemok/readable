@@ -24,7 +24,23 @@
 
 ## Deployment
 
-*WIP*
+1. Install Heroku CLI
+
+   `brew install heroku/brew/heroku`
+
+2. Login to Heroku CLI
+
+   `heroku login`
+
+   `Enter your heroku credentials`
+
+   `Email: readableweb@gmail.com`
+   
+   `Password (typing will be hidden): [password]`
+
+3. Deploy
+
+   `git push heroku master`
 
 ## Usage
 
