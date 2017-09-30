@@ -46,9 +46,9 @@
           <label for="family">Family code</label><br>
           <select class="custom-select" id="family" name="family">
             <% if (!chosenFitzroy.family) { %>
-              <option selected value="">Unknown</option>
+              <option selected value="Unknown">Unknown</option>
             <% } else { %>
-              <option value="">Unknown</option>
+              <option value="Unknown">Unknown</option>
             <% } %>
             <% if (chosenFitzroy.family === 'A4') { %>
               <option selected value="A4">A4</option>

@@ -39,6 +39,7 @@ var PreSchoolSchema = new mongoose.Schema({
   family: {
     type: String,
     enum: [
+      'Unknown',
       'A4', 
       'B6',
       'C3',

@@ -9,7 +9,9 @@
           <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.gender %></span>
           <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.age %> years old</span>
           <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.schoolLevel %></span>
-          <span class="badge badge-pill badge-primary">family group <%= chosenPostFitzroy.family %></span>
+          <% if (chosenPostFitzroy.family !== 'Unknown') { %>
+            <span class="badge badge-pill badge-primary">family group <%= chosenPostFitzroy.family %></span>
+          <% } %>
           <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenPostFitzroy.startDate) %></span>
         </p>
       </div>

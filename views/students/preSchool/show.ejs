@@ -9,7 +9,9 @@
           <span class="badge badge-pill badge-primary"><%= chosenPreSchool.gender %></span>
           <span class="badge badge-pill badge-primary"><%= chosenPreSchool.age %> years old</span>
           <span class="badge badge-pill badge-primary"><%= chosenPreSchool.schoolLevel %></span>
-          <span class="badge badge-pill badge-primary">family group <%= chosenPreSchool.family %></span>
+          <% if (chosenPreSchool.family !== 'Unknown') { %>
+            <span class="badge badge-pill badge-primary">family group <%= chosenPreSchool.family %></span>
+          <% } %>
           <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenPreSchool.startDate) %></span>
         </p>
       </div>

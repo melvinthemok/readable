@@ -346,10 +346,6 @@ var studentController = {
 
     update: function (req, res) {
       Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
-        console.log('dates', req.body.saturdates)
-        console.log('books', req.body.fitzroyBooks)
-        console.log('tutors', req.body.fitzroyTutors)
-        console.log('completed', req.body.fitzroyCompleted)
         chosenFitzroy.name = req.body.name
         chosenFitzroy.gender = req.body.gender
         chosenFitzroy.age = req.body.age
@@ -389,7 +385,6 @@ var studentController = {
             req.flash('error', err.toString())
           }
         })
-        console.log('savedFitzroy', chosenFitzroy)
         if (err) {
           req.flash('error', err.toString())
           res.redirect('/students/fitzroy/edit/' + req.params.id)
@@ -412,7 +407,6 @@ var studentController = {
                       req.flash('error', err.toString())
                       res.redirect('/students/fitzroy/edit/' + req.params.id)
                     } else {
-                      console.log('chosenFitzroy', chosenFitzroy)
                       req.flash('success', chosenFitzroy.name + '\'s details successfully updated!')
                       res.redirect('/students/fitzroy/' + chosenFitzroy.id)
                     }
