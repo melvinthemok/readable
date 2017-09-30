@@ -11,12 +11,14 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-sm-6 offset-sm-3 list-group">
-      <% if (allSaturdates.length > 0) { %>
-        <% allSaturdates.forEach(function (saturdate) { %>
-          <a class="list-group-item list-group-item-action" href="/history/<%= saturdate.id %>"><%= formatDateLong(saturdate.date) %></a>
-        <% }) %>
-      <% } %>
+    <div class="col-sm-6 offset-sm-3">
+      <div class="list-group">
+        <% if (allSaturdates.length > 0) { %>
+          <% allSaturdates.forEach(function (saturdate) { %>
+            <a class="list-group-item list-group-item-action" href="/history/<%= saturdate.id %>"><%= formatDateLong(saturdate.date) %></a>
+          <% }) %>
+        <% } %>
+      </div>
       <form action="/history" method="POST" class="my-5">
         <div class="form-group">
           <label for="date" class="mb-0">Add another session</label><br>
