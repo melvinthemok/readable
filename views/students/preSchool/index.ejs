@@ -1,69 +1,75 @@
 <div class="jumbotron" style="background-color:#d9edf7">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-6 offset-sm-3">
-          <h2 class="display-4">pre-school</h2>
-          <hr class="my-4">
-          <p>overview</p>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="container">
     <div class="row">
       <div class="col-sm-6 offset-sm-3">
-        <script>
-          document.addEventListener('DOMContentLoaded', function () {
-            var filter = document.getElementById('filter')
-            var filterResult = document.getElementById('filter-result')
-            var result = <%- JSON.stringify(allPreSchools) %>
-            if (document.getElementById('filter')) {
-              filter.onchange = function () {
-                if (this.value === 'all') {
-                  result = <%- JSON.stringify(allPreSchools) %>
-                } else if (this.value === 'oneOnOne') {
-                  result = result.filter(function (preSchool) {
-                    return preSchool.oneOnOne
-                  })
-                } else if (this.value === 'intervention') {
-                  result = result.filter(function(preSchool) {
-                    return preSchool.intervention
-                  })
-                }
-                filterResult.innerHTML = ''
-                result.forEach(function (preSchool) {
-                  var a = document.createElement('a')
-                  a.classList.add('list-group-item', 'list-group-item-action')
-                  a.appendChild(document.createTextNode(preSchool.name))
-                  filterResult.appendChild(a)
-                })
-              }
-            }
-          })
-        </script>
-        <% if (allPreSchools.length > 0) { %>
-        <select id="filter" class="custom-select mb-2">
-          <option value="all" selected>All students</option>
-          <% if (allPreSchools.some(function (preSchool) {
-            return preSchool.oneOnOne
-          })) { %>
-            <option value="oneOnOne">One-on-one attention</option>
-          <% } %>
-          <% if (allPreSchools.some(function (preSchool) {
-            return preSchool.intervention
-          })) { %>
-            <option value="intervention">Intervention owing to absenteeism</option>
-          <% } %>
-        </select>
-        <% } %>
-        <div id="filter-result" class="list-group">
-        <% if (allPreSchools.length > 0) { %>
-          <% allPreSchools.forEach(function (preSchool) { %>
-            <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= preSchool.id %>"><%= preSchool.name %></a>
-          <% }) %>
-        <% } %>
-        </div><br>
-        <a class="btn btn-primary mb-4" href="/students/pre-school/new">Sign up a new student</a>
+        <h2 class="display-4">pre-school</h2>
+        <hr class="my-4">
+        <p>overview</p>
       </div>
     </div>
   </div>
+</div>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var filter = document.getElementById('filter')
+          var filterResult = document.getElementById('filter-result')
+          var result = <%- JSON.stringify(allPreSchools) %>
+          if (document.getElementById('filter')) {
+            filter.onchange = function () {
+              if (this.value === 'all') {
+                result = <%- JSON.stringify(allPreSchools) %>
+              } else if (this.value === 'oneOnOne') {
+                result = result.filter(function (preSchool) {
+                  return preSchool.oneOnOne
+                })
+              } else if (this.value === 'intervention') {
+                result = result.filter(function(preSchool) {
+                  return preSchool.intervention
+                })
+              }
+              filterResult.innerHTML = ''
+              result.forEach(function (preSchool) {
+                var a = document.createElement('a')
+                a.classList.add('list-group-item', 'list-group-item-action')
+                a.appendChild(document.createTextNode(preSchool.name))
+                filterResult.appendChild(a)
+              })
+            }
+          }
+        })
+      </script>
+      <% if (allPreSchools.length > 0) { %>
+      <select id="filter" class="custom-select mb-2">
+        <option value="all" selected>All students</option>
+        <% if (allPreSchools.some(function (preSchool) {
+          return preSchool.oneOnOne
+        })) { %>
+          <option value="oneOnOne">One-on-one attention</option>
+        <% } %>
+        <% if (allPreSchools.some(function (preSchool) {
+          return preSchool.intervention
+        })) { %>
+          <option value="intervention">Intervention owing to absenteeism</option>
+        <% } %>
+      </select>
+      <% } %>
+      <div id="filter-result" class="list-group">
+      <% if (allPreSchools.length > 0) { %>
+        <% allPreSchools.forEach(function (preSchool) { %>
+          <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= preSchool.id %>"><%= preSchool.name %></a>
+        <% }) %>
+      <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <a href="/students/pre-school/new"><button class="btn btn-primary" type="button" style="cursor:pointer;">Sign up a new student</button></a>
+    </div>
+  </div>
+</div>
