@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
       password2.classList.add('form-control-success')
       password2.classList.remove('form-control-warning')
       message.textContent = 'Passwords match'
-      submitButton.removeAttribute('disabled')
     } else {
       if (!password1.classList.contains('form-control-warning') && !passwordFormGroup.classList.contains('has-warning')) {
         password1.classList.add('form-control-warning')
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
         passwordFormGroup.classList.remove('has-success')
       }
       message.textContent = "Passwords don't match"
-      submitButton.setAttribute('disabled', true)
     }
   }
 })
