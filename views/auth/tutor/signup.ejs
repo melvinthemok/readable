@@ -11,23 +11,23 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <form action="/auth/tutor/signup" method="POST" class="mb-5">
-        <div id="email-form-group" class="form-group">
+        <div id="email-form-group" class="form-group required-group">
           <label for="email">Email</label>
           <input id="email" class="form-control" type="email" name="email" placeholder="name@email.com">
           <small id="emailRegexMessage" class="form-text form-control-feedback"></small>
         </div>
-        <div id="name-form-group" class="form-group">
+        <div id="name-form-group" class="form-group required-group">
           <label for="name">Name</label>
           <input id="name" class="form-control" type="text" name="name" placeholder="Your name">
           <small id="nameLengthMessage" class="form-text form-control-feedback"></small>
         </div>
-        <div id="phone-form-group" class="form-group">
+        <div id="phone-form-group" class="form-group required-group">
           <label for="phone" class="mb-0">Phone</label>
           <small class="form-text text-muted mt-0 mb-2">+65 | Singapore</small>
           <input id="phone" class="form-control" type="text" name="phone" placeholder="Your contact number">
           <small id="phoneLengthMessage" class="form-text form-control-feedback"></small>
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="gender">Gender</label><br>
           <select class="custom-select" id="gender" name="gender">
             <option value="" selected disabled hidden>Please select</option>
@@ -35,7 +35,7 @@
             <option value="female">Female</option>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="age">Age</label><br>
           <select class="custom-select" id="age" name="age">
             <option value="" selected disabled hidden>Please select</option>
@@ -52,13 +52,13 @@
           <textarea id="experience" class="form-control" name="experience" rows="5" placeholder="Please leave this space blank if you have none"></textarea>
           <small id="experienceMessage" class="form-text form-control-feedback"></small>
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="startDate" class="mb-0">When did you join ReadAble?</label><br>
           <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
           <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
         </div>
-        <div id="password-form-group" class="form-group">
-          <label for="password" class="mb-0">Your password</label><br>
+        <div id="password-form-group" class="form-group required-group">
+          <label for="password" class="mb-0">Your ReadAbly password</label><br>
           <small class="form-text text-muted mt-0 mb-2">Between 8 and 30 characters</small>
           <input id="passwordDraft" class="form-control" type="password" name="passwordDraft" placeholder="**********">
           <small id="passwordDescription" class="form-text text-muted mt-1 mb-2" style="display: none; visibility: hidden;">Please confirm</small>
@@ -75,7 +75,7 @@
           <small class="form-text text-muted mt-0 mb-2">Enter the passphrase you were given</small>
           <input class="form-control" id="tutorSignUpAttempt" type="password" name="tutorSignUpAttempt" placeholder="**********">
         </div><br>
-        <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" disabled>Submit</button>
       </form>
     </div>
   </div>
@@ -86,8 +86,9 @@
     'nameLengthCheck',
     'phoneLengthCheck',
     'expLengthCheck',
-    'passwordLengthCheck',
-    'passwordMatch'
+    'passwordLengthCheckAndShowConfirm',
+    'passwordMatch',
+    'requiredCompletenessCheck'
   ]
   javaScriptFiles.forEach(function (file) {
 %>
