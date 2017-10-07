@@ -2,16 +2,14 @@ document.addEventListener('DOMContentLoaded', function () {
   var emailFormGroup = document.getElementById('email-form-group')
   var email = document.getElementById('email')
   var message = document.getElementById('emailRegexMessage')
-  var submitButton = document.getElementById('submitButton')
+  var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   email.onkeyup = function () {
-    var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (emailRegex.test(email.value)) {
       emailFormGroup.classList.add('has-success')
       emailFormGroup.classList.remove('has-warning')
       email.classList.add('form-control-success')
       email.classList.remove('form-control-warning')
       message.textContent = ''
-      submitButton.removeAttribute('disabled')
     } else {
       if (!email.classList.contains('form-control-warning') && !emailFormGroup.classList.contains('has-warning')) {
         email.classList.add('form-control-warning')
@@ -22,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
         emailFormGroup.classList.remove('has-success')
       }
       message.textContent = 'Your email doesn\'t look right'
-      submitButton.setAttribute('disabled', true)
     }
   }
 })

@@ -10,15 +10,23 @@
 
    `git@github.com:melvinthemok/readable.git`
 
-3. Install packages
+3. Add your own .env file with values for the following keys
+
+   `SESSION_SECRET`
+
+   `ADMIN_PASSWORD`
+
+   `SIGNUP_PASSWORD`
+
+4. Install packages
 
    `yarn install`
 
-3. Run mongoDB daemon
+5. Run mongoDB daemon
 
    `mongod`
 
-4. Run the app
+6. Run the app
 
    `yarn dev-start`
 

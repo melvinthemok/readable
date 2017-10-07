@@ -58,7 +58,7 @@ var CatchPlusSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
-    enum: ['catchplus', 'tutor'],
+    enum: ['catchPlus', 'tutor'],
     required: true,
     default: 'catchPlus'
   }

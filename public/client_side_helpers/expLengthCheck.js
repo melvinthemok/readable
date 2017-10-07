@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var experienceFormGroup = document.getElementById('experience-form-group')
   var experience = document.getElementById('experience')
   var message = document.getElementById('experienceMessage')
-  var submitButton = document.getElementById('submitButton')
   experience.onkeyup = function() {
     if (experience.value.length < 501) {
       if (experience.classList.contains('form-control-warning') && experienceFormGroup.classList.contains('form-control-warning')) {
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
         experienceFormGroup.classList.add('has-success')
       }
       message.textContent = 'Characters remaining: ' + (500 - experience.value.length)
-      submitButton.removeAttribute('disabled')
     } else {
       if (experience.classList.contains('form-control-success') && experienceFormGroup.classList.contains('form-control-success')) {
         experience.classList.remove('form-control-success')
@@ -25,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
         experienceFormGroup.classList.add('has-warning')
       }
       message.textContent = 'Too much information'
-      submitButton.setAttribute('disabled', true)
     }
   }
 })
