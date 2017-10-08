@@ -5,9 +5,9 @@ var ejsLayouts = require('express-ejs-layouts')
 var mongoose = require('mongoose')
 var auth = require('./routes/authRouter')
 var saturdate = require('./routes/saturdateRouter')
-var student = require ('./routes/studentRouter')
-var tutor = require ('./routes/tutorRouter')
-var comment = require ('./routes/commentRouter')
+var student = require('./routes/studentRouter')
+var tutor = require('./routes/tutorRouter')
+var comment = require('./routes/commentRouter')
 // var attend = require('./routes/attendRouter')
 // var group = require('./routes/groupRouter')
 var morgan = require('morgan')
@@ -20,9 +20,13 @@ var isLoggedIn = require('./middleware/isLoggedIn')
 var isAdmin = require('./middleware/isAdmin')
 require('dotenv').config({ silent: true })
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/readable')
+if (process.env.NODE_ENV === 'test') {
+  mongoose.connect('mongodb://localhost/readable-test')
+} else {
+  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/readable')
+}
 mongoose.Promise = global.Promise
- 
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.set('view engine', 'ejs')
@@ -65,3 +69,5 @@ app.use('/comments', isLoggedIn, comment)
 // app.use('/group', group)
 
 app.listen(process.env.PORT || 3000)
+
+module.exports = app
