@@ -34,6 +34,7 @@ describe('Tutors', function () {
         startDate: '',
         password: ''
       }
+
       var tutor = new Tutor(createTutorWithFaultyAttr(emptyFields))
       tutor.save().should.eventually.be.rejectedWith(Error).notify(done)
     })
@@ -57,14 +58,17 @@ describe('Tutors', function () {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
       tutor.save().should.eventually.be.fulfilled.notify(done)
     })
+
     it('Should hash the given password', function (done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
       tutor.save().should.eventually.have.property('password').to.not.equal('12345678').notify(done)
     })
+
     it('Should be able to validate a given password', function (done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
       tutor.save().should.eventually.have.property('validPassword').that.is.a('function').notify(done)
     })
+
     it('Should return false if the wrong password is provided', function (done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
       tutor.save(function (err, savedTutor) {
@@ -72,6 +76,7 @@ describe('Tutors', function () {
         done()
       })
     })
+
     it('Should return true if the correct password is provided', function (done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
       tutor.save(function (err, savedTutor) {
@@ -118,6 +123,7 @@ describe('Tutors', function () {
                   .expect('Location', '/auth/tutor/signup')
                   .end(done)
     })
+
     it('Should redirect to homepage if tutor is successfully saved', function (done) {
       request(app).post('/auth/tutor/signup')
                   .set("Accept", "application/json")
@@ -156,6 +162,7 @@ describe('Tutors', function () {
                   .expect('Location', '/auth/login')
                   .end(done)
     })
+
     it('Should redirect to log in page if a wrong password is given', function (done) {
       request(app).post('/auth/tutor/login')
                   .set("Accept", "application/json")
@@ -167,6 +174,7 @@ describe('Tutors', function () {
                   .expect('Location', '/auth/login')
                   .end(done)
     })
+
     it('Should redirect to homepage if the correct email and password are provided', function (done) {
       request(app).post('/auth/tutor/login')
                   .set("Accept", "application/json")
@@ -178,5 +186,6 @@ describe('Tutors', function () {
                   .expect('Location', '/')
                   .end(done)
     })
+    
   })
 })
