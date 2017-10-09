@@ -12,12 +12,72 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <div class="list-group">
-      <% if (allTutors.length > 0) { %>
-        <% allTutors.forEach(function (tutor) { %>
-          <a class="list-group-item list-group-item-action" href="/tutors/<%= tutor.id %>"><%= tutor.name %></a>
-        <% }) %>
-      <% } %>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var filter = document.getElementById('filterTutor')
+          var filterResult = document.getElementById('filter-tutor-result')
+          var result = <%- JSON.stringify(allTutors) %>
+          var fitzroylist = <%- JSON.stringify(fitzroyTutor)%>
+          var preschoollist = <%- JSON.stringify(preschoolTutor)%>
+          var postfitzroylist = <%- JSON.stringify(postFitzroyTutor)%>
+          if (document.getElementById('filterTutor')) {
+            filter.onchange = function () {
+              if (filter.value === 'all') {
+                result = <%- JSON.stringify(allTutors) %>
+              }else if (filter.value === 'fitzroyTutor'){
+                result = <%- JSON.stringify(allTutors) %>
+                result = result.filter(function (tutor){
+                 if(fitzroylist.includes(tutor._id) == true){
+                       return tutor
+                    }
+                })
+               } else if (filter.value === 'preschoolTutor'){
+                 result = <%- JSON.stringify(allTutors) %>
+                 result = result.filter(function (tutor){
+                  if(preschoollist.includes(tutor._id) == true){
+                        return tutor
+                     }
+                 })
+                } else if (filter.value === 'postfitzroyTutor'){
+                  result = <%- JSON.stringify(allTutors) %>
+                  result = result.filter(function (tutor){
+                   if(postfitzroylist.includes(tutor._id) == true){
+                         return tutor
+                      }
+                  })
+                 }
+               filterResult.innerHTML = ''
+               result.forEach(function (tutor) {
+                 var a = document.createElement('a')
+                 a.classList.add('list-group-item', 'list-group-item-action')
+                 a.href = '/tutors/' + tutor._id
+                 a.appendChild(document.createTextNode(tutor.name))
+                 filterResult.appendChild(a)
+               })
+              }
+            }
+          })
+      </script>
+      <select id="filterTutor" class="custom-select mb-2">
+        <% if (allTutors.length > 0) { %>
+          <option value="all" selected>All tutors</option>
+        <% } %>
+        <% if (fitzroyTutor.length > 0) { %>
+          <option value="fitzroyTutor">Fitzroy Tutors</option>
+        <% } %>
+        <% if (preschoolTutor.length > 0) { %>
+          <option value="preschoolTutor">Preschool Tutors</option>
+        <% } %>
+        <% if (postFitzroyTutor.length > 0) { %>
+          <option value="postfitzroyTutor">Post-Fitzroy Tutors</option>
+        <% } %>
+      </select>
+      <div id="filter-tutor-result" class="list-group">
+        <% if (allTutors.length > 0) { %>
+    <% allTutors.forEach(function (tutor) { %>
+      <a class="list-group-item list-group-item-action" href="/tutors/<%= tutor.id %>"><%= tutor.name %></a>
+    <% }) %>
+  <% } %>
       </div>
     </div>
   </div>
