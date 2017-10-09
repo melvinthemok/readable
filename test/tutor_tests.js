@@ -14,7 +14,7 @@ describe('Tutors', function () {
       })
     })
 
-    after(function (done) {
+    afterEach(function (done) {
       mongoose.connection.collections.tutors.drop(function () {
         done()
       })
