@@ -134,7 +134,9 @@ describe('Tutors', function () {
   describe('3) Log in', function () {
     before(function(done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
-      tutor.save(done)
+      tutor.save(function(err, res) {
+        done()
+      })
     })
 
     after(function(done) {
