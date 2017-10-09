@@ -1,15 +1,10 @@
-var expect = require('chai').expect
 var should = require('chai').should()
 var chai = require('chai')
-var chaiAsPromised = require('chai-as-promised')
 var request = require('supertest')
 var mongoose = require('mongoose')
-mongoose.Promise = global.Promise
 var Tutor = require('../models/tutor')
 var createTutorWithFaultyAttr = require('./helpers/test_helpers').createTutorWithFaultyAttr
 var app = require('../index')
-
-chai.use(chaiAsPromised)
 
 describe('Tutors', function () {
   describe('1) Creation', function () {
@@ -36,7 +31,10 @@ describe('Tutors', function () {
       }
 
       var tutor = new Tutor(createTutorWithFaultyAttr(emptyFields))
-      tutor.save().should.eventually.be.rejectedWith(Error).notify(done)
+      tutor.save(function (err, data) {
+        err.should.be.an.instanceof(Error)
+        done()
+      })
     })
 
     it('Should fail to save tutor if custom validation is not met', function (done) {
@@ -51,22 +49,34 @@ describe('Tutors', function () {
       }
 
       var tutor = new Tutor(createTutorWithFaultyAttr(faultyFields))
-      tutor.save().should.eventually.be.rejectedWith(Error).notify(done)
+      tutor.save(function (err, data) {
+        err.should.be.an.instanceof(Error)
+        done()
+      })
     })
 
     it('Should successfully save tutor if the appropriate params are passed', function (done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
-      tutor.save().should.eventually.be.fulfilled.notify(done)
+      tutor.save(function (err, savedTutor) {
+        savedTutor.should.be.an.instanceof(Tutor)
+        done()
+      })
     })
 
     it('Should hash the given password', function (done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
-      tutor.save().should.eventually.have.property('password').to.not.equal('12345678').notify(done)
+      tutor.save(function (err, savedTutor) {
+        savedTutor.should.have.property('password').to.not.equal('12345678')
+        done()
+      })
     })
 
     it('Should be able to validate a given password', function (done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
-      tutor.save().should.eventually.have.property('validPassword').that.is.a('function').notify(done)
+      tutor.save(function (err, savedTutor) {
+        savedTutor.should.have.property('validPassword').that.is.a('function')
+        done()
+      })
     })
 
     it('Should return false if the wrong password is provided', function (done) {
@@ -87,7 +97,6 @@ describe('Tutors', function () {
   })
 
   describe('2) Sign up', function () {
-
     beforeEach(function (done) {
       mongoose.connection.collections.tutors.drop(function () {
         done()
@@ -102,7 +111,7 @@ describe('Tutors', function () {
 
     it('Should redirect to sign up page if an invalid field is given', function (done) {
       request(app).post('/auth/tutor/signup')
-                  .set("Accept", "application/json")
+                  .set('Accept', 'application/json')
                   .type('form')
                   .send(Object.assign(
                     createTutorWithFaultyAttr({ email: '' }),
@@ -114,7 +123,7 @@ describe('Tutors', function () {
 
     it('Should redirect to sign up page if an incorrect signup passphrase is given', function (done) {
       request(app).post('/auth/tutor/signup')
-                  .set("Accept", "application/json")
+                  .set('Accept', 'application/json')
                   .type('form')
                   .send(Object.assign(
                     createTutorWithFaultyAttr({}),
@@ -125,12 +134,13 @@ describe('Tutors', function () {
     })
 
     it('Should redirect to homepage if tutor is successfully saved', function (done) {
+      var signUpPassword = process.env.SIGNUP_PASSWORD
       request(app).post('/auth/tutor/signup')
-                  .set("Accept", "application/json")
+                  .set('Accept', 'application/json')
                   .type('form')
                   .send(Object.assign(
                     createTutorWithFaultyAttr({}),
-                    { tutorSignUpAttempt: 'testingpassphrase' })
+                    { tutorSignUpAttempt: signUpPassword })
                   )
                   .expect('Location', '/')
                   .end(done)
@@ -138,14 +148,14 @@ describe('Tutors', function () {
   })
 
   describe('3) Log in', function () {
-    before(function(done) {
+    before(function (done) {
       var tutor = new Tutor(createTutorWithFaultyAttr({}))
-      tutor.save(function(err, res) {
+      tutor.save(function (err, res) {
         done()
       })
     })
 
-    after(function(done) {
+    after(function (done) {
       mongoose.connection.collections.tutors.drop(function () {
         done()
       })
@@ -153,7 +163,7 @@ describe('Tutors', function () {
 
     it('Should redirect to log in page if a wrong email is given', function (done) {
       request(app).post('/auth/tutor/login')
-                  .set("Accept", "application/json")
+                  .set('Accept', 'application/json')
                   .type('form')
                   .send({
                     email: 'wrongemail@readable.com',
@@ -165,7 +175,7 @@ describe('Tutors', function () {
 
     it('Should redirect to log in page if a wrong password is given', function (done) {
       request(app).post('/auth/tutor/login')
-                  .set("Accept", "application/json")
+                  .set('Accept', 'application/json')
                   .type('form')
                   .send({
                     email: 'tutor@readable.com',
@@ -177,7 +187,7 @@ describe('Tutors', function () {
 
     it('Should redirect to homepage if the correct email and password are provided', function (done) {
       request(app).post('/auth/tutor/login')
-                  .set("Accept", "application/json")
+                  .set('Accept', 'application/json')
                   .type('form')
                   .send({
                     email: 'tutor@readable.com',
@@ -186,6 +196,5 @@ describe('Tutors', function () {
                   .expect('Location', '/')
                   .end(done)
     })
-    
   })
 })
