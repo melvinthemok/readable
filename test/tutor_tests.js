@@ -110,12 +110,13 @@ describe('Tutors', function () {
     })
 
     it('Should redirect to sign up page if an invalid field is given', function (done) {
+      var signUpPassword = process.env.SIGNUP_PASSWORD
       request(app).post('/auth/tutor/signup')
                   .set('Accept', 'application/json')
                   .type('form')
                   .send(Object.assign(
                     createTutorWithFaultyAttr({ email: '' }),
-                    { tutorSignUpAttempt: 'testingpassphrase' })
+                    { tutorSignUpAttempt: signUpPassword })
                   )
                   .expect('Location', '/auth/tutor/signup')
                   .end(done)
