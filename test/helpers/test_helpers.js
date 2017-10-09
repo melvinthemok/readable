@@ -1,5 +1,5 @@
-
-function faultyTutorAttr (attributesToChange) {
+// attributesToChange must be an object
+function createTutorWithFaultyAttr (attributesToChange) {
   var newTutor = {
                       email: 'tutor@readable.com',
                       name: 'new tutor',
@@ -21,5 +21,5 @@ function faultyTutorAttr (attributesToChange) {
 }
 
 module.exports = {
-  faultyTutorAttr: faultyTutorAttr
+  createTutorWithFaultyAttr: createTutorWithFaultyAttr
 }
