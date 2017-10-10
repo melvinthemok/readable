@@ -34,7 +34,7 @@
 
 1. Set up app as described above.
 
-3. Run tests with
+2. Run tests with
 
    `yarn test`
 
