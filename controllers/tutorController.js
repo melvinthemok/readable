@@ -38,8 +38,8 @@ var tutorController = {
                     })
                   }
                 }) // PostFitzroy fetch
-              } // Preschool else
-            }) // Preschool fetch
+              } // PreSchool else
+            }) // PreSchool fetch
           } // Fitzroy else
         }) // Fitzroy fetch
       } // Tutor else
