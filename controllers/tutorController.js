@@ -11,25 +11,25 @@ var tutorController = {
         req.flash('error', err.toString())
         res.redirect('/')
       } else {
-        Fitzroy.distinct('attendance.tutor', function (err, fitzroyTutor) {
+        Fitzroy.distinct('attendance.tutor', function (err, fitzroyTutors) {
           if (err) {
             req.flash('error', err.toString())
             res.redirect('/')
           } else {
-            PreSchool.distinct('attendance.tutor', function (err, preschoolTutor) {
+            PreSchool.distinct('attendance.tutor', function (err, preSchoolTutors) {
               if (err) {
                 req.flash('error', err.toString())
                 res.redirect('/')
               } else {
-                PostFitzroy.distinct('attendance.tutor', function (err, postFitzroyTutor) {
+                PostFitzroy.distinct('attendance.tutor', function (err, postFitzroyTutors) {
                   if (err) {
                     req.flash('error', err.toString())
                     res.redirect('/')
                   } else {
                     res.render('tutors/index', {
-                      fitzroyTutor: fitzroyTutor,
-                      preschoolTutor: preschoolTutor,
-                      postFitzroyTutor: postFitzroyTutor,
+                      fitzroyTutors: fitzroyTutors,
+                      preSchoolTutors: preSchoolTutors,
+                      postFitzroyTutors: postFitzroyTutors,
                       allTutors: allTutors.sort(function (tutor1, tutor2) {
                         if (tutor1.name < tutor2.name) return -1
                         else if (tutor1.name > tutor2.name) return 1
@@ -37,13 +37,13 @@ var tutorController = {
                       })
                     })
                   }
-                }) // Preschool fetch
+                }) // PostFitzroy fetch
               } // Preschool else
             }) // Preschool fetch
           } // Fitzroy else
-        })// Fitzroy fetch
-      }// Tutor else
-    })// Tutor.find
+        }) // Fitzroy fetch
+      } // Tutor else
+    }) // Tutor.find
   },
 
   show: function (req, res) {
