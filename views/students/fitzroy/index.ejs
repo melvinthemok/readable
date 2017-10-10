@@ -16,17 +16,18 @@
         document.addEventListener('DOMContentLoaded', function () {
           var filter = document.getElementById('filter')
           var filterResult = document.getElementById('filter-result')
-          var result = <%- JSON.stringify(allFitzroys) %>
+          var all = <%- JSON.stringify(allFitzroys) %>
+          var result
           if (document.getElementById('filter')) {
             filter.onchange = function () {
               if (this.value === 'all') {
-                result = <%- JSON.stringify(allFitzroys) %>
+                result = all
               } else if (this.value === 'oneOnOne') {
-                result = result.filter(function (fitzroy) {
+                result = all.filter(function (fitzroy) {
                   return fitzroy.oneOnOne
                 })
               } else if (this.value === 'intervention') {
-                result = result.filter(function(fitzroy) {
+                result = all.filter(function (fitzroy) {
                   return fitzroy.intervention
                 })
               }
