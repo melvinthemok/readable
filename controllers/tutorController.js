@@ -11,15 +11,39 @@ var tutorController = {
         req.flash('error', err.toString())
         res.redirect('/')
       } else {
-        res.render('tutors/index', {
-          allTutors: allTutors.sort(function (tutor1, tutor2) {
-            if (tutor1.name < tutor2.name) return -1
-            else if (tutor1.name > tutor2.name) return 1
-            else return 0
-          })
-        })
-      }
-    })
+        Fitzroy.distinct('attendance.tutor', function (err, fitzroyTutors) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/')
+          } else {
+            PreSchool.distinct('attendance.tutor', function (err, preSchoolTutors) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/')
+              } else {
+                PostFitzroy.distinct('attendance.tutor', function (err, postFitzroyTutors) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/')
+                  } else {
+                    res.render('tutors/index', {
+                      fitzroyTutors: fitzroyTutors,
+                      preSchoolTutors: preSchoolTutors,
+                      postFitzroyTutors: postFitzroyTutors,
+                      allTutors: allTutors.sort(function (tutor1, tutor2) {
+                        if (tutor1.name < tutor2.name) return -1
+                        else if (tutor1.name > tutor2.name) return 1
+                        else return 0
+                      })
+                    })
+                  }
+                }) // PostFitzroy fetch
+              } // PreSchool else
+            }) // PreSchool fetch
+          } // Fitzroy else
+        }) // Fitzroy fetch
+      } // Tutor else
+    }) // Tutor.find
   },
 
   show: function (req, res) {
@@ -78,7 +102,7 @@ var tutorController = {
                           allPreSchools: allPreSchools.filter(function (preSchool) {
                             return (preSchool.attendance.some(function (indivAttendance) {
                               if (indivAttendance.tutor) {
-                                return indivAttendance.tutor.id.toString() ===   chosenTutor.id.toString()
+                                return indivAttendance.tutor.id.toString() === chosenTutor.id.toString()
                               }
                             }) || preSchool.preferredTutors.some(function (tutor) {
                               return tutor.equals(chosenTutor.id)

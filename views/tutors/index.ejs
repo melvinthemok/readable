@@ -12,12 +12,72 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <div class="list-group">
-      <% if (allTutors.length > 0) { %>
-        <% allTutors.forEach(function (tutor) { %>
-          <a class="list-group-item list-group-item-action" href="/tutors/<%= tutor.id %>"><%= tutor.name %></a>
-        <% }) %>
-      <% } %>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var filter = document.getElementById('filterTutor')
+          var filterResult = document.getElementById('filter-tutor-result')
+          var all = <%- JSON.stringify(allTutors) %>
+          var fitzroyTutorsList = <%- JSON.stringify(fitzroyTutors)%>
+          var preSchoolTutorsList = <%- JSON.stringify(preSchoolTutors)%>
+          var postFitzroyTutorsList = <%- JSON.stringify(postFitzroyTutors)%>
+          var result
+          if (document.getElementById('filterTutor')) {
+            filter.onchange = function () {
+              if (this.value === 'all') {
+                result = all
+              } else if (this.value === 'fitzroyTutors') {
+                result = all.filter(function (tutor) {
+                  if (fitzroyTutorsList.includes(tutor._id)) {
+                    return tutor
+                  }
+                })
+              } else if (this.value === 'preSchoolTutors') {
+                result = all.filter(function (tutor) {
+                  if (preSchoolTutorsList.includes(tutor._id)) {
+                    return tutor
+                  }
+                })
+              } else if (this.value === 'postFitzroyTutors') {
+                result = all.filter(function (tutor) {
+                  if (postFitzroyTutorsList.includes(tutor._id)) {
+                    return tutor
+                  }
+                })
+              }
+              filterResult.innerHTML = ''
+              result.forEach(function (tutor) {
+                var a = document.createElement('a')
+                a.classList.add('list-group-item', 'list-group-item-action')
+                a.href = '/tutors/' + tutor._id
+                a.appendChild(document.createTextNode(tutor.name))
+                filterResult.appendChild(a)
+              })
+            }
+          }
+        })
+      </script>
+      <select id="filterTutor" class="custom-select mb-2">
+        <% if (allTutors.length > 0) { %>
+          <option value="all" selected>All tutors</option>
+        <% } %>
+        <% if (fitzroyTutors.length > 0) { %>
+          <option value="fitzroyTutors">Fitzroy tutors</option>
+        <% } %>
+        <% if (preSchoolTutors.length > 0) { %>
+          <option value="preSchoolTutors">Pre-school tutors</option>
+        <% } %>
+        <% if (postFitzroyTutors.length > 0) { %>
+          <option value="postFitzroyTutors">Post-Fitzroy tutors</option>
+        <% } %>
+      </select>
+      <div id="filter-tutor-result" class="list-group">
+        <% if (allTutors.length > 0) { %>
+          <% allTutors.forEach(function (tutor) { %>
+            <a class="list-group-item list-group-item-action" href="/tutors/<%= tutor.id %>">
+              <%= tutor.name %>
+            </a>
+          <% }) %>
+        <% } %>
       </div>
     </div>
   </div>
