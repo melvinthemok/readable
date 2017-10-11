@@ -30,6 +30,14 @@
 
    `yarn dev-start`
 
+## Testing
+
+1. Set up app as described above.
+
+2. Run tests with
+
+   `yarn test`
+
 ## Deployment
 
 1. Install Heroku CLI
@@ -43,7 +51,7 @@
    `Enter your heroku credentials`
 
    `Email: readableweb@gmail.com`
-   
+
    `Password (typing will be hidden): [password]`
 
 3. Deploy
