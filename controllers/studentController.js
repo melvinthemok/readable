@@ -48,10 +48,25 @@ var studentController = {
             req.flash('error', err.toString())
             res.redirect('/students/pre-school')
           } else {
-            res.render('students/preSchool/show', {
-              chosenPreSchool: chosenPreSchool,
-              formatDateShort: formatDateShort
-            })
+            Comment.find({})
+              .populate('date')
+              .populate('preSchools')
+              .exec(function (err, allComments) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/pre-school')
+                } else {
+                  res.render('students/preSchool/show', {
+                    chosenPreSchool: chosenPreSchool,
+                    allComments: allComments.filter(function (comment) {
+                      return comment.preSchools.some(function(preSchool) {
+                        return preSchool.equals(chosenPreSchool.id)
+                      })
+                    }),
+                    formatDateShort: formatDateShort
+                  })
+                }
+              })
           }
         })
     },
