@@ -151,7 +151,7 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
     <form action="/history/<%= chosenSaturdate._id %>?_method=DELETE" method="POST">
-      <button class="btn btn-danger mt-5" type="submit" style="cursor:pointer;">Delete this session</button>
+      <button class="btn btn-danger mt-5" type="submit" <%= allPreSchools.length > 0 || allFitzroys.length > 0 || allPostFitzroys.length > 0 ? 'disabled' : 'style=cursor:pointer;' %>>Delete this session</button>
     </form>
     </div>
   </div>
