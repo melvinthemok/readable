@@ -1,0 +1,23 @@
+dist: trusty
+sudo: false
+language: node_js
+node_js:
+- '6'
+services:
+- mongodb
+cache: yarn
+notifications:
+  slack:
+    rooms:
+      secure: keWPbmcY6EfAIpyNzC/fBaJKCR3VDv7QZ43ED2XrlkXi2vy7Qe6g4Xbujl1mYC4dOPXrufRNl0NfyYyVEsDwtDI669aqIXvBQcwnIM+nOm6FDs4BXpxatOiPg49HtbkiEa/aog+FVmT45dHdDsbrDaoKHNyte3evnqStnohxU6fn6dZj+wMUbhLOhXQPAFmlFWwQEbZKRCHHa4o/F9coqmRlPsNyBhJkCv5u6l193ExDByLS/l79UYNuKo6fPH6zZD8db8+HoiO5c5FUT7WvzCbw5tBLk+2MvoAQg2Fyd56CxLKrvZM7bn46/yB+ObCtLeT6Xmy5pVnMeGrZSkpwW/Pw9HNMOpxOPnZW6424SJkI5mzrnFM1dS3YxPI6YPdnd4Jjszh1P0lru4iFOlUELeehLCGQzsg5mnl3s5LBTu6vAj8IR0VtgopGd6RH+KhqJ1af0mjtiHNwmscmcq8mMF71JVXqMy1rBO3E3rlJlxunY416NM08ybuHmUsiGcwIam0ohwfoC3FEAkSIA6i/pGcqXRYWd6eJ1kGf4T2wgxdFiN8gadIMRexa2nTcAkamxrr607RgSeV0uaCggRfhLzeDvZ9W6d0miuurNOMHHxcR8DevKd4ihpUV11cuxc6ZtiEX7oRj2K58rEEciDFHqmbBc6u5UBaK4wwPTrzV690=
+    template:
+    - Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of %{branch}
+      by %{author} %{result} in %{duration}
+    on_pull_requests: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: BtcTCtpy4LlzK5wsfzsyOY3FIUkpt6T/iBt8cJN3H387DmDu6PIdPQ+Ng1hh75NQsJzBFIqb69vbKk/b8Fq3SG4+S3mN+obHSUhSSHCncVClniRpIga0KwR+MA6+/WrVU/+cbHu7Sm5l6gqOoKY+lfWzX2BD17VMXZnaVwkrValnS007S4Jr9ljOb9MF4d15ZxiV//+cWkQkAyq9vy/5P3nGMR7CAb7u9Xq0UbLYgqbDZq4tnbcSXfGdUEiJi84GvmgPrpU9E3CXNHrVsdjGpn0Jh27phQczu1Th17GnBsdejJLbMTJWsVAoPURDZI8W4DJvUyoGWoDTTxOgXMYSAj6sSgRorXTH4tsVHsw0TqFNBA68cklobZDycrxZc3L77mTS2M8cNqyD6hObz4S2gTXOVUS61VHrviz23eD8QljYZRr4eSBHtGuLyOvj0jWt2AxVj+8RHQy1QoTZ/iXkpdb4+ostYgO7/A1rSkvbH6YFWJ4Sz/eWL4WJ9kb9SPhTr58tGSNXQW8m1NcsooyKy4nfKYjqfY+Qgv/jW/AqRrvNGrSPtYEF8sljIVl8IUhZA1OqsoiFvYGH0Fn53UXnGQclw5QPELiEal6rk80iqLe+rEdW/fJaeiWihRkxbgkb4hiEZXisuL8XJVFLHVNROqPmYGwVQyVJD+fSCjXZka0=
+  app: readably
+  on:
+    repo: melvinthemok/readable
