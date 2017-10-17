@@ -44,9 +44,30 @@
   <div class="col-sm-6 offset-sm-3 my-5">
     <div class="row">
       <a class="btn btn-primary mr-3 mb-3" href="/comments/edit/<%= chosenComment._id %>">Edit this comment</a>
-      <form action="/comments/<%= chosenComment._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-danger" type="submit" style="cursor:pointer;">Delete this comment</button>
-      </form>
+      <button class="btn btn-danger mb-3" type="button" style="cursor:pointer;" data-toggle="modal" data-target="#deleteModal">
+        Delete this comment
+      </button>
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Warning</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Once deleted, this comment cannot be recovered.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" style="cursor:pointer;"data-dismiss="modal">Cancel</button>
+              <form action="/comments/<%= chosenComment._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger" type="submit" style="cursor:pointer;">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
