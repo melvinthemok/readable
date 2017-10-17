@@ -103,26 +103,32 @@
                   <% chosenFitzroy.attendance.filter(function (bookAttendance) { %>
                     <% return bookAttendance.book === indivBook %>
                   <% }).forEach(function (indivAttendance) { %>
-                    <div class="list-group-item justify-content-between">
+                    <div class="list-group-item justify-content-start">
                       <% if (!indivAttendance.completed) { %>
                         <% badgeStyle = "badge-warning" %>
                       <% } else { %>
                         <% badgeStyle = "badge-success" %>
                       <% } %>
-                      <a href="/history/<%= indivAttendance.date.id %>">
-                        <span class="badge badge-pill <%= badgeStyle %>">
-                          <%= formatDateShort(indivAttendance.date.date) %>
-                        </span>
-                      </a>
-                      <% allComments.filter(function (comment) { %>
-                        <% return comment.date.id === indivAttendance.date.id %>
-                      <% }).forEach(function (comment) { %>
-                        <a href="/comments/<%= comment.id %>" data-toggle="tooltip" title="<%= comment.contents %>">
-                          <span class="badge badge-pill badge-info">
-                            ' '
+                      <div style="flex-grow: 1;">
+                        <a href="/history/<%= indivAttendance.date.id %>" >
+                          <span class="badge badge-pill <%= badgeStyle %>">
+                            <%= formatDateShort(indivAttendance.date.date) %>
                           </span>
                         </a>
-                      <% }) %>
+                      </div>
+                      <% if (allComments.length > 0) { %>
+                        <% allComments.filter(function (comment) { %>
+                          <% return comment.date.id === indivAttendance.date.id %>
+                        <% }).forEach(function (comment) { %>
+                          <div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
+                            <a href="/comments/<%= comment.id %>">
+                              <span class="badge badge-pill badge-info" data-toggle="tooltip" title="<%= comment.contents %>" >
+                                ' '
+                              </span>
+                            </a>
+                          </div>
+                        <% }) %>
+                      <% } %>
                       <% if (indivAttendance.tutor) { %>
                         <a href="/tutors/<%= indivAttendance.tutor.id %>">
                           <span class="badge badge-pill badge-default">

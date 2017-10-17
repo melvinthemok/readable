@@ -88,19 +88,33 @@
           <div class="list-group">
             <% if (chosenPostFitzroy.attendance.length > 0) { %>
               <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
-                <div class="list-group-item justify-content-between">
-                  <a href="/history/<%= indivAttendance.date.id %>">
-                    <span class="badge badge-pill badge-default">
-                      <%= formatDateShort(indivAttendance.date.date) %>
-                    </span>
-                  </a>
+                <div class="list-group-item justify-content-start">
+                  <div style="flex-grow: 1;">
+                    <a href="/history/<%= indivAttendance.date.id %>" style="flex-grow: 1;">
+                      <span class="badge badge-pill badge-default">
+                        <%= formatDateShort(indivAttendance.date.date) %>
+                      </span>
+                    </a>
+                  </div>
+                  <% if (allComments.length > 0) { %>
+                    <% allComments.filter(function (comment) { %>
+                      <% return comment.date.id === indivAttendance.date.id %>
+                    <% }).forEach(function (comment) { %>
+                      <div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
+                        <a href="/comments/<%= comment.id %>" style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
+                          <span class="badge badge-pill badge-info" data-toggle="tooltip" title="<%= comment.contents %>" >
+                            ' '
+                          </span>
+                        </a>
+                      </div>
+                    <% }) %>
+                  <% } %>
                   <% if (indivAttendance.tutor) { %>
-                    &nbsp &nbsp
-                      <a href="/tutors/<%= indivAttendance.tutor.id %>">
-                        <span class="badge badge-pill badge-default">
-                          <%= indivAttendance.tutor.name %>
-                        </span>
-                      </a>
+                    <a href="/tutors/<%= indivAttendance.tutor.id %>">
+                      <span class="badge badge-pill badge-default">
+                        <%= indivAttendance.tutor.name %>
+                      </span>
+                    </a>
                   <% } %>
                 </div>
               <% }) %>
