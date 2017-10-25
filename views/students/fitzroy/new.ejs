@@ -104,9 +104,10 @@
             </label>
           </div>
         </div>
-        <div class="form-group">
+        <div id="general-comment-form-group" class="form-group">
           <label for="generalComment" class="mb-0">Any general comment?</label><br>
           <textarea id="generalComment" class="form-control" name="generalComment" rows="5" placeholder="Please leave this space blank if you have none"></textarea>
+          <small id="generalCommentMessage" class="form-text form-control-feedback"></small>
         </div>
         <% if (allTutors.length > 0) { %>
         <div class="form-group">
