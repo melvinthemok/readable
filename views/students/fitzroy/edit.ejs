@@ -13,12 +13,12 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <form action="/students/fitzroy/update/<%= chosenFitzroy._id %>?_method=PUT" method="POST" class="mb-5">
-        <div id="name-form-group" class="form-group">
+        <div id="name-form-group" class="form-group required-group">
           <label for="name">Name</label>
           <input id="name" class="form-control" type="text" name="name" value="<%= chosenFitzroy.name %>">
           <small id="nameLengthMessage" class="form-text form-control-feedback"></small>
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="gender">Gender</label><br>
           <select class="custom-select" id="gender" name="gender">
             <% if (chosenFitzroy.gender === 'male') { %>
@@ -30,7 +30,7 @@
             <% } %>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="age">Age</label><br>
           <select class="custom-select" id="age" name="age">
             <% for (var i = 5; i < 21; i++) { %>
@@ -122,7 +122,7 @@
             <% } %>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="schoolLevel">School level</label><br>
           <select class="custom-select" id="schoolLevel" name="schoolLevel">
             <% if (chosenFitzroy.schoolLevel === 'Pre-primary') { %>
@@ -146,12 +146,12 @@
             <% } %>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="startDate" class="mb-0">When did this student join ReadAble?</label><br>
           <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
           <input class="form-control" id="startDate" type="date" name="startDate" value="<%= chosenFitzroy.startDate.getFullYear() %>-<%= (chosenFitzroy.startDate.getMonth()+1).toString().length < 2 ? '0' + (chosenFitzroy.startDate.getMonth()+1).toString() : (chosenFitzroy.startDate.getMonth()+1).toString() %>-<%= (chosenFitzroy.startDate.getDate()).toString().length < 2 ? '0' + (chosenFitzroy.startDate.getDate()).toString() : (chosenFitzroy.startDate.getDate()).toString() %>">
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="oneOnOne">Needs one-on-one attention?</label><br>
           <div class="form-check">
             <label class="form-check-label">
@@ -174,7 +174,7 @@
             </label>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group required-group">
           <label for="intervention">Requires intervention owing to frequent absenteeism?</label><br>
           <div class="form-check">
             <label class="form-check-label">
@@ -396,7 +396,9 @@
 </div>
 <%
   var javaScriptFiles = [
-    'nameLengthCheck'
+    'nameLengthCheck',
+    'generalCommentLengthCheck',
+    'allStudentChecksToSubmit'
   ]
   javaScriptFiles.forEach(function (file) {
 %>
