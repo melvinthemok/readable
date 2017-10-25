@@ -109,6 +109,7 @@
           <textarea id="generalComment" class="form-control" name="generalComment" rows="5" placeholder="Please leave this space blank if you have none"></textarea>
           <small id="generalCommentMessage" class="form-text form-control-feedback"></small>
         </div>
+        <% if (allTutors.length > 0) { %>
         <div class="form-group">
           <label class="control-label">Preferred tutor(s) (up to 3)</label><br>
           <% allTutors.forEach(function (tutor) { %>
@@ -120,6 +121,7 @@
             </div>
           <% }) %>
         </div>
+        <% } %>
         <% if (allPostFitzroys.length > 0) { %>
         <div class="form-group">
           <label class="control-label">Any student(s) to avoid?</label><br>
