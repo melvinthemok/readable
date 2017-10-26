@@ -17,7 +17,7 @@ var studentController = {
   },
 
   preSchool: {
-    
+
     index: function (req, res) {
       PreSchool.find({}, function (err, allPreSchools) {
         if (err) {
@@ -56,15 +56,36 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/pre-school')
                 } else {
-                  res.render('students/preSchool/show', {
-                    chosenPreSchool: chosenPreSchool,
-                    allComments: allComments.filter(function (comment) {
-                      return comment.preSchools.some(function(preSchool) {
-                        return preSchool.equals(chosenPreSchool.id)
-                      })
-                    }),
-                    formatDateShort: formatDateShort
-                  })
+                  PreSchool.find({})
+                    .populate({
+                      path: 'attendance.date',
+                      model: 'Saturdate'
+                    })
+                    .exec(function (err, allPreSchools) {
+                      if (err) {
+                        req.flash('error', err.toString())
+                        res.redirect('/students/pre-school')
+                      } else {
+                        var totalSession = {}
+                        allPreSchools.forEach(function (preSchoolSession) {
+                          preSchoolSession.attendance.forEach(function (attDate) {
+                            if (attDate.date.date >= chosenPreSchool.startDate) {
+                              totalSession[attDate.date.date] = 1
+                            }
+                          })
+                        })
+                        res.render('students/preSchool/show', {
+                          chosenPreSchool: chosenPreSchool,
+                          totalPreSchoolSession: Object.keys(totalSession).length,
+                          allComments: allComments.filter(function (comment) {
+                            return comment.preSchools.some(function (preSchool) {
+                              return preSchool.equals(chosenPreSchool.id)
+                            })
+                          }),
+                          formatDateShort: formatDateShort
+                        })
+                      }
+                    })
                 }
               })
           }
@@ -268,7 +289,7 @@ var studentController = {
           }
         )
       })
-    }    
+    }
   },
 
   fitzroy: {
@@ -311,14 +332,35 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/fitzroy')
                 } else {
-                  res.render('students/fitzroy/show', {
-                    chosenFitzroy: chosenFitzroy,
-                    allComments: allComments.filter(function (comment) {
-                      return comment.fitzroys.some(function(fitzroy) {
-                        return fitzroy.equals(chosenFitzroy.id)
+                  Fitzroy.find({})
+                  .populate({
+                    path: 'attendance.date',
+                    model: 'Saturdate'
+                  })
+                  .exec(function (err, allFitzroys) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/fitzroy')
+                    } else {
+                      var totalSession = {}
+                      allFitzroys.forEach(function (fitzroySession) {
+                        fitzroySession.attendance.forEach(function (attDate) {
+                          if (attDate.date.date >= chosenFitzroy.startDate) {
+                            totalSession[attDate.date.date] = 1
+                          }
+                        })
                       })
-                    }),
-                    formatDateShort: formatDateShort
+                      res.render('students/fitzroy/show', {
+                        chosenFitzroy: chosenFitzroy,
+                        totalFitzroySession: Object.keys(totalSession).length,
+                        allComments: allComments.filter(function (comment) {
+                          return comment.fitzroys.some(function (fitzroy) {
+                            return fitzroy.equals(chosenFitzroy.id)
+                          })
+                        }),
+                        formatDateShort: formatDateShort
+                      })
+                    }
                   })
                 }
               })
@@ -545,7 +587,7 @@ var studentController = {
   },
 
   postFitzroy: {
-    
+
     index: function (req, res) {
       PostFitzroy.find({}, function (err, allPostFitzroys) {
         if (err) {
@@ -584,14 +626,35 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/post-fitzroy')
               } else {
-                res.render('students/postFitzroy/show', {
-                  chosenPostFitzroy: chosenPostFitzroy,
-                  allComments: allComments.filter(function (comment) {
-                    return comment.postFitzroys.some(function(postFitzroy) {
-                      return postFitzroy.equals(chosenPostFitzroy.id)
+                PostFitzroy.find({})
+                .populate({
+                  path: 'attendance.date',
+                  model: 'Saturdate'
+                })
+                .exec(function (err, allPostFitzroys) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/post-fitzroy')
+                  } else {
+                    var totalSession = {}
+                    allPostFitzroys.forEach(function (postFitzroySession) {
+                      postFitzroySession.attendance.forEach(function (attDate) {
+                        if (attDate.date.date >= chosenPostFitzroy.startDate) {
+                          totalSession[attDate.date.date] = 1
+                        }
+                      })
                     })
-                  }),
-                  formatDateShort: formatDateShort
+                    res.render('students/postFitzroy/show', {
+                      chosenPostFitzroy: chosenPostFitzroy,
+                      totalPostFitzroySession: Object.keys(totalSession).length,
+                      allComments: allComments.filter(function (comment) {
+                        return comment.postFitzroys.some(function (postFitzroy) {
+                          return postFitzroy.equals(chosenPostFitzroy.id)
+                        })
+                      }),
+                      formatDateShort: formatDateShort
+                    })
+                  }
                 })
               }
             })
