@@ -14,6 +14,9 @@
 					<span class="badge badge-pill badge-primary"><%= chosenTutor.age %></span>
 					<span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenTutor.startDate) %></span>
 					<span class="badge badge-pill badge-primary">Experience: <%= chosenTutor.experience %></span>
+					<% if (totalTutorSession > 0) { %>
+						<span class="badge badge-pill badge-primary"><%= totalTutorSession %> session<%= totalTutorSession > 1 ? 's':''%> attended </span>
+						<% } %>
 				</p>
 			</div>
 		</div>
