@@ -1,200 +1,234 @@
 <div class="jumbotron" style="background-color:#d9edf7">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 offset-sm-3">
-        <h2 class="display-4"><%= chosenTutor.name %></h2>
-        <hr class="my-4">
-        <p class="mb-1"><a href="/tutors">tutor</a></p>
-        <p>
-          <a href="mailto:<%= chosenTutor.email %>?cc=pam.tham@gmail.com&subject=Hello%20from%20ReadAble" style="text-decoration: none;">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 offset-sm-3">
+				<h2 class="display-4"><%= chosenTutor.name %></h2>
+				<hr class="my-4">
+				<p class="mb-1"><a href="/tutors">tutor</a></p>
+				<p>
+					<a href="mailto:<%= chosenTutor.email %>?cc=pam.tham@gmail.com&subject=Hello%20from%20ReadAble" style="text-decoration: none;">
             <span class="badge badge-pill badge-primary"><%= chosenTutor.email %></span>
           </a>
-          <span class="badge badge-pill badge-primary"><%= chosenTutor.phone %></span>
-          <span class="badge badge-pill badge-primary"><%= chosenTutor.gender %></span>
-          <span class="badge badge-pill badge-primary"><%= chosenTutor.age %></span>
-          <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenTutor.startDate) %></span>
-        </p>
-        <p><%= chosenTutor.experience %></p>
-      </div>
-    </div>
-  </div>
+					<span class="badge badge-pill badge-primary"><%= chosenTutor.phone %></span>
+					<span class="badge badge-pill badge-primary"><%= chosenTutor.gender %></span>
+					<span class="badge badge-pill badge-primary"><%= chosenTutor.age %></span>
+					<span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenTutor.startDate) %></span>
+					<span class="badge badge-pill badge-primary">Experience: <%= chosenTutor.experience %></span>
+					<% if (totalTutorSession > 0) { %>
+						<span class="badge badge-pill badge-primary"><%= totalTutorSession %> session<%= totalTutorSession > 1 ? 's':''%> attended </span>
+						<% } %>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="container mb-5">
-  <div class="row">
-    <div class="col-sm-8 offset-sm-2">
-      <a href="/students/pre-school"><h4 class="mt-5 mb-4">pre-school</h4></a>
-      <% if (allPreSchools.length > 0) { %>
-        <p>
-          <% var psPreferred = allPreSchools.filter(function (preSchool) { %>
-            <% return preSchool.preferredTutors.some(function (tutor) { %>
-              <% return tutor.equals(chosenTutor.id) %>
-            <% }) %>
-          <% }) %>
-          <% if (psPreferred.length > 0) { %>
-            This tutor is <strong>preferred</strong> by
-            <% psPreferred.forEach(function (psP, index, array) { %>
-              <% if (array.length === 1 || index === array.length - 2) { %>
-                <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>
-              <% } else if (index === array.length - 1) { %>
-                and <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>
-              <% } else { %>
-                <a href="/students/pre-school/<%= psP.id %>"><%= psP.name %></a>,
-              <% } %>
-            <% }) %>
-          <% } %>
-        </p>
-        <% var psUniqueDates = [...new Set(allPreSchools.map(function (preSchool) { %>
-          <% return preSchool.attendance.map(function (indivAtten) { %>
-            <% return indivAtten.date %>
-          <% }) %>
-        <% }).reduce(function (a, b) { %>
-          <% return a.concat(b) %>
-        <% }, []))] %>
-        <% psUniqueDates.forEach(function (psUniqueDate) { %>
-          <div class="d-flex flex-wrap justify-content-left mb-4">
-            <div class="card m-2" style="width: 21rem;">
-              <div class="card-header">
-                <a href="/history/<%= psUniqueDate.id %>"><%= formatDateShort(psUniqueDate.date) %></a>
-              </div>
-              <div class="card-block">
-                <div class="list-group">
-                <% var thisDatePreSchools = allPreSchools.filter(function (preSchool) { %>
-                  <% return preSchool.attendance.some(function (indivAtten) { %>
-                    <% return indivAtten.date === psUniqueDate %>
-                  <% }) %>
-                <% }) %>
-                <% thisDatePreSchools.forEach(function (thisDatePreSchool) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/pre-school/<%= thisDatePreSchool.id %>"><%= thisDatePreSchool.name %></a>
-                <% }) %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p>No sessions yet</p>
-      <% } %>
-      <a href="/students/fitzroy"><h4 class="mt-5 mb-4">fitzroy</h4></a>
-      <% if (allFitzroys.length > 0) { %>
-        <p>
-          <% var fPreferred = allFitzroys.filter(function (fitzroy) { %>
-            <% return fitzroy.preferredTutors.some(function (tutor) { %>
-              <% return tutor.equals(chosenTutor.id) %>
-            <% }) %>
-          <% }) %>
-          <% if (fPreferred.length > 0) { %>
-            This tutor is <strong>preferred</strong> by
-            <% fPreferred.forEach(function (fP, index, array) { %>
-              <% if (array.length === 1 || index === array.length - 2) { %>
-                <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>
-              <% } else if (index === array.length - 1) { %>
-                and <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>
-              <% } else { %>
-                <a href="/students/fitzroy/<%= fP.id %>"><%= fP.name %></a>,
-              <% } %>
-            <% }) %>
-          <% } %>
-        </p>
-        <% var fUniqueDates = [...new Set(allFitzroys.map(function (fitzroy) { %>
-          <% return fitzroy.attendance.map(function (indivAtten) { %>
-            <% return indivAtten.date %>
-          <% }) %>
-        <% }).reduce(function (a, b) { %>
-          <% return a.concat(b) %>
-        <% }, []))] %>
-        <% fUniqueDates.forEach(function (fUniqueDate) { %>
-          <div class="d-flex flex-wrap justify-content-left mb-4">
-            <div class="card m-2" style="width: 21rem;">
-              <div class="card-header">
-                <a href="/history/<%= fUniqueDate.id %>"><%= formatDateShort(fUniqueDate.date) %></a>
-              </div>
-              <div class="card-block">
-                <div class="list-group">
-                <% var thisDateFitzroys = allFitzroys.filter(function (fitzroy) { %>
-                  <% return fitzroy.attendance.some(function (indivAtten) { %>
-                    <% return indivAtten.date === fUniqueDate %>
-                  <% }) %>
-                <% }) %>
-                <% thisDateFitzroys.forEach(function (thisDateFitzroy) { %>
-                  <% var fBadgeStyle = "" %>
-                  <% var thisFDate = thisDateFitzroy.attendance.filter(function (indivAtten) { %>
-                    <% return indivAtten.date = fUniqueDate %>
-                  <% })[0] %>
-                  <% if (!thisFDate.completed) { %>
-                    <% fBadgeStyle = "badge-warning" %>
-                  <% } else { %>
-                    <% fBadgeStyle = "badge-success" %>
-                  <% } %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisDateFitzroy.id %>">
-                    <%= thisDateFitzroy.name %>
-                    <% if (thisFDate.book) { %>
-                      &nbsp
-                      <span class="badge badge-pill <%= fBadgeStyle %>">
+	<div class="row">
+		<div class="col-sm-8 offset-sm-2">
+			<a href="/students/pre-school"><h4 class="mt-5 mb-4">pre-school</h4></a>
+			<% if (allPreSchools.length > 0) { %>
+				<p>
+					<% var psPreferred = allPreSchools.filter(function (preSchool) { %>
+						<% return preSchool.preferredTutors.some(function (tutor) { %>
+							<% return tutor.equals(chosenTutor.id) %>
+								<% }) %>
+									<% }) %>
+										<% if (psPreferred.length > 0) { %>
+											This tutor is <strong>preferred</strong> by
+											<% psPreferred.forEach(function (psP, index, array) { %>
+												<% if (array.length === 1 || index === array.length - 2) { %>
+													<a href="/students/pre-school/<%= psP.id %>">
+														<%= psP.name %>
+													</a>
+													<% } else if (index === array.length - 1) { %>
+														and
+														<a href="/students/pre-school/<%= psP.id %>">
+															<%= psP.name %>
+														</a>
+														<% } else { %>
+															<a href="/students/pre-school/<%= psP.id %>">
+																<%= psP.name %>
+															</a>,
+															<% } %>
+																<% }) %>
+																	<% } %>
+				</p>
+				<% var psUniqueDates = [...new Set(allPreSchools.map(function (preSchool) { %>
+					<% return preSchool.attendance.map(function (indivAtten) { %>
+						<% return indivAtten.date %>
+							<% }) %>
+								<% }).reduce(function (a, b) { %>
+									<% return a.concat(b) %>
+										<% }, []))] %>
+											<% psUniqueDates.forEach(function (psUniqueDate) { %>
+												<div class="d-flex flex-wrap justify-content-left mb-4">
+													<div class="card m-2" style="width: 21rem;">
+														<div class="card-header">
+															<a href="/history/<%= psUniqueDate.id %>">
+																<%= formatDateShort(psUniqueDate.date) %>
+															</a>
+														</div>
+														<div class="card-block">
+															<div class="list-group">
+																<% var thisDatePreSchools = allPreSchools.filter(function (preSchool) { %>
+																	<% return preSchool.attendance.some(function (indivAtten) { %>
+																		<% return indivAtten.date === psUniqueDate %>
+																			<% }) %>
+																				<% }) %>
+																					<% thisDatePreSchools.forEach(function (thisDatePreSchool) { %>
+																						<a class="list-group-item list-group-item-action justify-content-between" href="/students/pre-school/<%= thisDatePreSchool.id %>">
+																							<%= thisDatePreSchool.name %>
+																						</a>
+																						<% }) %>
+															</div>
+														</div>
+													</div>
+												</div>
+												<% }) %>
+													<% } else { %>
+														<p>No sessions yet</p>
+														<% } %>
+															<a href="/students/fitzroy"><h4 class="mt-5 mb-4">fitzroy</h4></a>
+															<% if (allFitzroys.length > 0) { %>
+																<p>
+																	<% var fPreferred = allFitzroys.filter(function (fitzroy) { %>
+																		<% return fitzroy.preferredTutors.some(function (tutor) { %>
+																			<% return tutor.equals(chosenTutor.id) %>
+																				<% }) %>
+																					<% }) %>
+																						<% if (fPreferred.length > 0) { %>
+																							This tutor is <strong>preferred</strong> by
+																							<% fPreferred.forEach(function (fP, index, array) { %>
+																								<% if (array.length === 1 || index === array.length - 2) { %>
+																									<a href="/students/fitzroy/<%= fP.id %>">
+																										<%= fP.name %>
+																									</a>
+																									<% } else if (index === array.length - 1) { %>
+																										and
+																										<a href="/students/fitzroy/<%= fP.id %>">
+																											<%= fP.name %>
+																										</a>
+																										<% } else { %>
+																											<a href="/students/fitzroy/<%= fP.id %>">
+																												<%= fP.name %>
+																											</a>,
+																											<% } %>
+																												<% }) %>
+																													<% } %>
+																</p>
+																<% var fUniqueDates = [...new Set(allFitzroys.map(function (fitzroy) { %>
+																	<% return fitzroy.attendance.map(function (indivAtten) { %>
+																		<% return indivAtten.date %>
+																			<% }) %>
+																				<% }).reduce(function (a, b) { %>
+																					<% return a.concat(b) %>
+																						<% }, []))] %>
+																							<% fUniqueDates.forEach(function (fUniqueDate) { %>
+																								<div class="d-flex flex-wrap justify-content-left mb-4">
+																									<div class="card m-2" style="width: 21rem;">
+																										<div class="card-header">
+																											<a href="/history/<%= fUniqueDate.id %>">
+																												<%= formatDateShort(fUniqueDate.date) %>
+																											</a>
+																										</div>
+																										<div class="card-block">
+																											<div class="list-group">
+																												<% var thisDateFitzroys = allFitzroys.filter(function (fitzroy) { %>
+																													<% return fitzroy.attendance.some(function (indivAtten) { %>
+																														<% return indivAtten.date === fUniqueDate %>
+																															<% }) %>
+																																<% }) %>
+																																	<% thisDateFitzroys.forEach(function (thisDateFitzroy) { %>
+																																		<% var fBadgeStyle = "" %>
+																																			<% var thisFDate = thisDateFitzroy.attendance.filter(function (indivAtten) { %>
+																																				<% return indivAtten.date = fUniqueDate %>
+																																					<% })[0] %>
+																																						<% if (!thisFDate.completed) { %>
+																																							<% fBadgeStyle = "badge-warning" %>
+																																								<% } else { %>
+																																									<% fBadgeStyle = "badge-success" %>
+																																										<% } %>
+																																											<a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisDateFitzroy.id %>">
+																																												<%= thisDateFitzroy.name %>
+																																													<% if (thisFDate.book) { %>
+																																														&nbsp
+																																														<span class="badge badge-pill <%= fBadgeStyle %>">
                         <%= thisFDate.book %>
                       </span>
-                    <% } %>
-                  </a>
-                <% }) %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p>No sessions yet</p>
-      <% } %>
-      <a href="/students/post-fitzroy"><h4 class="mt-5 mb-4">post-fitzroy</h4></a>
-      <% if (allPostFitzroys.length > 0) { %>
-        <p>
-          <% var pfPreferred = allPostFitzroys.filter(function (postFitzroy) { %>
-            <% return postFitzroy.preferredTutors.some(function (tutor) { %>
-              <% return tutor.equals(chosenTutor.id) %>
-            <% }) %>
-          <% }) %>
-          <% if (pfPreferred.length > 0) { %>
-            This tutor is <strong>preferred</strong> by
-            <% pfPreferred.forEach(function (pfP, index, array) { %>
-              <% if (array.length === 1 || index === array.length - 2) { %>
-                <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>
-              <% } else if (index === array.length - 1) { %>
-                and <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>
-              <% } else { %>
-                <a href="/students/post-fitzroy/<%= pfP.id %>"><%= pfP.name %></a>,
-              <% } %>
-            <% }) %>
-          <% } %>
-        </p>
-        <% var pfUniqueDates = [...new Set(allPostFitzroys.map(function (postFitzroy) { %>
-          <% return postFitzroy.attendance.map(function (indivAtten) { %>
-            <% return indivAtten.date %>
-          <% }) %>
-        <% }).reduce(function (a, b) { %>
-          <% return a.concat(b) %>
-        <% }, []))] %>
-        <% pfUniqueDates.forEach(function (pfUniqueDate) { %>
-          <div class="d-flex flex-wrap justify-content-left mb-4">
-            <div class="card m-2" style="width: 21rem;">
-              <div class="card-header">
-                <a href="/history/<%= pfUniqueDate.id %>"><%= formatDateShort(pfUniqueDate.date) %></a>
-              </div>
-              <div class="card-block">
-                <div class="list-group">
-                <% var thisDatePostFitzroys = allPostFitzroys.filter(function (postFitzroy) { %>
-                  <% return postFitzroy.attendance.some(function (indivAtten) { %>
-                    <% return indivAtten.date === pfUniqueDate %>
-                  <% }) %>
-                <% }) %>
-                <% thisDatePostFitzroys.forEach(function (thisDatePostFitzroy) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/post-fitzroy/<%= thisDatePostFitzroy.id %>"><%= thisDatePostFitzroy.name %></a>
-                <% }) %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p>No sessions yet</p>
-      <% } %>
-    </div>
-  </div>
+																																														<% } %>
+																																											</a>
+																																											<% }) %>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																								<% }) %>
+																									<% } else { %>
+																										<p>No sessions yet</p>
+																										<% } %>
+																											<a href="/students/post-fitzroy"><h4 class="mt-5 mb-4">post-fitzroy</h4></a>
+																											<% if (allPostFitzroys.length > 0) { %>
+																												<p>
+																													<% var pfPreferred = allPostFitzroys.filter(function (postFitzroy) { %>
+																														<% return postFitzroy.preferredTutors.some(function (tutor) { %>
+																															<% return tutor.equals(chosenTutor.id) %>
+																																<% }) %>
+																																	<% }) %>
+																																		<% if (pfPreferred.length > 0) { %>
+																																			This tutor is <strong>preferred</strong> by
+																																			<% pfPreferred.forEach(function (pfP, index, array) { %>
+																																				<% if (array.length === 1 || index === array.length - 2) { %>
+																																					<a href="/students/post-fitzroy/<%= pfP.id %>">
+																																						<%= pfP.name %>
+																																					</a>
+																																					<% } else if (index === array.length - 1) { %>
+																																						and
+																																						<a href="/students/post-fitzroy/<%= pfP.id %>">
+																																							<%= pfP.name %>
+																																						</a>
+																																						<% } else { %>
+																																							<a href="/students/post-fitzroy/<%= pfP.id %>">
+																																								<%= pfP.name %>
+																																							</a>,
+																																							<% } %>
+																																								<% }) %>
+																																									<% } %>
+																												</p>
+																												<% var pfUniqueDates = [...new Set(allPostFitzroys.map(function (postFitzroy) { %>
+																													<% return postFitzroy.attendance.map(function (indivAtten) { %>
+																														<% return indivAtten.date %>
+																															<% }) %>
+																																<% }).reduce(function (a, b) { %>
+																																	<% return a.concat(b) %>
+																																		<% }, []))] %>
+																																			<% pfUniqueDates.forEach(function (pfUniqueDate) { %>
+																																				<div class="d-flex flex-wrap justify-content-left mb-4">
+																																					<div class="card m-2" style="width: 21rem;">
+																																						<div class="card-header">
+																																							<a href="/history/<%= pfUniqueDate.id %>">
+																																								<%= formatDateShort(pfUniqueDate.date) %>
+																																							</a>
+																																						</div>
+																																						<div class="card-block">
+																																							<div class="list-group">
+																																								<% var thisDatePostFitzroys = allPostFitzroys.filter(function (postFitzroy) { %>
+																																									<% return postFitzroy.attendance.some(function (indivAtten) { %>
+																																										<% return indivAtten.date === pfUniqueDate %>
+																																											<% }) %>
+																																												<% }) %>
+																																													<% thisDatePostFitzroys.forEach(function (thisDatePostFitzroy) { %>
+																																														<a class="list-group-item list-group-item-action justify-content-between" href="/students/post-fitzroy/<%= thisDatePostFitzroy.id %>">
+																																															<%= thisDatePostFitzroy.name %>
+																																														</a>
+																																														<% }) %>
+																																							</div>
+																																						</div>
+																																					</div>
+																																				</div>
+																																				<% }) %>
+																																					<% } else { %>
+																																						<p>No sessions yet</p>
+																																						<% } %>
+		</div>
+	</div>
 </div>

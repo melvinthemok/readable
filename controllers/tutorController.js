@@ -97,8 +97,31 @@ var tutorController = {
                         req.flash('error', err.toString())
                         res.redirect('/tutors')
                       } else {
+                        var totalSession = {}
+                        allPreSchools.forEach(function (preSchoolSession) {
+                          preSchoolSession.attendance.forEach(function (attDate) {
+                            if (attDate.date.date >= chosenTutor.startDate) {
+                              totalSession[attDate.date.date] = 1
+                            }
+                          })
+                        })
+                        allFitzroys.forEach(function (fitzroySession) {
+                          fitzroySession.attendance.forEach(function (attDate) {
+                            if (attDate.date.date >= chosenTutor.startDate) {
+                              totalSession[attDate.date.date] = 1
+                            }
+                          })
+                        })
+                        allPostFitzroys.forEach(function (postFitzroySession) {
+                          postFitzroySession.attendance.forEach(function (attDate) {
+                            if (attDate.date.date >= chosenTutor.startDate) {
+                              totalSession[attDate.date.date] = 1
+                            }
+                          })
+                        })
                         res.render('tutors/show', {
                           chosenTutor: chosenTutor,
+                          totalTutorSession: Object.keys(totalSession).length,
                           allPreSchools: allPreSchools.filter(function (preSchool) {
                             return (preSchool.attendance.some(function (indivAttendance) {
                               if (indivAttendance.tutor) {
