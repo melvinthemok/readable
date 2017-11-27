@@ -1,49 +1,54 @@
 <div class="jumbotron" style="background-color:#d9edf7">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 offset-sm-3">
-        <h2 class="display-4"><%= chosenPostFitzroy.name %></h2>
-        <hr class="my-4">
-        <p class="mb-1"><a href="/students/post-fitzroy">post-fitzroy</a> student</p>
-        <p>
-          <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.gender %></span>
-          <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.age %> years old</span>
-          <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.schoolLevel %></span>
-          <% if (chosenPostFitzroy.family !== 'Unknown') { %>
-            <span class="badge badge-pill badge-primary">family group <%= chosenPostFitzroy.family %></span>
-          <% } %>
-          <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenPostFitzroy.startDate) %></span>
-        </p>
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <h2 class="display-4"><%= chosenPostFitzroy.name %></h2>
+                <hr class="my-4">
+                <p class="mb-1"><a href="/students/post-fitzroy">post-fitzroy</a> student</p>
+                <p>
+                    <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.gender %></span>
+                    <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.age %> years old</span>
+                    <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.schoolLevel %></span>
+                    <% if (chosenPostFitzroy.family !== 'Unknown') { %>
+                        <span class="badge badge-pill badge-primary">family group <%= chosenPostFitzroy.family %></span>
+                        <% } %>
+                            <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenPostFitzroy.startDate) %></span>
+                            <% if (chosenPostFitzroy.attendance.length > 0) { %>
+                                <span class="badge badge-pill badge-primary"><%= chosenPostFitzroy.attendance.length %>/<%= totalPostFitzroySession %> session<%= totalPostFitzroySession > 1 ? 's':''%> attended </span>
+                                <% } %>
+                </p>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="container mb-5">
-  <div class="row">
-    <div class="col-sm-6 offset-sm-3">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
 
-      <div class="card m-2 mb-3">
-        <div class="card-header">
-          Notes
-        </div>
-        <div class="card-block">
-          <div class="list-group">
-            <% if (chosenPostFitzroy.oneOnOne) { %>
-              <div class="list-group-item">Needs one-on-one attention</div>
-            <% } else { %>
-              <div class="list-group-item">Does not need one-on-one attention</div>
-            <% } %>
-            <% if (chosenPostFitzroy.intervention) { %>
-              <div class="list-group-item">Requires intervention for absenteeism</div>
-            <% } else { %>
-              <div class="list-group-item">Does not require intervention for absenteeism</div>
-            <% } %>
-            <% if (chosenPostFitzroy.generalComment) { %>
-              <div class="list-group-item"><%= chosenPostFitzroy.generalComment %></div>
-            <% } %>
-            <% if (chosenPostFitzroy.kidsToAvoid.length > 0) { %>
-              <div class="list-group-item">Should not be grouped with&nbsp
-                <span>
+            <div class="card m-2 mb-3">
+                <div class="card-header">
+                    Notes
+                </div>
+                <div class="card-block">
+                    <div class="list-group">
+                        <% if (chosenPostFitzroy.oneOnOne) { %>
+                            <div class="list-group-item">Needs one-on-one attention</div>
+                            <% } else { %>
+                                <div class="list-group-item">Does not need one-on-one attention</div>
+                                <% } %>
+                                    <% if (chosenPostFitzroy.intervention) { %>
+                                        <div class="list-group-item">Requires intervention for absenteeism</div>
+                                        <% } else { %>
+                                            <div class="list-group-item">Does not require intervention for absenteeism</div>
+                                            <% } %>
+                                                <% if (chosenPostFitzroy.generalComment) { %>
+                                                    <div class="list-group-item">
+                                                        <%= chosenPostFitzroy.generalComment %>
+                                                    </div>
+                                                    <% } %>
+                                                        <% if (chosenPostFitzroy.kidsToAvoid.length > 0) { %>
+                                                            <div class="list-group-item">Should not be grouped with&nbsp
+                                                                <span>
                 <% chosenPostFitzroy.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
                   <% if (array.length === 1 || index === array.length - 2) { %>
                     <a href="/students/post-fitzroy/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
@@ -54,16 +59,16 @@
                   <% } %>
                 <% }) %>
                 </span>
-              </div>
-            <% } %>
-            <% if (chosenPostFitzroy.preferredTutors.length > 0) { %>
-              <div class="list-group-item">
-                <% if (chosenPostFitzroy.preferredTutors.length === 1) { %>
-                  Favourite tutor:&nbsp
-                <% } else if (chosenPostFitzroy.preferredTutors.length > 1) { %>
-                  Favourite tutors:&nbsp
-                <% } %>
-                <span>
+                                                            </div>
+                                                            <% } %>
+                                                                <% if (chosenPostFitzroy.preferredTutors.length > 0) { %>
+                                                                    <div class="list-group-item">
+                                                                        <% if (chosenPostFitzroy.preferredTutors.length === 1) { %>
+                                                                            Favourite tutor:&nbsp
+                                                                            <% } else if (chosenPostFitzroy.preferredTutors.length > 1) { %>
+                                                                                Favourite tutors:&nbsp
+                                                                                <% } %>
+                                                                                    <span>
                 <% chosenPostFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
                   <% if (array.length === 1 || index === array.length - 2) { %>
                     <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>&nbsp
@@ -74,63 +79,63 @@
                   <% } %>
                 <% }) %>
                 </span>
-              </div>
-            <% } %>
-          </div>
-        </div>
-      </div>
+                                                                    </div>
+                                                                    <% } %>
+                    </div>
+                </div>
+            </div>
 
-      <div class="card m-2">
-        <div class="card-header">
-          Attendance
-        </div>
-        <div class="card-block">
-          <div class="list-group">
-            <% if (chosenPostFitzroy.attendance.length > 0) { %>
-              <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
-                <div class="list-group-item justify-content-start">
-                  <div style="flex-grow: 1;">
-                    <a href="/history/<%= indivAttendance.date.id %>" style="flex-grow: 1;">
+            <div class="card m-2">
+                <div class="card-header">
+                    Attendance
+                </div>
+                <div class="card-block">
+                    <div class="list-group">
+                        <% if (chosenPostFitzroy.attendance.length > 0) { %>
+                            <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
+                                <div class="list-group-item justify-content-start">
+                                    <div style="flex-grow: 1;">
+                                        <a href="/history/<%= indivAttendance.date.id %>" style="flex-grow: 1;">
                       <span class="badge badge-pill badge-default">
                         <%= formatDateShort(indivAttendance.date.date) %>
                       </span>
                     </a>
-                  </div>
-                  <% if (allComments.length > 0) { %>
-                    <% allComments.filter(function (comment) { %>
-                      <% return comment.date.id === indivAttendance.date.id %>
-                    <% }).forEach(function (comment) { %>
-                      <div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
-                        <a href="/comments/<%= comment.id %>" style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
+                                    </div>
+                                    <% if (allComments.length > 0) { %>
+                                        <% allComments.filter(function (comment) { %>
+                                            <% return comment.date.id === indivAttendance.date.id %>
+                                                <% }).forEach(function (comment) { %>
+                                                    <div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
+                                                        <a href="/comments/<%= comment.id %>" style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
                           <span class="badge badge-pill badge-info" data-toggle="tooltip" title="<%= comment.contents %>" >
                             ' '
                           </span>
                         </a>
-                      </div>
-                    <% }) %>
-                  <% } %>
-                  <% if (indivAttendance.tutor) { %>
-                    <a href="/tutors/<%= indivAttendance.tutor.id %>">
+                                                    </div>
+                                                    <% }) %>
+                                                        <% } %>
+                                                            <% if (indivAttendance.tutor) { %>
+                                                                <a href="/tutors/<%= indivAttendance.tutor.id %>">
                       <span class="badge badge-pill badge-default">
                         <%= indivAttendance.tutor.name %>
                       </span>
                     </a>
-                  <% } %>
+                                                                <% } %>
+                                </div>
+                                <% }) %>
+                                    <% } else { %>
+                                        <div class="list-group-item">No sessions yet</div>
+                                        <% } %>
+                    </div>
                 </div>
-              <% }) %>
-            <% } else { %>
-              <div class="list-group-item">No sessions yet</div>
-            <% } %>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 <div class="container mb-5">
-  <div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <a href="/students/post-fitzroy/edit/<%= chosenPostFitzroy.id %>"><button class="btn btn-primary float-right" type="button" style="cursor:pointer;">Edit</button></a>
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <a href="/students/post-fitzroy/edit/<%= chosenPostFitzroy.id %>"><button class="btn btn-primary float-right" type="button" style="cursor:pointer;">Edit</button></a>
+        </div>
     </div>
-  </div>
 </div>
