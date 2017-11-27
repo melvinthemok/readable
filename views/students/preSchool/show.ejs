@@ -1,53 +1,53 @@
 <div class="jumbotron" style="background-color:#d9edf7">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-6 offset-sm-3">
-				<h2 class="display-4"><%= chosenPreSchool.name %></h2>
-				<hr class="my-4">
-				<p class="mb-1"><a href="/students/pre-school">pre-school</a> student</p>
-				<p>
-					<span class="badge badge-pill badge-primary"><%= chosenPreSchool.gender %></span>
-					<span class="badge badge-pill badge-primary"><%= chosenPreSchool.age %> years old</span>
-					<span class="badge badge-pill badge-primary"><%= chosenPreSchool.schoolLevel %></span>
-					<% if (chosenPreSchool.family !== 'Unknown') { %>
-						<span class="badge badge-pill badge-primary">family group <%= chosenPreSchool.family %></span>
-						<% } %>
-							<span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenPreSchool.startDate) %></span>
-							<% if (chosenPreSchool.attendance.length > 0) { %>
-								<span class="badge badge-pill badge-primary"><%= chosenPreSchool.attendance.length %>/<%= totalPreSchoolSession %> session<%= totalPreSchoolSession > 1 ? 's':''%> attended </span>
-								<% } %>
-				</p>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <h2 class="display-4"><%= chosenPreSchool.name %></h2>
+                <hr class="my-4">
+                <p class="mb-1"><a href="/students/pre-school">pre-school</a> student</p>
+                <p>
+                    <span class="badge badge-pill badge-primary"><%= chosenPreSchool.gender %></span>
+                    <span class="badge badge-pill badge-primary"><%= chosenPreSchool.age %> years old</span>
+                    <span class="badge badge-pill badge-primary"><%= chosenPreSchool.schoolLevel %></span>
+                    <% if (chosenPreSchool.family !== 'Unknown') { %>
+                        <span class="badge badge-pill badge-primary">family group <%= chosenPreSchool.family %></span>
+                        <% } %>
+                            <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenPreSchool.startDate) %></span>
+                            <% if (chosenPreSchool.attendance.length > 0) { %>
+                                <span class="badge badge-pill badge-primary"><%= chosenPreSchool.attendance.length %>/<%= totalPreSchoolSession %> session<%= totalPreSchoolSession > 1 ? 's':''%> attended </span>
+                                <% } %>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="container mb-5">
-	<div class="row">
-		<div class="col-sm-6 offset-sm-3">
-			<div class="card m-2 mb-3">
-				<div class="card-header">
-					Notes
-				</div>
-				<div class="card-block">
-					<div class="list-group">
-						<% if (chosenPreSchool.oneOnOne) { %>
-							<div class="list-group-item">Needs one-on-one attention</div>
-							<% } else { %>
-								<div class="list-group-item">Does not need one-on-one attention</div>
-								<% } %>
-									<% if (chosenPreSchool.intervention) { %>
-										<div class="list-group-item">Requires intervention for absenteeism</div>
-										<% } else { %>
-											<div class="list-group-item">Does not require intervention for absenteeism</div>
-											<% } %>
-												<% if (chosenPreSchool.generalComment) { %>
-													<div class="list-group-item">
-														<%= chosenPreSchool.generalComment %>
-													</div>
-													<% } %>
-														<% if (chosenPreSchool.kidsToAvoid.length > 0) { %>
-															<div class="list-group-item">Should not be grouped with&nbsp
-																<span>
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <div class="card m-2 mb-3">
+                <div class="card-header">
+                    Notes
+                </div>
+                <div class="card-block">
+                    <div class="list-group">
+                        <% if (chosenPreSchool.oneOnOne) { %>
+                            <div class="list-group-item">Needs one-on-one attention</div>
+                            <% } else { %>
+                                <div class="list-group-item">Does not need one-on-one attention</div>
+                                <% } %>
+                                    <% if (chosenPreSchool.intervention) { %>
+                                        <div class="list-group-item">Requires intervention for absenteeism</div>
+                                        <% } else { %>
+                                            <div class="list-group-item">Does not require intervention for absenteeism</div>
+                                            <% } %>
+                                                <% if (chosenPreSchool.generalComment) { %>
+                                                    <div class="list-group-item">
+                                                        <%= chosenPreSchool.generalComment %>
+                                                    </div>
+                                                    <% } %>
+                                                        <% if (chosenPreSchool.kidsToAvoid.length > 0) { %>
+                                                            <div class="list-group-item">Should not be grouped with&nbsp
+                                                                <span>
                 <% chosenPreSchool.kidsToAvoid.forEach(function (kidToAvoid, index, array) { %>
                   <% if (array.length === 1 || index === array.length - 2) { %>
                     <a href="/students/pre-school/<%= kidToAvoid.id %>"><%= kidToAvoid.name %></a>
@@ -58,16 +58,16 @@
                   <% } %>
                 <% }) %>
                 </span>
-															</div>
-															<% } %>
-																<% if (chosenPreSchool.preferredTutors.length > 0) { %>
-																	<div class="list-group-item">
-																		<% if (chosenPreSchool.preferredTutors.length === 1) { %>
-																			Favourite tutor:&nbsp
-																			<% } else if (chosenPreSchool.preferredTutors.length > 1) { %>
-																				Favourite tutors:&nbsp
-																				<% } %>
-																					<span>
+                                                            </div>
+                                                            <% } %>
+                                                                <% if (chosenPreSchool.preferredTutors.length > 0) { %>
+                                                                    <div class="list-group-item">
+                                                                        <% if (chosenPreSchool.preferredTutors.length === 1) { %>
+                                                                            Favourite tutor:&nbsp
+                                                                            <% } else if (chosenPreSchool.preferredTutors.length > 1) { %>
+                                                                                Favourite tutors:&nbsp
+                                                                                <% } %>
+                                                                                    <span>
                 <% chosenPreSchool.preferredTutors.forEach(function(preferredTutor, index, array) { %>
                   <% if (array.length === 1 || index === array.length - 2) { %>
                     <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>&nbsp
@@ -78,62 +78,62 @@
                   <% } %>
                 <% }) %>
                 </span>
-																	</div>
-																	<% } %>
-					</div>
-				</div>
-			</div>
-			<div class="card m-2">
-				<div class="card-header">
-					Attendance
-				</div>
-				<div class="card-block">
-					<div class="list-group">
-						<% if (chosenPreSchool.attendance.length > 0) { %>
-							<% chosenPreSchool.attendance.forEach(function (indivAttendance) { %>
-								<div class="list-group-item justify-content-start">
-									<div style="flex-grow: 1;">
-										<a href="/history/<%= indivAttendance.date.id %>">
+                                                                    </div>
+                                                                    <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="card m-2">
+                <div class="card-header">
+                    Attendance
+                </div>
+                <div class="card-block">
+                    <div class="list-group">
+                        <% if (chosenPreSchool.attendance.length > 0) { %>
+                            <% chosenPreSchool.attendance.forEach(function (indivAttendance) { %>
+                                <div class="list-group-item justify-content-start">
+                                    <div style="flex-grow: 1;">
+                                        <a href="/history/<%= indivAttendance.date.id %>">
                       <span class="badge badge-pill badge-default">
                         <%= formatDateShort(indivAttendance.date.date) %>
                       </span>
                     </a>
-									</div>
-									<% if (allComments.length > 0) { %>
-										<% allComments.filter(function (comment) { %>
-											<% return comment.date.id === indivAttendance.date.id %>
-												<% }).forEach(function (comment) { %>
-													<div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
-														<a href="/comments/<%= comment.id %>">
+                                    </div>
+                                    <% if (allComments.length > 0) { %>
+                                        <% allComments.filter(function (comment) { %>
+                                            <% return comment.date.id === indivAttendance.date.id %>
+                                                <% }).forEach(function (comment) { %>
+                                                    <div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
+                                                        <a href="/comments/<%= comment.id %>">
                           <span class="badge badge-pill badge-info" data-toggle="tooltip" title="<%= comment.contents %>" >
                             ' '
                           </span>
                         </a>
-													</div>
-													<% }) %>
-														<% } %>
-															<% if (indivAttendance.tutor) { %>
-																<a href="/tutors/<%= indivAttendance.tutor.id %>">
+                                                    </div>
+                                                    <% }) %>
+                                                        <% } %>
+                                                            <% if (indivAttendance.tutor) { %>
+                                                                <a href="/tutors/<%= indivAttendance.tutor.id %>">
                       <span class="badge badge-pill badge-default">
                         <%= indivAttendance.tutor.name %>
                       </span>
                     </a>
-																<% } %>
-								</div>
-								<% }) %>
-									<% } else { %>
-										<div class="list-group-item">No sessions yet</div>
-										<% } %>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                                                <% } %>
+                                </div>
+                                <% }) %>
+                                    <% } else { %>
+                                        <div class="list-group-item">No sessions yet</div>
+                                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="container mb-5">
-	<div class="row">
-		<div class="col-sm-6 offset-sm-3">
-			<a href="/students/pre-school/edit/<%= chosenPreSchool.id %>"><button class="btn btn-primary float-right" type="button" style="cursor:pointer;">Edit</button></a>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <a href="/students/pre-school/edit/<%= chosenPreSchool.id %>"><button class="btn btn-primary float-right" type="button" style="cursor:pointer;">Edit</button></a>
+        </div>
+    </div>
 </div>

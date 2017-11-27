@@ -17,7 +17,6 @@ var studentController = {
   },
 
   preSchool: {
-
     index: function (req, res) {
       PreSchool.find({}, function (err, allPreSchools) {
         if (err) {

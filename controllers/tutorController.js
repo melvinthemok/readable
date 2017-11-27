@@ -37,13 +37,13 @@ var tutorController = {
                       })
                     })
                   }
-                }) // PostFitzroy fetch
-              } // PreSchool else
-            }) // PreSchool fetch
-          } // Fitzroy else
-        }) // Fitzroy fetch
-      } // Tutor else
-    }) // Tutor.find
+                })
+              }
+            })
+          }
+        })
+      }
+    })
   },
 
   show: function (req, res) {
