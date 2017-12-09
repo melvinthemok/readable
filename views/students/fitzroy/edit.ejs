@@ -279,17 +279,8 @@
                       }
                       saturdatesCheckbox.onchange = function () {
                         if (this.checked) {
-                          if (fitzroyTutorSelect.hasChildNodes() && fitzroyTutorSelect.firstChild.value === "" && fitzroyTutorSelect.childNodes[1] === "") {
-                            fitzroyTutorSelect.remove(fitzroyTutorSelect.firstChild)
-                          }
                           fitzroyTutorDiv.removeAttribute('style')
-                          if (fitzroyBookSelect.hasChildNodes() && fitzroyBookSelect.firstChild.value === "" && fitzroyBookSelect.childNodes[1] === "") {
-                            fitzroyBookSelect.remove(fitzroyBookSelect.firstChild)
-                          }
                           fitzroyBookDiv.removeAttribute('style')
-                          if (fitzroyCompletedSelect.hasChildNodes() && fitzroyCompletedSelect.firstChild.value === "" && fitzroyCompletedSelect.childNodes[1] === "") {
-                            fitzroyCompletedSelect.remove(fitzroyCompletedSelect.firstChild)
-                          }
                           fitzroyCompletedDiv.removeAttribute('style')
                         } else {
                           if (fitzroyTutorSelect.options[fitzroyTutorSelect.selectedIndex].value !== "") {
