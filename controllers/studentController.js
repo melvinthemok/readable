@@ -504,14 +504,14 @@ var studentController = {
         chosenFitzroy.kidsToAvoid = req.body.kidsToAvoid || []
         chosenFitzroy.attendance = typeof req.body.fitzroyBooks === 'string'
           ? req.body.fitzroyTutors === 'unknown'
-            ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
-            : { tutor: req.body.fitzroyTutors, book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+              ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+              : { tutor: req.body.fitzroyTutors, book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
           : req.body.fitzroyBooks
             ? req.body.fitzroyBooks.map(function (book) {
               var obj = {}
               req.body.fitzroyTutors[0] === 'unknown'
-              ? req.body.fitzroyTutors.shift()
-              : obj['tutor'] = req.body.fitzroyTutors.shift()
+                ? req.body.fitzroyTutors.shift()
+                : obj['tutor'] = req.body.fitzroyTutors.shift()
               obj['book'] = book
               obj['date'] = req.body.saturdates.shift()
               if (req.body.fitzroyCompleted) {
