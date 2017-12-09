@@ -513,7 +513,9 @@ var studentController = {
                 ? req.body.fitzroyTutors.shift()
                 : obj['tutor'] = req.body.fitzroyTutors.shift()
               obj['book'] = book
-              obj['date'] = req.body.saturdates.shift()
+              typeof req.body.saturdates === 'string'
+                ? obj['date'] = req.body.saturdates
+                : obj['date'] = req.body.saturdates.shift()
               if (req.body.fitzroyCompleted) {
                 if (obj['book'] !== '0') {
                   typeof req.body.fitzroyCompleted === 'string'
