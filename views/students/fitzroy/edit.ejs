@@ -294,36 +294,33 @@
                       }
                       saturdatesCheckbox.onchange = function () {
                         if (this.checked) {
-                          if (fitzroyTutorSelect.hasChildNodes() && fitzroyTutorSelect.firstChild.value === "" && fitzroyTutorSelect.childNodes[1] === "") {
-                            fitzroyTutorSelect.remove(fitzroyTutorSelect.firstChild)
-                          }
                           fitzroyTutorDiv.removeAttribute('style')
-                          if (fitzroyBookSelect.hasChildNodes() && fitzroyBookSelect.firstChild.value === "" && fitzroyBookSelect.childNodes[1] === "") {
-                            fitzroyBookSelect.remove(fitzroyBookSelect.firstChild)
-                          }
                           fitzroyBookDiv.removeAttribute('style')
-                          if (fitzroyCompletedSelect.hasChildNodes() && fitzroyCompletedSelect.firstChild.value === "" && fitzroyCompletedSelect.childNodes[1] === "") {
-                            fitzroyCompletedSelect.remove(fitzroyCompletedSelect.firstChild)
-                          }
                           fitzroyCompletedDiv.removeAttribute('style')
                         } else {
-                          if (fitzroyTutorSelect.hasChildNodes()) {
+                          if (fitzroyTutorSelect.options[fitzroyTutorSelect.selectedIndex].value !== "") {
+                            fitzroyTutorSelect.options[fitzroyTutorSelect.selectedIndex].removeAttribute('selected')
+                          }
+                          if (fitzroyTutorSelect.hasChildNodes() && fitzroyTutorSelect.options[0].value !== "") {
                             var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
                             blank.setAttribute('hidden', true)
                             fitzroyTutorSelect.insertBefore(blank, fitzroyTutorSelect.firstChild)
                           }
                           fitzroyTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
-                          if (fitzroyBookSelect.hasChildNodes()) {
+                          if (fitzroyBookSelect.options[fitzroyBookSelect.selectedIndex].value !== "") {
+                            fitzroyBookSelect.options[fitzroyBookSelect.selectedIndex].removeAttribute('selected')
+                          }
+                          if (fitzroyBookSelect.hasChildNodes() && fitzroyBookSelect.options[0].value !== "") {
                             var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
                             blank.setAttribute('hidden', true)
                             fitzroyBookSelect.insertBefore(blank, fitzroyBookSelect.firstChild)
                           }
                           fitzroyBookDiv.setAttribute('style', 'display:none; visibility:hidden')
-                          if (fitzroyCompletedSelect.hasChildNodes()) {
+                          if (fitzroyCompletedSelect.options[fitzroyCompletedSelect.selectedIndex].value !== "") {
+                            fitzroyCompletedSelect.options[fitzroyCompletedSelect.selectedIndex].removeAttribute('selected')
+                          }
+                          if (fitzroyCompletedSelect.hasChildNodes() && fitzroyCompletedSelect.options[0].value !== "") {
                             var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
                             blank.setAttribute('hidden', true)
                             fitzroyCompletedSelect.insertBefore(blank, fitzroyCompletedSelect.firstChild)
                           }

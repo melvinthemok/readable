@@ -474,6 +474,22 @@ var studentController = {
     },
 
     update: function (req, res) {
+
+      // when a Saturdate is unchecked
+      // the former values of book, tutor, and completed
+      // are replaced by empty strings
+      // remove these empty strings before processing attendance
+
+      if (typeof req.body.fitzroyBooks !== 'string') {
+        req.body.fitzroyBooks = req.body.fitzroyBooks.filter(function(book) { return book !== '' })
+      }
+      if (typeof req.body.fitzroyTutors !== 'string') {
+        req.body.fitzroyTutors = req.body.fitzroyTutors.filter(function(tutor) { return tutor !== '' })
+      }
+      if (typeof req.body.fitzroyCompleted !== 'string') {
+        req.body.fitzroyCompleted = req.body.fitzroyCompleted.filter(function(completed) { return completed !== '' })
+      }
+
       Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
         chosenFitzroy.name = req.body.name
         chosenFitzroy.gender = req.body.gender
@@ -488,16 +504,18 @@ var studentController = {
         chosenFitzroy.kidsToAvoid = req.body.kidsToAvoid || []
         chosenFitzroy.attendance = typeof req.body.fitzroyBooks === 'string'
           ? req.body.fitzroyTutors === 'unknown'
-            ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
-            : { tutor: req.body.fitzroyTutors, book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+              ? { book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
+              : { tutor: req.body.fitzroyTutors, book: req.body.fitzroyBooks, date: req.body.saturdates, completed: req.body.fitzroyCompleted }
           : req.body.fitzroyBooks
             ? req.body.fitzroyBooks.map(function (book) {
               var obj = {}
               req.body.fitzroyTutors[0] === 'unknown'
-              ? req.body.fitzroyTutors.shift()
-              : obj['tutor'] = req.body.fitzroyTutors.shift()
+                ? req.body.fitzroyTutors.shift()
+                : obj['tutor'] = req.body.fitzroyTutors.shift()
               obj['book'] = book
-              obj['date'] = req.body.saturdates.shift()
+              typeof req.body.saturdates === 'string'
+                ? obj['date'] = req.body.saturdates
+                : obj['date'] = req.body.saturdates.shift()
               if (req.body.fitzroyCompleted) {
                 if (obj['book'] !== '0') {
                   typeof req.body.fitzroyCompleted === 'string'
