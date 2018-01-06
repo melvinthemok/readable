@@ -369,11 +369,11 @@
                       <% } else { %>
                         <option value="0">Other activity</option>
                       <% } %>
-                      <% for (var l = 1; l < 61; l++) { %>
+                      <% for (var l = 1; l < 121; l++) { %>
                         <% if (selectedAttendance && selectedAttendance.book && selectedAttendance.book === l) { %>
-                          <option selected value="<%= l %>"><%= l %></option>
+                          <option selected value="<%= l %>"><%= fitzroyBookLevelPlusX(l) %></option>
                         <% } else { %>
-                          <option value="<%= l %>"><%= l %></option>
+                          <option value="<%= l %>"><%= fitzroyBookLevelPlusX(l) %></option>
                         <% } %>
                       <% } %>
                     </select>
