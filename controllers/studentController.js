@@ -6,6 +6,7 @@ var Saturdate = require('../models/saturdate')
 var Comment = require('../models/comment')
 var formatDateShort = require('../public/client_side_helpers/formatDateShort')
 var formatDateLong = require('../public/client_side_helpers/formatDateLong')
+var fitzroyBookLevelPlusX = require('../public/client_side_helpers/fitzroyBookLevelPlusX')
 
 var studentController = {
   index: function (req, res) {
@@ -318,7 +319,8 @@ var studentController = {
                         return fitzroy.equals(chosenFitzroy.id)
                       })
                     }),
-                    formatDateShort: formatDateShort
+                    formatDateShort: formatDateShort,
+                    fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                   })
                 }
               })
@@ -350,7 +352,8 @@ var studentController = {
                       else if (date1.date > date2.date) return 1
                       else return 0
                     }),
-                    formatDateLong: formatDateLong
+                    formatDateLong: formatDateLong,
+                    fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                   })
                 }
               })
@@ -461,7 +464,8 @@ var studentController = {
                             else return 0
                           }),
                           chosenFitzroy: chosenFitzroy,
-                          formatDateLong: formatDateLong
+                          formatDateLong: formatDateLong,
+                          fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                         })
                       }
                     })
