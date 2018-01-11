@@ -50,6 +50,4 @@ Automatic deployment upon merging to master.
 
 3. Add students at `/students/new`.
 
-4. While adding attendance details for each Fitzroy student, please choose either 'Yes' or 'No' for 'Book Completed?' if the 'Fitzroy Book Level' selected is not 'Other activity'. Conversely, do not select any value for 'Book completed?' if the student did 'Other activity' during that session.
-
-5. If you have comments to add for a student for a particular session, do so at `/comments/new`.
+4. If you have comments to add for student(s) for a particular session, do so at `/comments/new`.
