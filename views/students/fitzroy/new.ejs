@@ -20,20 +20,22 @@
         </div>
         <div class="form-group required-group">
           <label for="gender">Gender</label><br>
-          <select class="custom-select" id="gender" name="gender">
+          <select class="custom-select form-control" id="gender" name="gender">
             <option value="" selected disabled hidden>Please select</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
+          <small class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group required-group">
           <label for="age">Age</label><br>
-          <select class="custom-select" id="age" name="age">
+          <select class="custom-select form-control" id="age" name="age">
             <option value="" selected disabled hidden>Please select</option>
             <% for (var i = 5; i < 21; i++) { %>
             <option value="<%= i %>"><%= i %></option>
             <% } %>
           </select>
+          <small class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group">
           <label for="family">Family code</label><br>
@@ -61,7 +63,7 @@
         </div>
         <div class="form-group required-group">
           <label for="schoolLevel">School level</label><br>
-          <select class="custom-select" id="schoolLevel" name="schoolLevel">
+          <select class="custom-select form-control" id="schoolLevel" name="schoolLevel">
             <option value="" selected disabled hidden>Please select</option>
             <option value="Pre-primary">Pre-primary</option>
             <% for (var j = 1; j < 7; j++) { %>
@@ -71,11 +73,13 @@
             <option value="Secondary <%= k %>">Secondary <%= k %></option>
             <% } %>
           </select>
+          <small class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group required-group">
           <label for="startDate" class="mb-0">When did this student join ReadAble?</label><br>
           <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
           <input class="form-control" id="startDate" type="date" name="startDate" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
+          <small class="form-text form-control-feedback"></small>
         </div>
         <div class="form-group required-group">
           <label for="oneOnOne">Needs one-on-one attention?</label><br>
@@ -148,57 +152,6 @@
                   <input class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
                   <%= formatDateLong(saturdate.date) %>
                 </label>
-                <script>
-                  document.addEventListener('DOMContentLoaded', function () {
-                    (function (i) {
-                      var saturdatesCheckbox = document.getElementById('fitzroy.' + i + '.date')
-                      var fitzroyTutorDiv = document.getElementById('fitzroy.' + i + '.tutor')
-                      var fitzroyTutorSelect = fitzroyTutorDiv.getElementsByTagName('select')[0]
-                      var fitzroyBookDiv = document.getElementById('fitzroy.' + i + '.book')
-                      var fitzroyBookSelect = fitzroyBookDiv.getElementsByTagName('select')[0]
-                      var fitzroyCompletedDiv = document.getElementById('fitzroy.' + i + '.completed')
-                      var fitzroyCompletedSelect = fitzroyCompletedDiv.getElementsByTagName('select')[0]
-                      saturdatesCheckbox.onchange = function () {
-                        if (this.checked) {
-                          if (fitzroyTutorSelect.hasChildNodes() && fitzroyTutorSelect.firstChild.value === "" && fitzroyTutorSelect.childNodes[1] === "") {
-                            fitzroyTutorSelect.remove(fitzroyTutorSelect.firstChild)
-                          }
-                          fitzroyTutorDiv.removeAttribute('style')
-                          if (fitzroyBookSelect.hasChildNodes() && fitzroyBookSelect.firstChild.value === "" && fitzroyBookSelect.childNodes[1] === "") {
-                            fitzroyBookSelect.remove(fitzroyBookSelect.firstChild)
-                          }
-                          fitzroyBookDiv.removeAttribute('style')
-                          if (fitzroyCompletedSelect.hasChildNodes() && fitzroyCompletedSelect.firstChild.value === "" && fitzroyCompletedSelect.childNodes[1] === "") {
-                            fitzroyCompletedSelect.remove(fitzroyCompletedSelect.firstChild)
-                          }
-                          fitzroyCompletedDiv.removeAttribute('style')
-                        } else {
-                          if (fitzroyTutorSelect.hasChildNodes()) {
-                            var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
-                            blank.setAttribute('hidden', true)
-                            fitzroyTutorSelect.insertBefore(blank, fitzroyTutorSelect.firstChild)
-                          }
-                          fitzroyTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
-                          if (fitzroyBookSelect.hasChildNodes()) {
-                            var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
-                            blank.setAttribute('hidden', true)
-                            fitzroyBookSelect.insertBefore(blank, fitzroyBookSelect.firstChild)
-                          }
-                          fitzroyBookDiv.setAttribute('style', 'display:none; visibility:hidden')
-                          if (fitzroyCompletedSelect.hasChildNodes()) {
-                            var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
-                            blank.setAttribute('hidden', true)
-                            fitzroyCompletedSelect.insertBefore(blank, fitzroyCompletedSelect.firstChild)
-                          }
-                          fitzroyCompletedDiv.setAttribute('style', 'display:none; visibility:hidden')
-                        }
-                      }
-                    }(<%= index %>))
-                  })
-                </script>
                 <div class="row ml-1">
                   <div id="fitzroy.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
                     <label class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
@@ -211,6 +164,7 @@
                         <% }) %>
                       <% } %>
                     </select>
+                    <small class="ml-4 form-text form-control-feedback"></small>
                   </div>
                 </div>
                 <div class="row ml-1">
@@ -223,6 +177,7 @@
                       <option value="<%= l %>"><%= fitzroyBookLevelPlusX(l) %></option>
                       <% } %>
                     </select>
+                    <small class="ml-4 form-text form-control-feedback"></small>
                   </div>
                   <div id="fitzroy.<%= index %>.completed" class="form-group" style="display: none; visibility: hidden;">
                     <label class="text-muted mb-0 mt-1 ml-4"><small>Book completed?</small></label><br>
@@ -231,6 +186,7 @@
                       <option value="true">Yes</option>
                       <option value="false">No</option>
                     </select>
+                    <small class="ml-4 form-text form-control-feedback"></small>
                   </div>
                 </div>
               </div>
@@ -242,13 +198,5 @@
     </div>
   </div>
 </div>
-<%
-  var javaScriptFiles = [
-    'nameLengthCheck',
-    'generalCommentLengthCheck',
-    'allStudentChecksToSubmit'
-  ]
-  javaScriptFiles.forEach(function (file) {
-%>
-<script type="text/javascript" src="/client_side_helpers/<%= file %>.js"></script>
-<%  })  %>
+
+<script type="text/javascript" src="/client_side_helpers/fitzroyChecksToSubmit.js"></script>
