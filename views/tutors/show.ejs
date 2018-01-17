@@ -14,7 +14,9 @@
           <span class="badge badge-pill badge-primary"><%= chosenTutor.age %></span>
           <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenTutor.startDate) %></span>
         </p>
-        <p><%= chosenTutor.experience %></p>
+        <p>
+          <%= chosenTutor.experience %>
+        </p>
       </div>
     </div>
   </div>
@@ -118,7 +120,7 @@
                 <% thisDateFitzroys.forEach(function (thisDateFitzroy) { %>
                   <% var fBadgeStyle = "" %>
                   <% var thisFDate = thisDateFitzroy.attendance.filter(function (indivAtten) { %>
-                    <% return indivAtten.date = fUniqueDate %>
+                    <% return indivAtten.date === fUniqueDate %>
                   <% })[0] %>
                   <% if (!thisFDate.completed) { %>
                     <% fBadgeStyle = "badge-warning" %>
