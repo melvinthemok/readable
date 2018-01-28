@@ -2,7 +2,9 @@ var Tutor = require('../models/tutor')
 var PreSchool = require('../models/preSchool')
 var Fitzroy = require('../models/fitzroy')
 var PostFitzroy = require('../models/postFitzroy')
-var formatDateShort = require('../public/client_side_helpers/formatDateShort')
+
+var formatDateShort = require('../helpers/formatDateShort')
+var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
 
 var tutorController = {
   index: function (req, res) {
@@ -126,7 +128,8 @@ var tutorController = {
                               return tutor.equals(chosenTutor.id)
                             }))
                           }),
-                          formatDateShort: formatDateShort
+                          formatDateShort: formatDateShort,
+                          fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                         })
                       }
                     })

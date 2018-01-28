@@ -4,8 +4,9 @@ var PreSchool = require('../models/preSchool')
 var Fitzroy = require('../models/fitzroy')
 var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
-var formatDateShort = require('../public/client_side_helpers/formatDateShort')
-var formatDateLong = require('../public/client_side_helpers/formatDateLong')
+
+var formatDateShort = require('../helpers/formatDateShort')
+var formatDateLong = require('../helpers/formatDateLong')
 
 var commentController = {
   index: function (req, res) {

@@ -4,9 +4,10 @@ var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
 var Saturdate = require('../models/saturdate')
 var Comment = require('../models/comment')
-var formatDateShort = require('../public/client_side_helpers/formatDateShort')
-var formatDateLong = require('../public/client_side_helpers/formatDateLong')
-var fitzroyBookLevelPlusX = require('../public/client_side_helpers/fitzroyBookLevelPlusX')
+
+var formatDateShort = require('../helpers/formatDateShort')
+var formatDateLong = require('../helpers/formatDateLong')
+var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
 
 var studentController = {
   index: function (req, res) {
