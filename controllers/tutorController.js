@@ -128,7 +128,8 @@ var tutorController = {
                               return tutor.equals(chosenTutor.id)
                             }))
                           }),
-                          formatDateShort: formatDateShort
+                          formatDateShort: formatDateShort,
+                          fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                         })
                       }
                     })

@@ -91,7 +91,8 @@ var saturdateController = {
                                 return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
                               })
                             }),
-                            formatDateLong: formatDateLong
+                            formatDateLong: formatDateLong,
+                            fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                           })
                         }
                       })
