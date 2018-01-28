@@ -80,7 +80,7 @@
                   <% thisTutorFitzroys.forEach(function (thisTutorFitzroy) { %>
                     <% var fBadgeStyle = "" %>
                     <% var thisFDate = thisTutorFitzroy.attendance.filter(function (indivAtten) { %>
-                      <% return indivAtten.date = chosenSaturdate %>
+                      <% return indivAtten.date.toString() === chosenSaturdate.toString() %>
                     <% })[0] %>
                     <% if (!thisFDate.completed) { %>
                       <% fBadgeStyle = "badge-warning" %>
