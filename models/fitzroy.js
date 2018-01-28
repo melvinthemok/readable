@@ -133,7 +133,7 @@ var FitzroySchema = new mongoose.Schema({
       book: {
         type: Number,
         min: 0,
-        max: 120,
+        max: 80,
         required: [
           true,
           'please specify what was covered during this session'

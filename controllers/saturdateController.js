@@ -3,7 +3,9 @@ var Fitzroy = require('../models/fitzroy')
 var PreSchool = require('../models/preSchool')
 var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
-var formatDateLong = require('../public/client_side_helpers/formatDateLong')
+
+var formatDateLong = require('../helpers/formatDateLong')
+var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
 
 var saturdateController = {
   index: function (req, res) {
