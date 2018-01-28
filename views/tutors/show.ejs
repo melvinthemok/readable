@@ -66,7 +66,11 @@
                   <% }) %>
                 <% }) %>
                 <% thisDatePreSchools.forEach(function (thisDatePreSchool) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/pre-school/<%= thisDatePreSchool.id %>"><%= thisDatePreSchool.name %></a>
+                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/pre-school/<%= thisDatePreSchool.id %>">
+                    <span class="d-inline-block text-truncate">
+                      <%= thisDatePreSchool.name %>
+                    </span>
+                  </a>
                 <% }) %>
                 </div>
               </div>
@@ -128,7 +132,9 @@
                     <% fBadgeStyle = "badge-success" %>
                   <% } %>
                   <a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisDateFitzroy.id %>">
-                    <%= thisDateFitzroy.name %>
+                    <span class="d-inline-block text-truncate" style="max-width: 83%;">
+                      <%= thisDateFitzroy.name %>
+                    </span>
                     <% if (thisFDate.book) { %>
                       &nbsp
                       <span class="badge badge-pill float-right <%= fBadgeStyle %>">
@@ -187,7 +193,11 @@
                   <% }) %>
                 <% }) %>
                 <% thisDatePostFitzroys.forEach(function (thisDatePostFitzroy) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/post-fitzroy/<%= thisDatePostFitzroy.id %>"><%= thisDatePostFitzroy.name %></a>
+                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/post-fitzroy/<%= thisDatePostFitzroy.id %>">
+                    <span class="d-inline-block text-truncate">
+                      <%= thisDatePostFitzroy.name %>
+                    </span>
+                  </a>
                 <% }) %>
                 </div>
               </div>

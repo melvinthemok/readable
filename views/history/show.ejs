@@ -26,7 +26,9 @@
             <div class="card m-2" style="width: 21rem;">
               <div class="card-header">
                 <% if (psUniqueTutor) { %>
-                  <a href="/tutors/<%= psUniqueTutor.id %>"><%= psUniqueTutor.name %></a>
+                  <a href="/tutors/<%= psUniqueTutor.id %>">
+                    <%= psUniqueTutor.name %>
+                  </a>
                 <% } else { %>
                   Unknown tutor
                 <% } %>
@@ -40,7 +42,9 @@
                   <% }) %>
                   <% thisTutorPreSchools.forEach(function (thisTutorPreSchool) { %>
                     <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= thisTutorPreSchool.id %>">
-                      <%= thisTutorPreSchool.name %>
+                      <span class="d-inline-block text-truncate">
+                        <%= thisTutorPreSchool.name %>
+                      </span>
                     </a>
                   <% }) %>
                 </div>
@@ -88,7 +92,9 @@
                       <% fBadgeStyle = "badge-success" %>
                     <% } %>
                     <a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisTutorFitzroy.id %>">
-                      <%= thisTutorFitzroy.name %>
+                      <span class="d-inline-block text-truncate" style="max-width: 83%;">
+                        <%= thisTutorFitzroy.name %>
+                      </span>
                       <% if (thisFDate.book) { %>
                         &nbsp
                         <span class="badge badge-pill float-right <%= fBadgeStyle %>">
@@ -133,7 +139,9 @@
                   <% }) %>
                   <% thisTutorPostFitzroys.forEach(function (thisTutorPostFitzroy) { %>
                     <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= thisTutorPostFitzroy.id %>">
-                      <%= thisTutorPostFitzroy.name %>
+                      <span class="d-inline-block text-truncate">
+                        <%= thisTutorPostFitzroy.name %>
+                      </span>
                     </a>
                   <% }) %>
                 </div>
