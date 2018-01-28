@@ -32,9 +32,12 @@
                   <% return psComment.date === psUniqueDate %>
                 <% }) %>
                 <% thisDatePSComments.forEach(function (thisDatePSComment) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDatePSComment.id %>">
+                  <a class="list-group-item list-group-item-action justify-content-end" href="/comments/<%= thisDatePSComment.id %>">
                     <% thisDatePSComment.preSchools.forEach(function (preSchool, index, array) { %>
-                      <%= preSchool.name %><br />
+                      <span class="d-inline-block text-truncate" style="width: 100%;">
+                        <%= preSchool.name %>
+                      </span>
+                      <br />
                     <% }) %>
                     <span class="badge badge-pill badge-default float-right" style="margin-top: 3px">
                       <%= thisDatePSComment.tutor.name %>
@@ -70,9 +73,12 @@
                   <% return fComment.date === fUniqueDate %>
                 <% }) %>
                 <% thisDateFComments.forEach(function (thisDateFComment) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDateFComment.id %>">
+                  <a class="list-group-item list-group-item-action justify-content-end" href="/comments/<%= thisDateFComment.id %>">
                     <% thisDateFComment.fitzroys.forEach(function (fitzroy) { %>
-                      <%= fitzroy.name %><br/>
+                      <span class="d-inline-block text-truncate" style="width: 100%;">
+                        <%= fitzroy.name %>
+                      </span>
+                      <br />
                     <% }) %>
                     <span class="badge badge-pill badge-default">
                       <%= thisDateFComment.tutor.name %>
@@ -108,9 +114,12 @@
                   <% return pfComment.date === pfUniqueDate %>
                 <% }) %>
                 <% thisDatePFComments.forEach(function (thisDatePFComment) { %>
-                  <a class="list-group-item list-group-item-action justify-content-between" href="/comments/<%= thisDatePFComment.id %>">
+                  <a class="list-group-item list-group-item-action justify-content-end" href="/comments/<%= thisDatePFComment.id %>">
                     <% thisDatePFComment.postFitzroys.forEach(function (postFitzroy) { %>
-                      <%= postFitzroy.name %><br />
+                      <span class="d-inline-block text-truncate" style="width: 100%;">
+                        <%= postFitzroy.name %>
+                      </span>
+                      <br />
                     <% }) %>
                     <span class="badge badge-pill badge-default float-right" style="margin-top: 3px">
                       <%= thisDatePFComment.tutor.name %>

@@ -128,7 +128,9 @@
                     <% fBadgeStyle = "badge-success" %>
                   <% } %>
                   <a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisDateFitzroy.id %>">
-                    <%= thisDateFitzroy.name %>
+                    <span class="d-inline-block text-truncate" style="max-width: 83%;">
+                      <%= thisDateFitzroy.name %>
+                    </span>
                     <% if (thisFDate.book) { %>
                       &nbsp
                       <span class="badge badge-pill float-right <%= fBadgeStyle %>">
