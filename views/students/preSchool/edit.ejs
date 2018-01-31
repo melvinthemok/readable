@@ -253,29 +253,20 @@
                   document.addEventListener('DOMContentLoaded', function () {
                     (function (i) {
                       var saturdatesCheckbox = document.getElementById('preSchool.' + i + '.date')
-                      var preSchoolTutorDiv = document.getElementById('preSchool.' + i + '.tutor')
-                      var preSchoolTutorSelect = preSchoolTutorDiv.getElementsByTagName('select')[0]
+                      var tutor = document.getElementById('preSchool.' + i + '.tutor')
                       if (saturdatesCheckbox.checked) {
-                        preSchoolTutorDiv.removeAttribute('style')
+                        tutor.removeAttribute('style')
                       } else {
-                        preSchoolTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
+                        tutor.setAttribute('style', 'display:none; visibility:hidden')
                       }
-                      saturdatesCheckbox.onchange = function () {
+                      saturdatesCheckbox.addEventListener('change', function () {
                         if (this.checked) {
-                          if (preSchoolTutorSelect.hasChildNodes() && preSchoolTutorSelect.firstChild.value === "" && preSchoolTutorSelect.childNodes[1] === "") {
-                            preSchoolTutorSelect.remove(preSchoolTutorSelect.firstChild)
-                          }
-                          preSchoolTutorDiv.removeAttribute('style')
+                          tutor.removeAttribute('style')
                         } else {
-                          if (preSchoolTutorSelect.hasChildNodes()) {
-                            var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
-                            blank.setAttribute('hidden', true)
-                            preSchoolTutorSelect.insertBefore(blank, preSchoolTutorSelect.firstChild)
-                          }
-                          preSchoolTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
+                          tutor.querySelector('select').selectedIndex = 0
+                          tutor.setAttribute('style', 'display:none; visibility:hidden')
                         }
-                      }
+                      })
                     }(<%= index %>))
                   })
                 </script>
@@ -288,6 +279,8 @@
                     <select class="custom-select ml-4" name="preSchoolTutors">
                       <% if (!selectedAttendance) { %>
                         <option value="" selected disabled hidden>Please select</option>
+                      <% } else { %>
+                        <option value="" disabled hidden>Please select</option>
                       <% } %>
                       <% if (selectedAttendance && !selectedAttendance.tutor) { %>
                         <option selected value="unknown">Unknown</option>
@@ -315,6 +308,7 @@
     </div>
   </div>
 </div>
+
 <%
   var javaScriptFiles = [
     'nameLengthCheck',
