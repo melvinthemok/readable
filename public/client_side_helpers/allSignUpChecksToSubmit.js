@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var allChecksAndToggleSubmitButton = function () {
     if (!Array.prototype.some.call(required, function (item) {
       return item.value === ''
-    }) && emailRegex.test(email.value) && name.value.length > 2 && name.value.length < 41 && phone.value.length === 8 && experience.value.length < 501 && password1.value.length > 7 && password1.value.length < 31 && password1.value === password2.value) {
+    }) && emailRegex.test(email.value) && name.value.length > 2 && name.value.length < 41 && phoneRegex.test(phone.value) && (!experience || experience.value.length < 501) && password1.value.length > 7 && password1.value.length < 31 && password1.value === password2.value) {
       submitButton.removeAttribute('disabled')
       submitButton.setAttribute('style', 'cursor:pointer;')
     } else {
