@@ -2,33 +2,28 @@ document.addEventListener('DOMContentLoaded', function () {
   var nameFormGroup = document.getElementById('name-form-group')
   var name = document.getElementById('name')
   var message = document.getElementById('nameLengthMessage')
-  name.onkeyup = function () {
+  name.addEventListener('input', function () {
     if (name.value.length > 2 && name.value.length < 41) {
       nameFormGroup.classList.add('has-success')
-      nameFormGroup.classList.remove('has-warning')
       name.classList.add('form-control-success')
+      nameFormGroup.classList.remove('has-warning')
       name.classList.remove('form-control-warning')
       message.textContent = ''
-    } else if (name.value.length < 3) {
-      if (!name.classList.contains('form-control-warning') && !nameFormGroup.classList.contains('has-warning')) {
-        name.classList.add('form-control-warning')
-        nameFormGroup.classList.add('has-warning')
-      }
-      if (name.classList.contains('form-control-success') && nameFormGroup.classList.contains('has-success')) {
-        name.classList.remove('form-control-success')
-        nameFormGroup.classList.remove('has-success')
-      }
-      message.textContent = 'Too short'
     } else {
-      if (!name.classList.contains('form-control-warning') && !nameFormGroup.classList.contains('has-warning')) {
-        name.classList.add('form-control-warning')
-        nameFormGroup.classList.add('has-warning')
+      nameFormGroup.classList.add('has-warning')
+      name.classList.add('form-control-warning')
+      nameFormGroup.classList.remove('has-success')
+      name.classList.remove('form-control-success')
+      switch (true) {
+        case (name.value.length === 0):
+          message.textContent = 'Required'
+          break
+        case (name.value.length > 0 && name.value.length < 3):
+          message.textContent = 'Too short'
+          break
+        default: // name.value.length > 40
+          message.textContent = 'Too long'
       }
-      if (name.classList.contains('form-control-success') && nameFormGroup.classList.contains('has-success')) {
-        name.classList.remove('form-control-success')
-        nameFormGroup.classList.remove('has-success')
-      }
-      message.textContent = 'Too long'
     }
-  }
+  })
 })

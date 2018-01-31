@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function attachEventListenersToNonBookSelects () {
     var requiredNonBookSelects = document.querySelectorAll(".required-group > select:not([name='fitzroyBooks'])")
     requiredNonBookSelects.forEach(function (requiredNonBookSelect) {
-      requiredNonBookSelect.onchange = runAllRequiredChecks
+      requiredNonBookSelect.addEventListener('change', runAllRequiredChecks)
     })
   }
 
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
       book.removeAttribute('style')
     }
 
-    checkbox.onchange = function () {
+    checkbox.addEventListener('change', function () {
       if (checkbox.checked) {
         tutor.classList.add('required-group')
         tutor.removeAttribute('style')
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       attachEventListenersToNonBookSelects()
       runAllRequiredChecks()
-    }
+    })
   })
 
   bookSelects.forEach(function (bookSelect, index) {
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
       completed.removeAttribute('style')
     }
 
-    bookSelect.onchange = function () {
+    bookSelect.addEventListener('change', function () {
       if (this.value > 0) {
         completed.classList.add('required-group')
         completed.removeAttribute('style')
@@ -177,6 +177,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       attachEventListenersToNonBookSelects()
       runAllRequiredChecks()
-    }
+    })
   })
 })
