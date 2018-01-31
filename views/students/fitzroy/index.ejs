@@ -19,7 +19,7 @@
           var all = <%- JSON.stringify(allFitzroys) %>
           var result
           if (document.getElementById('filter')) {
-            filter.onchange = function () {
+            filter.addEventListener('change', function () {
               if (this.value === 'all') {
                 result = all
               } else if (this.value === 'oneOnOne') {
@@ -39,7 +39,7 @@
                 a.appendChild(document.createTextNode(fitzroy.name))
                 filterResult.appendChild(a)
               })
-            }
+            })
           }
         })
       </script>
