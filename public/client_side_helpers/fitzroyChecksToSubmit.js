@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-  var requiredInputs = document.querySelectorAll('.required-group > input')
+  var listeningInputs = document.querySelectorAll('.required-group > input, #generalComment')
   var name = document.getElementById('name')
-  var generalCommentFormGroup = document.getElementById('general-comment-form-group')
   var generalComment = document.getElementById('generalComment')
   var saturdatesCheckboxes = document.querySelectorAll("input[name='saturdates']")
   var bookSelects = document.querySelectorAll("select[name='fitzroyBooks']")
@@ -99,8 +98,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   attachEventListenersToNonBookSelects()
 
-  requiredInputs.forEach(function (requiredInput) {
-    requiredInput.oninput = runAllRequiredChecks
+  listeningInputs.forEach(function (requiredInput) {
+    requiredInput.addEventListener('input', runAllRequiredChecks)
   })
 
   generalComment.oninput = function () {
