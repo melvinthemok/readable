@@ -11,31 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var required = document.querySelectorAll('.required-group > input, .required-group > select')
 
     requiredGroups.forEach(function (requiredGroup) {
-      var name = requiredGroup.querySelector('#name')
       var input = requiredGroup.querySelector('input:not(#name):not(.form-check-input)')
       var select = requiredGroup.querySelector('select')
-
-      if (name) {
-        if (name.value.length > 2 && name.value.length < 41) {
-          requiredGroup.classList.add('has-success')
-          requiredGroup.classList.remove('has-warning')
-          name.classList.add('form-control-success')
-          name.classList.remove('form-control-warning')
-          requiredGroup.querySelector('.form-control-feedback').textContent = ''
-        } else {
-          requiredGroup.classList.remove('has-success')
-          requiredGroup.classList.add('has-warning')
-          name.classList.remove('form-control-success')
-          name.classList.add('form-control-warning')
-          if (name.value.length === 0) {
-            requiredGroup.querySelector('.form-control-feedback').textContent = 'Required'
-          } else if (name.value.length > 0 && name.value.length < 3) {
-            requiredGroup.querySelector('.form-control-feedback').textContent = 'Too short'
-          } else {
-            requiredGroup.querySelector('.form-control-feedback').textContent = 'Too long'
-          }
-        }
-      }
 
       if (input) {
         if (input.value !== '') {
@@ -101,29 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
   listeningInputs.forEach(function (requiredInput) {
     requiredInput.addEventListener('input', runAllRequiredChecks)
   })
-
-  generalComment.oninput = function () {
-    if (generalComment.value.length === 0) {
-      generalCommentFormGroup.classList.remove('has-success')
-      generalCommentFormGroup.classList.remove('has-warning')
-      generalComment.classList.remove('form-control-success')
-      generalComment.classList.remove('form-control-warning')
-      generalCommentFormGroup.querySelector('.form-control-feedback').textContent = ''
-    } else if (generalComment.value.length > 0 && generalComment.value.length < 501) {
-      generalCommentFormGroup.classList.add('has-success')
-      generalCommentFormGroup.classList.remove('has-warning')
-      generalComment.classList.add('form-control-success')
-      generalComment.classList.remove('form-control-warning')
-      generalCommentFormGroup.querySelector('.form-control-feedback').textContent = 'Characters remaining: ' + (500 - generalComment.value.length)
-    } else {
-      generalCommentFormGroup.classList.remove('has-success')
-      generalCommentFormGroup.classList.add('has-warning')
-      generalComment.classList.remove('form-control-success')
-      generalComment.classList.add('form-control-warning')
-      generalCommentFormGroup.querySelector('.form-control-feedback').textContent = 'Too much information'
-    }
-    runAllRequiredChecks()
-  }
 
   saturdatesCheckboxes.forEach(function (checkbox, index) {
     var tutor = document.getElementById('fitzroy.' + index + '.tutor')
