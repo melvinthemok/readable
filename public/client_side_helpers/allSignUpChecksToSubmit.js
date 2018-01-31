@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   var name = document.getElementById('name')
   var phone = document.getElementById('phone')
+  var phoneRegex = /^[6, 8, 9]\d{7}$/
   var experience = document.getElementById('experience')
   var password1 = document.getElementById('passwordDraft')
   var password2 = document.getElementById('password')
