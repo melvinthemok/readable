@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
         book.classList.remove('required-group')
         book.querySelector('select').selectedIndex = 0
         book.setAttribute('style', 'display:none; visibility:hidden')
+        completed.classList.remove('required-group')
         completed.querySelector('select').selectedIndex = 0
         completed.setAttribute('style', 'display:none; visibility:hidden')
       }
