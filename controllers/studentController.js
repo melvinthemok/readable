@@ -27,7 +27,11 @@ var studentController = {
           res.redirect('/students')
         } else {
           res.render('students/preSchool/index', {
-            allPreSchools: allPreSchools
+            allPreSchools: allPreSchools.sort(function (preSchool1, preSchool2) {
+              if (preSchool1.name < preSchool2.name) return -1
+              else if (preSchool1.name > preSchool2.name) return 1
+              else return 0
+            })
           })
         }
       })
@@ -282,7 +286,11 @@ var studentController = {
           res.redirect('/students')
         } else {
           res.render('students/fitzroy/index', {
-            allFitzroys: allFitzroys
+            allFitzroys: allFitzroys.sort(function (fitzroy1, fitzroy2) {
+              if (fitzroy1.name < fitzroy2.name) return -1
+              else if (fitzroy1.name > fitzroy2.name) return 1
+              else return 0
+            })
           })
         }
       })
@@ -576,7 +584,11 @@ var studentController = {
           res.redirect('/students')
         } else {
           res.render('students/postFitzroy/index', {
-            allPostFitzroys: allPostFitzroys
+            allPostFitzroys: allPostFitzroys.sort(function (postFitzroy1, postFitzroy2) {
+              if (postFitzroy1.name < postFitzroy2.name) return -1
+              else if (postFitzroy1.name > postFitzroy2.name) return 1
+              else return 0
+            })
           })
         }
       })
