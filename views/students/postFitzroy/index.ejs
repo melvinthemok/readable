@@ -16,28 +16,30 @@
         document.addEventListener('DOMContentLoaded', function () {
           var filter = document.getElementById('filter')
           var filterResult = document.getElementById('filter-result')
-          var result = <%- JSON.stringify(allPostFitzroys) %>
+          var all = <%- JSON.stringify(allPostFitzroys) %>
+          var result
           if (document.getElementById('filter')) {
-            filter.onchange = function () {
+            filter.addEventListener('change', function () {
               if (this.value === 'all') {
-                result = <%- JSON.stringify(allPostFitzroys) %>
+                result = all
               } else if (this.value === 'oneOnOne') {
-                result = result.filter(function (postFitzroy) {
+                result = all.filter(function (postFitzroy) {
                   return postFitzroy.oneOnOne
                 })
               } else if (this.value === 'intervention') {
-                result = result.filter(function(postFitzroy) {
+                result = all.filter(function(postFitzroy) {
                   return postFitzroy.intervention
                 })
               }
               filterResult.innerHTML = ''
               result.forEach(function (postFitzroy) {
                 var a = document.createElement('a')
-                a.classList.add('list-group-item')
+                a.classList.add('list-group-item', 'list-group-item-action')
+                a.href = '/students/post-fitzroy/' + postFitzroy._id
                 a.appendChild(document.createTextNode(postFitzroy.name))
                 filterResult.appendChild(a)
               })
-            }
+            })
           }
         })
       </script>

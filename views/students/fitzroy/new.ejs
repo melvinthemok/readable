@@ -199,4 +199,13 @@
   </div>
 </div>
 
-<script type="text/javascript" src="/client_side_helpers/fitzroyChecksToSubmit.js"></script>
+<%
+  var javaScriptFiles = [
+    'nameLengthCheck',
+    'generalCommentLengthCheck',
+    'fitzroyChecksToSubmit'
+  ]
+  javaScriptFiles.forEach(function (file) {
+%>
+<script type="text/javascript" src="/client_side_helpers/<%= file %>.js"></script>
+<%  })  %>

@@ -22,7 +22,7 @@
           var postFitzroyTutorsList = <%- JSON.stringify(postFitzroyTutors)%>
           var result
           if (document.getElementById('filterTutor')) {
-            filter.onchange = function () {
+            filter.addEventListener('change', function () {
               if (this.value === 'all') {
                 result = all
               } else if (this.value === 'fitzroyTutors') {
@@ -52,7 +52,7 @@
                 a.appendChild(document.createTextNode(tutor.name))
                 filterResult.appendChild(a)
               })
-            }
+            })
           }
         })
       </script>

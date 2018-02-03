@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // checking if required form elements have values
   var required = document.querySelectorAll('.required-group > input, .required-group > select')
   // different listeners for inputs and selects
-  var requiredInputs = document.querySelectorAll('.required-group > input')
-  var requiredSelects = document.querySelectorAll('.required-group > select')
+  var listeningInputs = document.querySelectorAll('.required-group > input, #generalComment')
+  var listeningSelects = document.querySelectorAll('.required-group > select')
   // enable submit only if other client-side helper checks succeed
   var name = document.getElementById('name')
   var generalComment = document.getElementById('generalComment')
@@ -21,13 +21,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  Array.prototype.forEach.call(requiredInputs, function (elem) {
-    elem.oninput = allChecksAndToggleSubmitButton
+  Array.prototype.forEach.call(listeningInputs, function (elem) {
+    elem.addEventListener('input', allChecksAndToggleSubmitButton)
   })
   
-  Array.prototype.forEach.call(requiredSelects, function (elem) {
-    elem.onchange = allChecksAndToggleSubmitButton
+  Array.prototype.forEach.call(listeningSelects, function (elem) {
+    elem.addEventListener('change', allChecksAndToggleSubmitButton)
   })
-
-  generalComment.oninput = allChecksAndToggleSubmitButton
 })

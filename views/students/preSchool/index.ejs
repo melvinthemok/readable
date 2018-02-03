@@ -16,17 +16,18 @@
         document.addEventListener('DOMContentLoaded', function () {
           var filter = document.getElementById('filter')
           var filterResult = document.getElementById('filter-result')
-          var result = <%- JSON.stringify(allPreSchools) %>
+          var all = <%- JSON.stringify(allPreSchools) %>
+          var result
           if (document.getElementById('filter')) {
-            filter.onchange = function () {
+            filter.addEventListener('change', function () {
               if (this.value === 'all') {
-                result = <%- JSON.stringify(allPreSchools) %>
+                result = all
               } else if (this.value === 'oneOnOne') {
-                result = result.filter(function (preSchool) {
+                result = all.filter(function (preSchool) {
                   return preSchool.oneOnOne
                 })
               } else if (this.value === 'intervention') {
-                result = result.filter(function(preSchool) {
+                result = all.filter(function(preSchool) {
                   return preSchool.intervention
                 })
               }
@@ -34,10 +35,11 @@
               result.forEach(function (preSchool) {
                 var a = document.createElement('a')
                 a.classList.add('list-group-item', 'list-group-item-action')
+                a.href = '/students/pre-school/' + preSchool._id
                 a.appendChild(document.createTextNode(preSchool.name))
                 filterResult.appendChild(a)
               })
-            }
+            })
           }
         })
       </script>

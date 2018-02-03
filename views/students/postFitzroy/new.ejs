@@ -152,24 +152,15 @@
                   document.addEventListener('DOMContentLoaded', function () {
                     (function (i) {
                       var saturdatesCheckbox = document.getElementById('postFitzroy.' + i + '.date')
-                      var postFitzroyTutorDiv = document.getElementById('postFitzroy.' + i + '.tutor')
-                      var postFitzroyTutorSelect = postFitzroyTutorDiv.getElementsByTagName("select")[0]
-                      saturdatesCheckbox.onchange = function () {
+                      var tutor = document.getElementById('postFitzroy.' + i + '.tutor')
+                      saturdatesCheckbox.addEventListener('change', function () {
                         if (this.checked) {
-                          if (postFitzroyTutorSelect.hasChildNodes() && postFitzroyTutorSelect.firstChild.value === "" && postFitzroyTutorSelect.childNodes[1] === "") {
-                            postFitzroyTutorSelect.remove(postFitzroyTutorSelect.firstChild)
-                          }
-                          postFitzroyTutorDiv.removeAttribute('style')
+                          tutor.removeAttribute('style')
                         } else {
-                          if (postFitzroyTutorSelect.hasChildNodes()) {
-                            var blank = new Option("Please select", "", true, true)
-                            blank.setAttribute('disabled', true)
-                            blank.setAttribute('hidden', true)
-                            postFitzroyTutorSelect.insertBefore(blank, postFitzroyTutorSelect.firstChild)
-                          }
-                          postFitzroyTutorDiv.setAttribute('style', 'display:none; visibility:hidden')
+                          tutor.querySelector('select').selectedIndex = 0
+                          tutor.setAttribute('style', 'display:none; visibility:hidden')
                         }
-                      }
+                      })
                     }(<%= index %>))
                   })
                 </script>
@@ -196,6 +187,7 @@
     </div>
   </div>
 </div>
+
 <%
   var javaScriptFiles = [
     'nameLengthCheck',
