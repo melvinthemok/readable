@@ -16,8 +16,8 @@ var saturdateController = {
       } else {
         res.render('history/index', {
           allSaturdates: allSaturdates.sort(function (date1, date2) {
-            if (date1.date < date2.date) return -1
-            else if (date1.date > date2.date) return 1
+            if (date1.date < date2.date) return 1
+            else if (date1.date > date2.date) return -1
             else return 0
           }),
           formatDateLong: formatDateLong
