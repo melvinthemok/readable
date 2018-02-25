@@ -121,9 +121,6 @@ var tutorController = {
                             }
                           })
                         })
-                        console.log('PreSchool Session:', tutorPreSession)
-                        console.log('Fitzroy Session:', tutorFitzroySession)
-                        console.log('Post Fitzroy Session:', tutorPostFitzroySession)
                         res.render('tutors/show', {
                           chosenTutor: chosenTutor,
                           tutorPreSession: Object.keys(tutorPreSession).length,
