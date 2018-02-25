@@ -14,9 +14,15 @@
                     <span class="badge badge-pill badge-primary"><%= chosenTutor.age %></span>
                     <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenTutor.startDate) %></span>
                     <span class="badge badge-pill badge-primary">Experience: <%= chosenTutor.experience %></span>
-                    <% if (totalTutorSession > 0) { %>
-                        <span class="badge badge-pill badge-primary"><%= totalTutorSession %> session<%= totalTutorSession > 1 ? 's':''%> attended </span>
-                        <% } %>
+                    <% if (tutorPreSession > 0) { %>
+                        <span class="badge badge-pill badge-primary"><%= tutorPreSession %> pre-school session<%= tutorPreSession > 1 ? 's':''%> attended </span>
+                    <% } %>
+                    <% if (tutorFitzroySession > 0) { %>
+                        <span class="badge badge-pill badge-primary"><%= tutorFitzroySession %> fitzroy session<%= tutorFitzroySession > 1 ? 's':''%> attended </span>
+                    <% } %>
+                    <% if (tutorPostFitzroySession > 0) { %>
+                        <span class="badge badge-pill badge-primary"><%= tutorPostFitzroySession %> post-fitzroy session<%= tutorPostFitzroySession > 1 ? 's':''%> attended </span>
+                    <% } %>
                 </p>
             </div>
         </div>

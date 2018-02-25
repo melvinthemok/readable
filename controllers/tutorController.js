@@ -97,31 +97,38 @@ var tutorController = {
                         req.flash('error', err.toString())
                         res.redirect('/tutors')
                       } else {
-                        var totalSession = {}
+                        var tutorPreSession = {}
                         allPreSchools.forEach(function (preSchoolSession) {
                           preSchoolSession.attendance.forEach(function (attDate) {
-                            if (attDate.date.date >= chosenTutor.startDate) {
-                              totalSession[attDate.date.date] = 1
+                            if (attDate.date.date >= chosenTutor.startDate && attDate.tutor.id.toString() === chosenTutor.id.toString()) {
+                              tutorPreSession[attDate.date.date] = 1
                             }
                           })
                         })
+                        var tutorFitzroySession = {}
                         allFitzroys.forEach(function (fitzroySession) {
                           fitzroySession.attendance.forEach(function (attDate) {
-                            if (attDate.date.date >= chosenTutor.startDate) {
-                              totalSession[attDate.date.date] = 1
+                            if (attDate.date.date >= chosenTutor.startDate && attDate.tutor.id.toString() === chosenTutor.id.toString()) {
+                              tutorFitzroySession[attDate.date.date] = 1
                             }
                           })
                         })
+                        var tutorPostFitzroySession = {}
                         allPostFitzroys.forEach(function (postFitzroySession) {
                           postFitzroySession.attendance.forEach(function (attDate) {
-                            if (attDate.date.date >= chosenTutor.startDate) {
-                              totalSession[attDate.date.date] = 1
+                            if (attDate.date.date >= chosenTutor.startDate && attDate.tutor.id.toString() === chosenTutor.id.toString()) {
+                              tutorPostFitzroySession[attDate.date.date] = 1
                             }
                           })
                         })
+                        console.log('PreSchool Session:', tutorPreSession)
+                        console.log('Fitzroy Session:', tutorFitzroySession)
+                        console.log('Post Fitzroy Session:', tutorPostFitzroySession)
                         res.render('tutors/show', {
                           chosenTutor: chosenTutor,
-                          totalTutorSession: Object.keys(totalSession).length,
+                          tutorPreSession: Object.keys(tutorPreSession).length,
+                          tutorFitzroySession: Object.keys(tutorFitzroySession).length,
+                          tutorPostFitzroySession: Object.keys(tutorPostFitzroySession).length,
                           allPreSchools: allPreSchools.filter(function (preSchool) {
                             return (preSchool.attendance.some(function (indivAttendance) {
                               if (indivAttendance.tutor) {
