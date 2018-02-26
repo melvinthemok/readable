@@ -34,11 +34,7 @@ var tutorController = {
                       fitzroyTutors: fitzroyTutors,
                       preSchoolTutors: preSchoolTutors,
                       postFitzroyTutors: postFitzroyTutors,
-                      allTutors: allTutors.sort(function (tutor1, tutor2) {
-                        if (tutor1.name < tutor2.name) return -1
-                        else if (tutor1.name > tutor2.name) return 1
-                        else return 0
-                      })
+                      allTutors: sortByProperty(allTutors, 'name')
                     })
                   }
                 }) // PostFitzroy fetch
