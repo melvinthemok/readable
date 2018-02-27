@@ -13,6 +13,99 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <form action="/students/fitzroy/update/<%= chosenFitzroy._id %>?_method=PUT" method="POST" class="mb-5">
+        <div class="form-group">
+          <label class="control-label mb-0">Attendance</label><br>
+          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student.<br>Select the tutor for this student at this session, or "Unknown" if unclear.<br>Select the Fitzroy book level covered during each session, or whether the student did some other activity.<br>If a Fitzroy book was covered, indicate whether that book level was completed.</small>
+          <% if (allSaturdates.length > 0) { %>
+            <% allSaturdates.forEach(function (saturdate, index) { %>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <% if (chosenFitzroy.attendance.some(function (indivAtten) { %>
+                    <% return indivAtten.date.id === saturdate.id %>
+                  <% })) { %>
+                    <input checked class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                  <% } else { %>
+                    <input class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
+                  <% } %>
+                  <%= formatDateLong(saturdate.date) %>
+                </label>
+                <% var selectedAttendance = chosenFitzroy.attendance.find(function (indivAtten) { %>
+                  <% return indivAtten.date.id === saturdate.id %>
+                <% }) %>
+                <div class="row ml-1">
+                  <div id="fitzroy.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
+                    <label class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
+                    <select class="custom-select ml-4" name="fitzroyTutors">
+                      <% if (!selectedAttendance) { %>
+                        <option value="" selected disabled hidden>Please select</option>
+                      <% } else { %>
+                        <option value="" disabled hidden>Please select</option>
+                      <% } %>
+                      <% if (selectedAttendance && !selectedAttendance.tutor) { %>
+                        <option selected value="unknown">Unknown</option>
+                      <% } else { %>
+                        <option value="unknown">Unknown</option>
+                      <% } %>
+                      <% if (allTutors.length > 0) { %>
+                        <% allTutors.forEach(function (tutor) { %>
+                          <% if (selectedAttendance && selectedAttendance.tutor && selectedAttendance.tutor.id === tutor.id) { %>
+                            <option selected value="<%= tutor.id %>"><%= tutor.name %></option>
+                          <% } else { %>
+                            <option value="<%= tutor.id %>"><%= tutor.name %></option>
+                          <% } %>
+                        <% }) %>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+                <div class="row ml-1">
+                  <div id="fitzroy.<%= index %>.book" class="form-group mb-0" style="display: none; visibility: hidden">
+                    <label class="text-muted mb-0 mt-1 ml-4"><small>Fitzroy Book Level</small></label><br>
+                    <select class="custom-select ml-4" name="fitzroyBooks">
+                      <% if (!selectedAttendance) { %>
+                        <option value="" selected disabled hidden>Please select</option>
+                      <% } else { %>
+                        <option value="" disabled hidden>Please select</option>
+                      <% } %>
+                      <% if (selectedAttendance && selectedAttendance.book && selectedAttendance.book === 0) { %>
+                        <option selected value="0">Other activity</option>
+                      <% } else { %>
+                        <option value="0">Other activity</option>
+                      <% } %>
+                      <% for (var l = 1; l < 81; l++) { %>
+                        <% if (selectedAttendance && selectedAttendance.book && selectedAttendance.book === l) { %>
+                          <option selected value="<%= l %>"><%= fitzroyBookLevelPlusX(l) %></option>
+                        <% } else { %>
+                          <option value="<%= l %>"><%= fitzroyBookLevelPlusX(l) %></option>
+                        <% } %>
+                      <% } %>
+                    </select>
+                  </div>
+                  <div id="fitzroy.<%= index %>.completed" class="form-group" style="display: none; visibility: hidden;">
+                    <label class="text-muted mb-0 mt-1 ml-4"><small>Book completed?</small></label><br>
+                    <select class="custom-select ml-4" name="fitzroyCompleted">
+                      <% if (!selectedAttendance || (selectedAttendance && typeof selectedAttendance.completed === 'undefined')) { %>
+                        <option value="" selected disabled hidden>Please select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                      <% } %>
+                      <% if (selectedAttendance && selectedAttendance.completed === true) { %>
+                        <option value="" disabled hidden>Please select</option>
+                        <option selected value="true">Yes</option>
+                        <option value="false">No</option>
+                      <% } %>
+                      <% if (selectedAttendance && selectedAttendance.completed === false) { %>
+                        <option value="" disabled hidden>Please select</option>
+                        <option value="true">Yes</option>
+                        <option selected value="false">No</option>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          <% } %>
+        </div>
         <div id="name-form-group" class="form-group required-group">
           <label for="name">Name</label>
           <input id="name" class="form-control" type="text" name="name" value="<%= chosenFitzroy.name %>">
@@ -257,99 +350,7 @@
           <% }) %>
         </div>
         <% } %>
-        <div class="form-group">
-          <label class="control-label mb-0">Attendance</label><br>
-          <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student.<br>Select the tutor for this student at this session, or "Unknown" if unclear.<br>Select the Fitzroy book level covered during each session, or whether the student did some other activity.<br>If a Fitzroy book was covered, indicate whether that book level was completed.</small>
-          <% if (allSaturdates.length > 0) { %>
-            <% allSaturdates.forEach(function (saturdate, index) { %>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <% if (chosenFitzroy.attendance.some(function (indivAtten) { %>
-                    <% return indivAtten.date.id === saturdate.id %>
-                  <% })) { %>
-                    <input checked class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
-                  <% } else { %>
-                    <input class="form-check-input mr-1" id="fitzroy.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
-                  <% } %>
-                  <%= formatDateLong(saturdate.date) %>
-                </label>
-                <% var selectedAttendance = chosenFitzroy.attendance.find(function (indivAtten) { %>
-                  <% return indivAtten.date.id === saturdate.id %>
-                <% }) %>
-                <div class="row ml-1">
-                  <div id="fitzroy.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
-                    <label class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
-                    <select class="custom-select ml-4" name="fitzroyTutors">
-                      <% if (!selectedAttendance) { %>
-                        <option value="" selected disabled hidden>Please select</option>
-                      <% } else { %>
-                        <option value="" disabled hidden>Please select</option>
-                      <% } %>
-                      <% if (selectedAttendance && !selectedAttendance.tutor) { %>
-                        <option selected value="unknown">Unknown</option>
-                      <% } else { %>
-                        <option value="unknown">Unknown</option>
-                      <% } %>
-                      <% if (allTutors.length > 0) { %>
-                        <% allTutors.forEach(function (tutor) { %>
-                          <% if (selectedAttendance && selectedAttendance.tutor && selectedAttendance.tutor.id === tutor.id) { %>
-                            <option selected value="<%= tutor.id %>"><%= tutor.name %></option>
-                          <% } else { %>
-                            <option value="<%= tutor.id %>"><%= tutor.name %></option>
-                          <% } %>
-                        <% }) %>
-                      <% } %>
-                    </select>
-                  </div>
-                </div>
-                <div class="row ml-1">
-                  <div id="fitzroy.<%= index %>.book" class="form-group mb-0" style="display: none; visibility: hidden">
-                    <label class="text-muted mb-0 mt-1 ml-4"><small>Fitzroy Book Level</small></label><br>
-                    <select class="custom-select ml-4" name="fitzroyBooks">
-                      <% if (!selectedAttendance) { %>
-                        <option value="" selected disabled hidden>Please select</option>
-                      <% } else { %>
-                        <option value="" disabled hidden>Please select</option>
-                      <% } %>
-                      <% if (selectedAttendance && selectedAttendance.book && selectedAttendance.book === 0) { %>
-                        <option selected value="0">Other activity</option>
-                      <% } else { %>
-                        <option value="0">Other activity</option>
-                      <% } %>
-                      <% for (var l = 1; l < 81; l++) { %>
-                        <% if (selectedAttendance && selectedAttendance.book && selectedAttendance.book === l) { %>
-                          <option selected value="<%= l %>"><%= fitzroyBookLevelPlusX(l) %></option>
-                        <% } else { %>
-                          <option value="<%= l %>"><%= fitzroyBookLevelPlusX(l) %></option>
-                        <% } %>
-                      <% } %>
-                    </select>
-                  </div>
-                  <div id="fitzroy.<%= index %>.completed" class="form-group" style="display: none; visibility: hidden;">
-                    <label class="text-muted mb-0 mt-1 ml-4"><small>Book completed?</small></label><br>
-                    <select class="custom-select ml-4" name="fitzroyCompleted">
-                      <% if (!selectedAttendance || (selectedAttendance && typeof selectedAttendance.completed === 'undefined')) { %>
-                        <option value="" selected disabled hidden>Please select</option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                      <% } %>
-                      <% if (selectedAttendance && selectedAttendance.completed === true) { %>
-                        <option value="" disabled hidden>Please select</option>
-                        <option selected value="true">Yes</option>
-                        <option value="false">No</option>
-                      <% } %>
-                      <% if (selectedAttendance && selectedAttendance.completed === false) { %>
-                        <option value="" disabled hidden>Please select</option>
-                        <option value="true">Yes</option>
-                        <option selected value="false">No</option>
-                      <% } %>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            <% }) %>
-          <% } %>
-        </div><br>
+        <br>
         <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
       </form>
     </div>
