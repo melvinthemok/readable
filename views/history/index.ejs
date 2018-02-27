@@ -9,6 +9,20 @@
     </div>
   </div>
 </div>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/history" method="POST">
+        <div class="form-group">
+          <label for="date" class="mb-0">Add another session</label><br>
+          <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
+          <input class="form-control" id="date" type="date" name="date" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
+          <button class="btn btn-primary float-right mt-2" type="submit" style="cursor:pointer;">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
@@ -19,14 +33,6 @@
           <% }) %>
         <% } %>
       </div>
-      <form action="/history" method="POST" class="my-5">
-        <div class="form-group">
-          <label for="date" class="mb-0">Add another session</label><br>
-          <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
-          <input class="form-control" id="date" type="date" name="date" value="<%= new Date().getFullYear() %>-<%= (new Date().getMonth()+1).toString().length < 2 ? '0' + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString() %>-<%= (new Date().getDate()).toString().length < 2 ? '0' + (new Date().getDate()).toString() : (new Date().getDate()).toString() %>">
-          <button class="btn btn-primary float-right mt-2" type="submit" style="cursor:pointer;">Add</button>
-        </div>
-      </form>
     </div>
   </div>
 </div>
