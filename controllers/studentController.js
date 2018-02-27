@@ -7,6 +7,7 @@ var Comment = require('../models/comment')
 
 var formatDateShort = require('../helpers/formatDateShort')
 var formatDateLong = require('../helpers/formatDateLong')
+var sortByProperty = require('../helpers/sortByProperty')
 var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
 
 var studentController = {
@@ -27,11 +28,7 @@ var studentController = {
           res.redirect('/students')
         } else {
           res.render('students/preSchool/index', {
-            allPreSchools: allPreSchools.sort(function (preSchool1, preSchool2) {
-              if (preSchool1.name < preSchool2.name) return -1
-              else if (preSchool1.name > preSchool2.name) return 1
-              else return 0
-            })
+            allPreSchools: sortByProperty(allPreSchools, 'name')
           })
         }
       })
@@ -94,13 +91,9 @@ var studentController = {
                   res.redirect('/students/pre-school')
                 } else {
                   res.render('students/preSchool/new', {
-                    allTutors: allTutors,
-                    allPreSchools: allPreSchools,
-                    allSaturdates: allSaturdates.sort(function (date1, date2) {
-                      if (date1.date < date2.date) return 1
-                      else if (date1.date > date2.date) return -1
-                      else return 0
-                    }),
+                    allTutors: sortByProperty(allTutors, 'name'),
+                    allPreSchools: sortByProperty(allPreSchools, 'name'),
+                    allSaturdates: sortByProperty(allSaturdates, 'date', true),
                     formatDateLong: formatDateLong
                   })
                 }
@@ -195,13 +188,9 @@ var studentController = {
                         res.redirect('/students/pre-school')
                       } else {
                         res.render('students/preSchool/edit', {
-                          allTutors: allTutors,
-                          allPreSchools: allPreSchools,
-                          allSaturdates: allSaturdates.sort(function (date1, date2) {
-                            if (date1.date < date2.date) return 1
-                            else if (date1.date > date2.date) return -1
-                            else return 0
-                          }),
+                          allTutors: sortByProperty(allTutors, 'name'),
+                          allPreSchools: sortByProperty(allPreSchools, 'name'),
+                          allSaturdates: sortByProperty(allSaturdates, 'date', true),
                           chosenPreSchool: chosenPreSchool,
                           formatDateLong: formatDateLong
                         })
@@ -286,11 +275,7 @@ var studentController = {
           res.redirect('/students')
         } else {
           res.render('students/fitzroy/index', {
-            allFitzroys: allFitzroys.sort(function (fitzroy1, fitzroy2) {
-              if (fitzroy1.name < fitzroy2.name) return -1
-              else if (fitzroy1.name > fitzroy2.name) return 1
-              else return 0
-            })
+            allFitzroys: sortByProperty(allFitzroys, 'name')
           })
         }
       })
@@ -354,13 +339,9 @@ var studentController = {
                   res.redirect('/students/fitzroy')
                 } else {
                   res.render('students/fitzroy/new', {
-                    allTutors: allTutors,
-                    allFitzroys: allFitzroys,
-                    allSaturdates: allSaturdates.sort(function (date1, date2) {
-                      if (date1.date < date2.date) return 1
-                      else if (date1.date > date2.date) return -1
-                      else return 0
-                    }),
+                    allTutors: sortByProperty(allTutors, 'name'),
+                    allFitzroys: sortByProperty(allFitzroys, 'name'),
+                    allSaturdates: sortByProperty(allSaturdates, 'date', true),
                     formatDateLong: formatDateLong,
                     fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                   })
@@ -465,13 +446,9 @@ var studentController = {
                         res.redirect('/students/fitzroy')
                       } else {
                         res.render('students/fitzroy/edit', {
-                          allTutors: allTutors,
-                          allFitzroys: allFitzroys,
-                          allSaturdates: allSaturdates.sort(function (date1, date2) {
-                            if (date1.date < date2.date) return 1
-                            else if (date1.date > date2.date) return -1
-                            else return 0
-                          }),
+                          allTutors: sortByProperty(allTutors, 'name'),
+                          allFitzroys: sortByProperty(allFitzroys, 'name'),
+                          allSaturdates: sortByProperty(allSaturdates, 'date', true),
                           chosenFitzroy: chosenFitzroy,
                           formatDateLong: formatDateLong,
                           fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
@@ -584,11 +561,7 @@ var studentController = {
           res.redirect('/students')
         } else {
           res.render('students/postFitzroy/index', {
-            allPostFitzroys: allPostFitzroys.sort(function (postFitzroy1, postFitzroy2) {
-              if (postFitzroy1.name < postFitzroy2.name) return -1
-              else if (postFitzroy1.name > postFitzroy2.name) return 1
-              else return 0
-            })
+            allPostFitzroys: sortByProperty(allPostFitzroys, 'name')
           })
         }
       })
@@ -651,13 +624,9 @@ var studentController = {
                   res.redirect('/students/post-fitzroy')
                 } else {
                   res.render('students/postFitzroy/new', {
-                    allTutors: allTutors,
-                    allPostFitzroys: allPostFitzroys,
-                    allSaturdates: allSaturdates.sort(function (date1, date2) {
-                      if (date1.date < date2.date) return 1
-                      else if (date1.date > date2.date) return -1
-                      else return 0
-                    }),
+                    allTutors: sortByProperty(allTutors, 'name'),
+                    allPostFitzroys: sortByProperty(allPostFitzroys, 'name'),
+                    allSaturdates: sortByProperty(allSaturdates, 'date', true),
                     formatDateLong: formatDateLong
                   })
                 }
@@ -753,13 +722,9 @@ var studentController = {
                         res.redirect('/students/post-fitzroy')
                       } else {
                         res.render('students/postFitzroy/edit', {
-                          allTutors: allTutors,
-                          allPostFitzroys: allPostFitzroys,
-                          allSaturdates: allSaturdates.sort(function (date1, date2) {
-                            if (date1.date < date2.date) return 1
-                            else if (date1.date > date2.date) return -1
-                            else return 0
-                          }),
+                          allTutors: sortByProperty(allTutors, 'name'),
+                          allPostFitzroys: sortByProperty(allPostFitzroys, 'name'),
+                          allSaturdates: sortByProperty(allSaturdates, 'date', true),
                           chosenPostFitzroy: chosenPostFitzroy,
                           formatDateLong: formatDateLong
                         })

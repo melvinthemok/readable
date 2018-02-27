@@ -4,6 +4,8 @@ var Fitzroy = require('../models/fitzroy')
 var PostFitzroy = require('../models/postFitzroy')
 
 var formatDateShort = require('../helpers/formatDateShort')
+var sortByProperty = require('../helpers/sortByProperty')
+var studentsOfTutor = require('../helpers/studentsOfTutor')
 var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
 
 var tutorController = {
@@ -32,11 +34,7 @@ var tutorController = {
                       fitzroyTutors: fitzroyTutors,
                       preSchoolTutors: preSchoolTutors,
                       postFitzroyTutors: postFitzroyTutors,
-                      allTutors: allTutors.sort(function (tutor1, tutor2) {
-                        if (tutor1.name < tutor2.name) return -1
-                        else if (tutor1.name > tutor2.name) return 1
-                        else return 0
-                      })
+                      allTutors: sortByProperty(allTutors, 'name')
                     })
                   }
                 }) // PostFitzroy fetch
@@ -101,33 +99,9 @@ var tutorController = {
                       } else {
                         res.render('tutors/show', {
                           chosenTutor: chosenTutor,
-                          allPreSchools: allPreSchools.filter(function (preSchool) {
-                            return (preSchool.attendance.some(function (indivAttendance) {
-                              if (indivAttendance.tutor) {
-                                return indivAttendance.tutor.id.toString() === chosenTutor.id.toString()
-                              }
-                            }) || preSchool.preferredTutors.some(function (tutor) {
-                              return tutor.equals(chosenTutor.id)
-                            }))
-                          }),
-                          allFitzroys: allFitzroys.filter(function (fitzroy) {
-                            return (fitzroy.attendance.some(function (indivAttendance) {
-                              if (indivAttendance.tutor) {
-                                return indivAttendance.tutor.id.toString() === chosenTutor.id.toString()
-                              }
-                            }) || fitzroy.preferredTutors.some(function (tutor) {
-                              return tutor.equals(chosenTutor.id)
-                            }))
-                          }),
-                          allPostFitzroys: allPostFitzroys.filter(function (postFitzroy) {
-                            return (postFitzroy.attendance.some(function (indivAttendance) {
-                              if (indivAttendance.tutor) {
-                                return indivAttendance.tutor.id.toString() === chosenTutor.id.toString()
-                              }
-                            }) || postFitzroy.preferredTutors.some(function (tutor) {
-                              return tutor.equals(chosenTutor.id)
-                            }))
-                          }),
+                          allPreSchools: studentsOfTutor(allPreSchools, chosenTutor),
+                          allFitzroys: studentsOfTutor(allFitzroys, chosenTutor),
+                          allPostFitzroys: studentsOfTutor(allPostFitzroys, chosenTutor),
                           formatDateShort: formatDateShort,
                           fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                         })
