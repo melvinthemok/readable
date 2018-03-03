@@ -94,7 +94,7 @@ var authController = {
   }),
 
   postCatchPlusLogIn: passport.authenticate('catchPlus-local', {
-    successRedirect: '/',
+    successRedirect: '/students/attendance',
     failureRedirect: '/auth/login',
     failureFlash: true,
     successFlash: 'You have successfully logged in'

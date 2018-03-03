@@ -45,7 +45,8 @@
                 <h6 class="dropdown-header" style="<%= loggedOut %>"><em>view this Saturday's</em></h6>
                 <a class="dropdown-item" href="/group" style="<%= loggedOut %>">groups</a>-->
                 <h6 class="dropdown-header"><em>students</em></h6>
-                <a class="dropdown-item" href="/students/new" style="<%= canCreateStudent %>">sign up a new one</a>
+                <a class="dropdown-item" href="/students/new" style="<%= isAdminOrCatchPlus %>">sign up a new one</a>
+                <a class="dropdown-item" href="/students/attendance" style="<%= isAdminOrCatchPlus %>">attendance</a>
                 <a class="dropdown-item" href="/students/pre-school">pre-school</a>
                 <a class="dropdown-item" href="/students/fitzroy">fitzroy</a>
                 <a class="dropdown-item" href="/students/post-fitzroy">post-fitzroy</a>

@@ -5,6 +5,8 @@ var studentController = require('../controllers/studentController')
 
 router.get('/', studentController.index)
 router.get('/new', studentController.new)
+router.get('/attendance', studentController.attendance.edit)
+router.put('/attendance', isAdminOrCatchPlus, studentController.attendance.update)
 
 router.get('/pre-school', studentController.preSchool.index)
 router.get('/pre-school/new', isAdminOrCatchPlus, studentController.preSchool.new)
