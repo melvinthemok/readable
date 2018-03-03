@@ -4,6 +4,17 @@ var app = express()
 var path = require('path')
 var ejsLayouts = require('express-ejs-layouts')
 var mongoose = require('mongoose')
+var morgan = require('morgan')
+var bodyParser = require('body-parser')
+var methodOverride = require('method-override')
+var session = require('express-session')
+var flash = require('connect-flash')
+var cron = require('node-schedule')
+
+var passport = require('./config/pp-config')
+
+var isLoggedIn = require('./middleware/isLoggedIn')
+
 var auth = require('./routes/authRouter')
 var saturdate = require('./routes/saturdateRouter')
 var student = require('./routes/studentRouter')
@@ -11,14 +22,9 @@ var tutor = require('./routes/tutorRouter')
 var comment = require('./routes/commentRouter')
 // var attend = require('./routes/attendRouter')
 // var group = require('./routes/groupRouter')
-var morgan = require('morgan')
-var bodyParser = require('body-parser')
-var methodOverride = require('method-override')
-var session = require('express-session')
-var flash = require('connect-flash')
-var passport = require('./config/pp-config')
-var isLoggedIn = require('./middleware/isLoggedIn')
-var isAdmin = require('./middleware/isAdmin')
+
+var resetStudentAttendance = require('./cron/resetStudentAttendance')
+
 require('dotenv').config({ silent: true })
 
 if (process.env.NODE_ENV === 'test') {
@@ -68,6 +74,10 @@ app.use('/history', isLoggedIn, saturdate)
 app.use('/comments', isLoggedIn, comment)
 // app.use('/attend', attend)
 // app.use('/group', group)
+
+cron.scheduleJob({ dayOfWeek: 0, hour: 0, minute: 0 }, function () {
+  resetStudentAttendance()
+})
 
 app.listen(process.env.PORT || 3000)
 
