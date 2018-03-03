@@ -130,6 +130,7 @@ var PostFitzroySchema = new mongoose.Schema({
   ],
   attending: {
     type: Boolean,
+    default: false,
     required: true
   }
 })

@@ -129,8 +129,7 @@ var studentController = {
             : obj['tutor'] = req.body.preSchoolTutors.shift()
             return obj
           })
-          : [],
-        attending: false
+          : []
       })
       newPreSchool.save(function (err, savedPreSchool) {
         if (err) {
@@ -230,7 +229,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenPreSchool.attending = false
         chosenPreSchool.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -387,8 +385,7 @@ var studentController = {
               }
               return obj
             })
-            : [],
-        attending: false
+            : []
       })
       newFitzroy.save(function (err, savedFitzroy) {
         if (err) {
@@ -516,7 +513,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenFitzroy.attending = false
         chosenFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -663,8 +659,7 @@ var studentController = {
             : obj['tutor'] = req.body.postFitzroyTutors.shift()
             return obj
           })
-          : [],
-        attending: false
+          : []
       })
       newPostFitzroy.save(function (err, savedPostFitzroy) {
         if (err) {
@@ -765,7 +760,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenPostFitzroy.attending = false
         chosenPostFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
