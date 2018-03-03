@@ -18,13 +18,13 @@
           <%
           var loggedIn = ""
           var loggedOut = ""
-          var canCreateStudent= ""
+          var isAdminOrCatchPlus= ""
           var isAdmin = ""
           var currentUserName = ""
           if (currentUser) {
             loggedIn = "display:none; visibility:hidden;"
             if (currentUser.userType !== "catchPlus" && !currentUser.admin) {
-              canCreateStudent = "display:none; visibility: hidden;"
+              isAdminOrCatchPlus = "display:none; visibility: hidden;"
             }
             if (!currentUser.admin) {
               isAdmin = "display:none; visibility: hidden;"
