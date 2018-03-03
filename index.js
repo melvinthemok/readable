@@ -28,9 +28,9 @@ var resetStudentAttendance = require('./cron/resetStudentAttendance')
 require('dotenv').config({ silent: true })
 
 if (process.env.NODE_ENV === 'test') {
-  mongoose.connect('mongodb://localhost/readable-test')
+  mongoose.connect('mongodb://localhost/readable-test', { useMongoClient: true })
 } else {
-  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/readable')
+  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/readable', { useMongoClient: true })
 }
 mongoose.Promise = global.Promise
 
