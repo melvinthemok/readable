@@ -5,6 +5,7 @@ var Fitzroy = require('../models/fitzroy')
 var PostFitzroy = require('../models/postFitzroy')
 var Tutor = require('../models/tutor')
 
+var sortByProperty = require('../helpers/sortByProperty')
 var formatDateShort = require('../helpers/formatDateShort')
 var formatDateLong = require('../helpers/formatDateLong')
 
@@ -22,11 +23,7 @@ var commentController = {
           res.redirect('/')
         } else {
           res.render('comments/index', {
-            allComments: allComments.sort(function (comment1, comment2) {
-              if (comment1.date < comment2.date) return -1
-              else if (comment1.date > comment2.date) return 1
-              else return 0
-            }),
+            allComments: sortByProperty(allComments, 'date'),
             formatDateShort: formatDateShort
           })
         }
@@ -80,15 +77,11 @@ var commentController = {
                         res.redirect('/comments')
                       } else {
                         res.render('comments/new', {
-                          allTutors: allTutors,
-                          allPreSchools: allPreSchools,
-                          allFitzroys: allFitzroys,
-                          allPostFitzroys: allPostFitzroys,
-                          allSaturdates: allSaturdates.sort(function (date1, date2) {
-                            if (date1.date < date2.date) return -1
-                            else if (date1.date > date2.date) return 1
-                            else return 0
-                          }),
+                          allTutors: sortByProperty(allTutors, 'name'),
+                          allPreSchools: sortByProperty(allPreSchools, 'name'),
+                          allFitzroys: sortByProperty(allFitzroys, 'name'),
+                          allPostFitzroys: sortByProperty(allPostFitzroys, 'name'),
+                          allSaturdates: sortByProperty(allSaturdates, 'date', true),
                           formatDateLong: formatDateLong
                         })
                       }
@@ -161,11 +154,11 @@ var commentController = {
                               res.redirect('/comments')
                             } else {
                               res.render('comments/edit', {
-                                allTutors: allTutors,
-                                allPreSchools: allPreSchools,
-                                allFitzroys: allFitzroys,
-                                allPostFitzroys: allPostFitzroys,
-                                allSaturdates: allSaturdates,
+                                allTutors: sortByProperty(allTutors, 'name'),
+                                allPreSchools: sortByProperty(allPreSchools, 'name'),
+                                allFitzroys: sortByProperty(allFitzroys, 'name'),
+                                allPostFitzroys: sortByProperty(allPostFitzroys, 'name'),
+                                allSaturdates: sortByProperty(allSaturdates, 'date', true),
                                 chosenComment: chosenComment,
                                 formatDateLong: formatDateLong
                               })
