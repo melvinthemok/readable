@@ -68,7 +68,11 @@
       <div id="filter-result" class="list-group">
       <% if (allPreSchools.length > 0) { %>
         <% allPreSchools.forEach(function (preSchool) { %>
-          <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= preSchool.id %>"><%= preSchool.name %></a>
+          <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= preSchool.id %>">
+            <span class="d-inline-block text-truncate">
+              <%= preSchool.name %>
+            </span>
+          </a>
         <% }) %>
       <% } %>
       </div>

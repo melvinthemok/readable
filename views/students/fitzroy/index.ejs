@@ -68,7 +68,11 @@
       <div id="filter-result" class="list-group">
       <% if (allFitzroys.length > 0) { %>
         <% allFitzroys.forEach(function (fitzroy) { %>
-          <a class="list-group-item list-group-item-action" href="/students/fitzroy/<%= fitzroy.id %>"><%= fitzroy.name %></a>
+          <a class="list-group-item list-group-item-action" href="/students/fitzroy/<%= fitzroy.id %>">
+            <span class="d-inline-lock text-truncate">
+              <%= fitzroy.name %>
+            </span>
+          </a>
         <% }) %>
       <% } %>
       </div>
