@@ -9,6 +9,7 @@ var formatDateShort = require('../helpers/formatDateShort')
 var formatDateLong = require('../helpers/formatDateLong')
 var sortByProperty = require('../helpers/sortByProperty')
 var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
+var filterStudentPrefixedKeys = require('../helpers/filterStudentPrefixedKeys')
 
 var studentController = {
   index: function (req, res) {
@@ -129,8 +130,7 @@ var studentController = {
             : obj['tutor'] = req.body.preSchoolTutors.shift()
             return obj
           })
-          : [],
-        attending: false
+          : []
       })
       newPreSchool.save(function (err, savedPreSchool) {
         if (err) {
@@ -230,7 +230,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenPreSchool.attending = false
         chosenPreSchool.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -387,8 +386,7 @@ var studentController = {
               }
               return obj
             })
-            : [],
-        attending: false
+            : []
       })
       newFitzroy.save(function (err, savedFitzroy) {
         if (err) {
@@ -516,7 +514,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenFitzroy.attending = false
         chosenFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -663,8 +660,7 @@ var studentController = {
             : obj['tutor'] = req.body.postFitzroyTutors.shift()
             return obj
           })
-          : [],
-        attending: false
+          : []
       })
       newPostFitzroy.save(function (err, savedPostFitzroy) {
         if (err) {
@@ -765,7 +761,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenPostFitzroy.attending = false
         chosenPostFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -798,6 +793,154 @@ var studentController = {
           }
         )
       })
+    }
+  },
+
+  attendance: {
+
+    edit: function (req, res) {
+      PreSchool.find({}, function (err, allPreSchools) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/')
+        } else {
+          Fitzroy.find({}, function (err, allFitzroys) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/')
+            } else {
+              PostFitzroy.find({}, function (err, allPostFitzroys) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/')
+                } else {
+                  Saturdate.findOne({ date: {
+                    $gt: Date.now(),
+                    $lt: Date.now() + 7 * 24 * 60 * 60 * 1000
+                  }}, function (err, futureSaturdate) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/')
+                    } else {
+                      if (futureSaturdate === null) {
+                        Saturdate.findOne({}).sort('-date').exec(function (err, latestSaturdate) {
+                          res.render('students/attendance', {
+                            comingSaturdate: latestSaturdate,
+                            formatDateLong: formatDateLong,
+                            allPreSchools: sortByProperty(allPreSchools, 'name'),
+                            allFitzroys: sortByProperty(allFitzroys, 'name'),
+                            allPostFitzroys: sortByProperty(allPostFitzroys, 'name')
+                          })
+                        })
+                      } else {
+                        res.render('students/attendance', {
+                          comingSaturdate: futureSaturdate,
+                          formatDateLong: formatDateLong,
+                          allPreSchools: sortByProperty(allPreSchools, 'name'),
+                          allFitzroys: sortByProperty(allFitzroys, 'name'),
+                          allPostFitzroys: sortByProperty(allPostFitzroys, 'name')
+                        })
+                      }
+                    }
+                  })
+                }
+              })
+            }
+          })
+        }
+      })
+    },
+
+    update: function (req, res) {
+      var preSchools = filterStudentPrefixedKeys(req.body, 'preSchool')
+      var fitzroys = filterStudentPrefixedKeys(req.body, 'fitzroy')
+      var postFitzroys = filterStudentPrefixedKeys(req.body, 'postFitzroy')
+
+      var updatePreSchools = new Promise (function (resolve, reject) {
+        Object.keys(preSchools).forEach(function (preSchoolId, i) {
+          PreSchool.findById(preSchoolId, function (err, chosenPreSchool) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/attendance')
+            }
+            else {
+              chosenPreSchool.attending = preSchools[preSchoolId]
+              chosenPreSchool.save(function(err) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/attendance')
+                }
+              })
+            }
+          })
+          if (i === Object.keys(preSchools).length - 1) {
+            resolve('Attendance updated for all preSchools')
+          }
+        })
+        reject('Error updating attendance for preSchools')
+      })
+      var updateFitzroys = new Promise (function (resolve, reject) {
+        Object.keys(fitzroys).forEach(function (fitzroyId, i) {
+          Fitzroy.findById(fitzroyId, function (err, chosenFitzroy) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/attendance')
+            }
+            else {
+              chosenFitzroy.attending = fitzroys[fitzroyId]
+              chosenFitzroy.save(function(err) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/attendance')
+                }
+              })
+            }
+          })
+          if (i === Object.keys(fitzroys).length - 1) {
+            resolve('Attendance updated for all fitzroys')
+          }
+        })
+        reject('Error updating attendance for fitzroys')
+      })
+      var updatePostFitzroys = new Promise (function (resolve, reject) {
+        Object.keys(postFitzroys).forEach(function (postFitzroyId, i) {
+          PostFitzroy.findById(postFitzroyId, function (err, postFitzroy) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/attendance')
+            }
+            else {
+              postFitzroy.attending = postFitzroys[postFitzroyId]
+              postFitzroy.save(function(err) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/attendance')
+                }
+              })
+            }
+          })
+          if (i === Object.keys(postFitzroys).length - 1) {
+            resolve('Attendance updated for all postFitzroys')
+          }
+        })
+        reject('Error updating attendance for postFitzroys')
+      })
+
+      Promise.all([updatePreSchools, updateFitzroys, updatePostFitzroys])
+        .then(function (successResponses) {
+          successResponses.forEach(function (successResponse) {
+            console.log(successResponse)
+          })
+          req.flash('success', 'Students\' attendance successfully updated!')
+          res.redirect('/students/attendance')
+        })
+        .catch(function (errorResponses) {
+          errorResponses.forEach(function (errorResponse) {
+            console.log(errorResponse)
+            req.flash('error', errorResponse)
+          })
+          res.redirect('/students/attendance')
+        })
     }
   }
 

@@ -1,0 +1,133 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <% if (comingSaturdate.date > Date.now()) { %>
+          <h2 class="display-4">who is attending?</h2><br>
+          <hr class="my-4">
+          <p>on <%= formatDateLong(comingSaturdate.date) %></p>
+        <% } else { %>
+          <h2 class="display-4">add the <a target="_blank" rel="noopener noreferrer" href="/history">next session</a></h2>
+          <hr class="my-4">
+          <p>after <%= formatDateLong(comingSaturdate.date) %>, then refresh this page!</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<% if (comingSaturdate.date > Date.now()) { %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <form action="/students/attendance?_method=PUT" method="POST">
+          <% if (allPreSchools.length > 0) { %>
+            <a href="/students/pre-school"><h4 class="mt-5 mb-4">pre-school</h4></a>
+            <div class="list-group">
+              <% allPreSchools.forEach(function (preSchool) { %>
+                <div class="list-group-item flex-nowrap">
+                  <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
+                    <%= preSchool.name %>
+                  </span>
+                  <div class="form-check form-check-inline mr-2" style="flex-shrink: 0;">
+                    <label class="form-check-label mt-2">
+                      <input class="form-check-input align-top mr-1" type="radio" name="preSchool-<%= preSchool.id %>" value="false"
+                        <% if (preSchool.attending === false) { %>
+                          checked
+                        <% } %>
+                      >
+                        No
+                      </input>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline" style="flex-shrink: 0;">
+                    <label class="form-check-label mt-2">
+                      <input class="form-check-input align-top" type="radio" name="preSchool-<%= preSchool.id %>" value="true"
+                        <% if (preSchool.attending === true) { %>
+                          checked
+                        <% } %>
+                      >
+                        Yes
+                      </input>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+          <% if (allFitzroys.length > 0) { %>
+            <a href="/students/fitzroy"><h4 class="mt-5 mb-4">fitzroy</h4></a>
+            <div class="list-group">
+              <% allFitzroys.forEach(function (fitzroy) { %>
+                <div class="list-group-item flex-nowrap">
+                  <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
+                    <%= fitzroy.name %>
+                  </span>
+                  <div class="form-check form-check-inline mr-2" style="flex-shrink: 0;">
+                    <label class="form-check-label mt-2">
+                      <input class="form-check-input align-top mr-1" type="radio" name="fitzroy-<%= fitzroy.id %>" value="false"
+                        <% if (fitzroy.attending === false) { %>
+                          checked
+                        <% } %>
+                      >
+                        No
+                      </input>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline" style="flex-shrink: 0;">
+                    <label class="form-check-label mt-2">
+                      <input class="form-check-input align-top" type="radio" name="fitzroy-<%= fitzroy.id %>" value="true"
+                        <% if (fitzroy.attending === true) { %>
+                          checked
+                        <% } %>
+                      >
+                        Yes
+                      </input>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+          <% if (allPostFitzroys.length > 0) { %>
+            <a href="/students/post-fitzroy"><h4 class="mt-5 mb-4">post-fitzroy</h4></a>
+            <div class="list-group">
+              <% allPostFitzroys.forEach(function (postFitzroy) { %>
+                <div class="list-group-item flex-nowrap">
+                  <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
+                    <%= postFitzroy.name %>
+                  </span>
+                  <div class="form-check form-check-inline mr-2" style="flex-shrink: 0;">
+                    <label class="form-check-label mt-2">
+                      <input class="form-check-input align-top mr-1" type="radio" name="postFitzroy-<%= postFitzroy.id %>" value="false"
+                        <% if (postFitzroy.attending === false) { %>
+                          checked
+                        <% } %>
+                      >
+                        No
+                      </input>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline" style="flex-shrink: 0;">
+                    <label class="form-check-label mt-2">
+                      <input class="form-check-input align-top" type="radio" name="postFitzroy-<%= postFitzroy.id %>" value="true"
+                        <% if (postFitzroy.attending === true) { %>
+                          checked
+                        <% } %>
+                      >
+                        Yes
+                      </input>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+          <br>
+          <button id="submitButton" class="btn btn-primary float-right mt-3" type="submit" style="cursor: pointer;">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+<% } %>

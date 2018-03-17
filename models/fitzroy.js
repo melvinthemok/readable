@@ -146,6 +146,7 @@ var FitzroySchema = new mongoose.Schema({
   ],
   attending: {
     type: Boolean,
+    default: false,
     required: true
   }
 })
