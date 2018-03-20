@@ -35,7 +35,12 @@
       </script>
       <script>
         $(function () {
-          $('[data-toggle="tooltip"]').tooltip({ container: 'body', delay: { "show": 0, "hide": 200 } })
+          $('[data-toggle="popover"]').popover({
+            container: 'body',
+            html: true,
+            placement: 'top',
+            trigger: 'focus'
+          })
         })
       </script>
 </body>
