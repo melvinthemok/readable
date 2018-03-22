@@ -127,9 +127,9 @@
                         <% allComments.filter(function (comment) { %>
                           <% return comment.date.id === indivAttendance.date.id %>
                         <% }).forEach(function (comment) { %>
-                          <div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>;">
-                            <a href="/comments/<%= comment.id %>">
-                              <span class="badge badge-pill badge-info" data-toggle="tooltip" title="<%= comment.contents %>" >
+                          <div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>; cursor: pointer;">
+                            <a data-toggle="popover" tabindex="0" data-content="<a href='/comments/<%= comment.id %>'><%= comment.contents %></a>">
+                              <span class="badge badge-pill badge-info">
                                 ' '
                               </span>
                             </a>
