@@ -463,18 +463,18 @@ var studentController = {
 
     update: function (req, res) {
 
-      // when a Saturdate is unchecked
+      // when a Saturdate is unchecked (not all)
       // the former values of book, tutor, and completed
       // are replaced by empty strings
       // remove these empty strings before processing attendance
 
-      if (typeof req.body.fitzroyBooks !== 'string') {
+      if (req.body.fitzroyBooks && typeof req.body.fitzroyBooks !== 'string') {
         req.body.fitzroyBooks = req.body.fitzroyBooks.filter(function(book) { return book !== '' })
       }
-      if (typeof req.body.fitzroyTutors !== 'string') {
+      if (req.body.fitzroyTutors && typeof req.body.fitzroyTutors !== 'string') {
         req.body.fitzroyTutors = req.body.fitzroyTutors.filter(function(tutor) { return tutor !== '' })
       }
-      if (typeof req.body.fitzroyCompleted !== 'string') {
+      if (req.body.fitzroyCompleted && typeof req.body.fitzroyCompleted !== 'string') {
         req.body.fitzroyCompleted = req.body.fitzroyCompleted.filter(function(completed) { return completed !== '' })
       }
 
