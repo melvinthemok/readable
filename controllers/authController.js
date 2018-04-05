@@ -79,6 +79,290 @@ var authController = {
     }
   },
 
+  getTutorForgot: function (req, res) {
+    res.render('./auth/tutor/forgot')
+  },
+
+  getCatchPlusForgot: function (req, res) {
+    res.render('./auth/catchPlus/forgot')
+  },
+
+  putTutorForgot: function (req, res) {
+    Tutor.findOneAndUpdate({
+      email: req.body.email
+    }, {
+      resetPasswordExpires: Date.now() + 3600000
+    }, function (err, chosenTutor) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/auth/tutor/forgot')
+      } else {
+        if (!chosenTutor) {
+          req.flash('error', 'No account with that email address exists')
+          res.redirect('/auth/tutor/forgot')
+        } else {
+          Tutor.findOne({ email: req.body.email }, function (err, chosenTutorAgain) {
+            var smtpTransport = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: process.env.GMAIL_ADDRESS,
+                pass: process.env.GMAIL_PASSWORD
+              }
+            })
+            var mailOptions = {
+              from: process.env.GMAIL_ADDRESS,
+              to: chosenTutorAgain.email,
+              subject: 'Password reset request',
+              html: `
+                <p>
+                  Greetings from ReadAble!<br /><br />
+                  You are receiving this email because you (or someone else) has requested a password reset for your account.<br /><br />
+                  Please click on
+                  <a href="http://${req.headers.host}/auth/tutor/reset/${chosenTutorAgain.resetPasswordToken}">this link</a>
+                  to reset your password, within the hour.<br /><br />
+                  If you did not request a password reset, you can ignore this email and your password will remain unchanged.<br /><br /><br />
+                  Kind regards,<br/>
+                  The ReadAble Team
+                </p>
+              `
+            }
+            smtpTransport.sendMail(mailOptions, function (err, info) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/auth/tutor/forgot')
+              } else {
+                req.flash('success', `An email has been sent to ${info.accepted}. Please follow the instructions in that email to reset your password`)
+                res.redirect('/auth/tutor/forgot')
+              }
+            })
+          })
+        }
+      }
+    })
+  },
+
+  putCatchPlusForgot: function (req, res) {
+    CatchPlus.findOneAndUpdate({
+      email: req.body.email
+    }, {
+      resetPasswordExpires: Date.now() + 3600000
+    }, function (err, chosenCatchPlus) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/auth/catchPlus/forgot')
+      } else {
+        if (!chosenCatchPlus) {
+          req.flash('error', 'No account with that email address exists')
+          res.redirect('/auth/catchPlus/forgot')
+        } else {
+          CatchPlus.findOne({ email: req.body.email }, function (err, chosenCatchPlusAgain) {
+            var smtpTransport = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: process.env.GMAIL_ADDRESS,
+                pass: process.env.GMAIL_PASSWORD
+              }
+            })
+            var mailOptions = {
+              from: process.env.GMAIL_ADDRESS,
+              to: chosenCatchPlusAgain.email,
+              subject: 'Password reset request',
+              html: `
+                <p>
+                  Greetings from ReadAble!<br /><br />
+                  You are receiving this email because you (or someone else) has requested a password reset for your account.<br /><br />
+                  Please click on
+                  <a href="http://${req.headers.host}/auth/catchPlus/reset/${chosenCatchPlusAgain.resetPasswordToken}">this link</a>
+                  to reset your password, within the hour.<br /><br />
+                  If you did not request a password reset, you can ignore this email and your password will remain unchanged.<br /><br /><br/>
+                  Kind regards,<br />
+                  The ReadAble Team
+                </p>
+              `
+            }
+            smtpTransport.sendMail(mailOptions, function (err, info) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/auth/catchPlus/forgot')
+              } else {
+                req.flash('success', `An email has been sent to ${info.accepted}. Please follow the instructions in that email to reset your password`)
+                res.redirect('/auth/catchPlus/forgot')
+              }
+            })
+          })
+        }
+      }
+    })
+  },
+
+  getTutorReset: function (req, res) {
+    Tutor.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: {
+        $gt: Date.now()
+      }
+    }, function (err, chosenTutor) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/auth/tutor/forgot')
+      } else {
+        if (!chosenTutor) {
+          req.flash('error', 'Your password reset token is invalid or has expired. Please request another password reset email')
+          res.redirect('/auth/tutor/forgot')
+        } else {
+          res.render('./auth/tutor/reset', {
+            chosenTutor: chosenTutor
+          })
+        }
+      }
+    })
+  },
+
+  getCatchPlusReset: function (req, res) {
+    CatchPlus.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: {
+        $gt: Date.now()
+      }
+    }, function (err, chosenCatchPlus) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/auth/catchPlus/forgot')
+      } else {
+        if (!chosenCatchPlus) {
+          req.flash('error', 'Your password reset token is invalid or has expired. Please request another password reset email')
+          res.redirect('/auth/catchPlus/forgot')
+        } else {
+          res.render('./auth/catchPlus/reset', {
+            chosenCatchPlus: chosenCatchPlus
+          })
+        }
+      }
+    })
+  },
+
+  putTutorReset: function (req, res) {
+    Tutor.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: {
+        $gt: Date.now()
+      }
+    }, function (err, chosenTutor) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/auth/tutor/forgot')
+      } else {
+        if (!chosenTutor) {
+          req.flash('error', 'Your password reset token is invalid or has expired. Please request another password reset email')
+          res.redirect('/auth/tutor/forgot')
+        } else {
+          chosenTutor.password = req.body.password
+          chosenTutor.resetPasswordToken = undefined
+          chosenTutor.resetPasswordExpires = undefined
+          chosenTutor.save(function (err, savedTutor) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/auth/tutor/forgot')
+            } else {
+              var smtpTransport = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: process.env.GMAIL_ADDRESS,
+                  pass: process.env.GMAIL_PASSWORD
+                }
+              })
+              var mailOptions = {
+                from: process.env.GMAIL_ADDRESS,
+                to: savedTutor.email,
+                subject: 'Password reset successful',
+                html: `
+                  <p>
+                    Hi again from ReadAble!<br /><br />
+                    Your password was successfully reset. Log in with your new password at
+                    <a href="http://${req.headers.host}/auth/tutor/login">this link</a>.<br /><br />
+                    If you did not reset your password, please reply to this email to let us know.<br /><br /><br />
+                    Kind regards,<br/>
+                    The ReadAble Team
+                  </p>
+                `
+              }
+              smtpTransport.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/auth/tutor/forgot')
+                } else {
+                  req.flash('success', 'Your password was successfully changed')
+                  res.redirect('/auth/tutor/login')
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+
+  putCatchPlusReset: function (req, res) {
+    CatchPlus.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: {
+        $gt: Date.now()
+      }
+    }, function (err, chosenCatchPlus) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/auth/catchPlus/forgot')
+      } else {
+        if (!chosenCatchPlus) {
+          req.flash('error', 'Your password reset token is invalid or has expired. Please request another password reset email')
+          res.redirect('/auth/catchPlus/forgot')
+        } else {
+          chosenCatchPlus.password = req.body.password
+          chosenCatchPlus.resetPasswordToken = undefined
+          chosenCatchPlus.resetPasswordExpires = undefined
+          chosenCatchPlus.save(function (err, savedCatchPlus) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/auth/catchPlus/forgot')
+            } else {
+              var smtpTransport = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: process.env.GMAIL_ADDRESS,
+                  pass: process.env.GMAIL_PASSWORD
+                }
+              })
+              var mailOptions = {
+                from: process.env.GMAIL_ADDRESS,
+                to: savedCatchPlus.email,
+                subject: 'Password reset successful',
+                html: `
+                  <p>
+                    Hi again from ReadAble!<br /><br />
+                    Your password was successfully reset. Log in with your new password at
+                    <a href="http://${req.headers.host}/auth/catchPlus/login">this link</a>.<br /><br />
+                    If you did not reset your password, please reply to this email to let us know.<br /><br /><br />
+                    Kind regards,<br/>
+                    The ReadAble Team
+                  </p>
+                `
+              }
+              smtpTransport.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/auth/catchPlus/forgot')
+                } else {
+                  req.flash('success', 'Your password was successfully changed')
+                  res.redirect('/auth/catchPlus/login')
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+
   getTutorLogIn: function (req, res) {
     res.render('./auth/tutor/login')
   },
