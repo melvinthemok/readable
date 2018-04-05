@@ -93,6 +93,12 @@ var TutorSchema = new mongoose.Schema({
       'your password must be between 8 and 30 characters'
     ]
   },
+  resetPasswordToken: {
+    type: String
+  },
+  resetPasswordExpires: {
+    type: Date
+  },
   userType: {
     type: String,
     enum: ['catchPlus', 'tutor'],
