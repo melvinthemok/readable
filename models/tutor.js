@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcryptjs')
+var crypto = require('crypto')
 var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 var phoneRegex = /^[6, 8, 9]\d{7}$/
 
@@ -14,7 +15,7 @@ var TutorSchema = new mongoose.Schema({
     lowercase: true,
     match: [
       emailRegex,
-      'that email address is not a valid regular expression'
+      'that email address is not valid'
     ]
   },
   name: {
@@ -93,6 +94,12 @@ var TutorSchema = new mongoose.Schema({
       'your password must be between 8 and 30 characters'
     ]
   },
+  resetPasswordToken: {
+    type: String
+  },
+  resetPasswordExpires: {
+    type: Date
+  },
   userType: {
     type: String,
     enum: ['catchPlus', 'tutor'],
@@ -115,6 +122,22 @@ TutorSchema.pre('save', function (next) {
   var hash = bcrypt.hashSync(tutor.password, 10)
   tutor.password = hash
   next()
+})
+
+TutorSchema.post('findOneAndUpdate', function (result, next) {
+  var tutor = this
+  if (!result) return next()
+  crypto.randomBytes(20, function (err, buf) {
+    var token = buf.toString('hex')
+    tutor.model.update({
+      email: result.email
+    }, {
+      $set: {
+        resetPasswordToken: token
+      }
+    }).exec()
+    next()
+  })
 })
 
 TutorSchema.post('save', function(error, doc, next) {

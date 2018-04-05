@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcryptjs')
+var crypto = require('crypto')
 var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 var phoneRegex = /^\d{8}$/
 
@@ -56,6 +57,12 @@ var CatchPlusSchema = new mongoose.Schema({
       'your password must be between 8 and 30 characters'
     ]
   },
+  resetPasswordToken: {
+    type: String
+  },
+  resetPasswordExpires: {
+    type: Date
+  },
   userType: {
     type: String,
     enum: ['catchPlus', 'tutor'],
@@ -70,6 +77,22 @@ CatchPlusSchema.pre('save', function (next) {
   var hash = bcrypt.hashSync(catchPlus.password, 10)
   catchPlus.password = hash
   next()
+})
+
+CatchPlusSchema.post('findOneAndUpdate', function (result, next) {
+  var catchPlus = this
+  if (!result) return next()
+  crypto.randomBytes(20, function (err, buf) {
+    var token = buf.toString('hex')
+    catchPlus.model.update({
+      email: result.email
+    }, {
+      $set: {
+        resetPasswordToken: token
+      }
+    }).exec()
+    next()
+  })
 })
 
 CatchPlusSchema.post('save', function(error, doc, next) {

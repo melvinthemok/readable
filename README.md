@@ -18,6 +18,10 @@
 
    `SIGNUP_PASSWORD`
 
+   `GMAIL_ADDRESS`
+
+   `GMAIL_PASSWORD`
+
 4. Install packages
 
    `yarn install`
