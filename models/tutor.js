@@ -14,7 +14,7 @@ var TutorSchema = new mongoose.Schema({
     lowercase: true,
     match: [
       emailRegex,
-      'that email address is not a valid regular expression'
+      'that email address is not valid'
     ]
   },
   name: {
