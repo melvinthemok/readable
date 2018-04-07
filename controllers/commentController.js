@@ -23,7 +23,7 @@ var commentController = {
           res.redirect('/')
         } else {
           res.render('comments/index', {
-            allComments: sortByProperty(allComments, 'date'),
+            allComments: sortByProperty(allComments, 'date', true),
             formatDateShort: formatDateShort
           })
         }
