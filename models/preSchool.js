@@ -49,12 +49,17 @@ var PreSchoolSchema = new mongoose.Schema({
       'G2',
       'G3',
       'H4',
+      'I2',
       'J2',
       'J3',
       'K3',
       'K4',
       'L2',
       'M2',
+      'N2',
+      'O4',
+      'P4',
+      'S4',
       'X2',
       'Z4'
     ]
