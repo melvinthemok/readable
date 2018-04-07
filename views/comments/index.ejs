@@ -40,7 +40,7 @@
                 <% }) %>
                 <% thisDatePSComments.forEach(function (thisDatePSComment) { %>
                   <a class="list-group-item list-group-item-action justify-content-end" href="/comments/<%= thisDatePSComment.id %>">
-                    <% thisDatePSComment.preSchools.forEach(function (preSchool, index, array) { %>
+                    <% thisDatePSComment.preSchools.forEach(function (preSchool) { %>
                       <span class="d-inline-block text-truncate" style="width: 100%;">
                         <%= preSchool.name %>
                       </span>
