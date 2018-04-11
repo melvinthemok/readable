@@ -24,7 +24,7 @@ var PreSchoolSchema = new mongoose.Schema({
   age: {
     type: Number,
     min: [
-      5,
+      2,
       'the student\'s age must be between ages 4 and 21 to qualify'
     ],
     max: [
