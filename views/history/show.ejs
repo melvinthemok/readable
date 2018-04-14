@@ -21,7 +21,9 @@
             <% }) %>
           <% }).reduce(function (a, b) { %>
             <% return a.concat(b) %>
-          <% }, []))] %>
+          <% }, []).filter(function (item) { %>
+            <% return item !== null %>
+          <% }))] %>
           <% psUniqueTutors.forEach(function (psUniqueTutor) { %>
             <div class="card m-2" style="width: 21rem;">
               <div class="card-header">
@@ -64,7 +66,9 @@
             <% }) %>
           <% }).reduce(function (a, b) { %>
             <% return a.concat(b) %>
-          <% }, []))] %>
+          <% }, []).filter(function (item) { %>
+            <% return item !== null %>
+          <% }))] %>
           <% fUniqueTutors.forEach(function (fUniqueTutor) { %>
             <div class="card m-2" style="width: 21rem;">
               <div class="card-header">
@@ -120,7 +124,9 @@
             <% }) %>
           <% }).reduce(function (a, b) { %>
             <% return a.concat(b) %>
-          <% }, []))] %>
+          <% }, []).filter(function (item) { %>
+            <% return item !== null %>
+          <% }))] %>
           <% pfUniqueTutors.forEach(function (pfUniqueTutor) { %>
             <div class="card m-2" style="width: 21rem;">
               <div class="card-header">
