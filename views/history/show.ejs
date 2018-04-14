@@ -39,7 +39,7 @@
                 <div class="list-group">
                   <% var thisTutorPreSchools = allPreSchools.filter(function (preSchool) { %>
                     <% return preSchool.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.tutor === psUniqueTutor %>
+                      <% return indivAtten.tutor === psUniqueTutor && indivAtten.date.toString() === chosenSaturdate.toString() %>
                     <% }) %>
                   <% }) %>
                   <% thisTutorPreSchools.forEach(function (thisTutorPreSchool) { %>
@@ -82,7 +82,7 @@
                 <div class="list-group">
                   <% var thisTutorFitzroys = allFitzroys.filter(function (fitzroy) { %>
                     <% return fitzroy.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.tutor === fUniqueTutor %>
+                      <% return indivAtten.tutor === fUniqueTutor && indivAtten.date.toString() === chosenSaturdate.toString() %>
                     <% }) %>
                   <% }) %>
                   <% thisTutorFitzroys.forEach(function (thisTutorFitzroy) { %>
@@ -140,7 +140,7 @@
                 <div class="list-group">
                   <% var thisTutorPostFitzroys = allPostFitzroys.filter(function (postFitzroy) { %>
                     <% return postFitzroy.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.tutor === pfUniqueTutor %>
+                      <% return indivAtten.tutor === pfUniqueTutor && indivAtten.date.toString() === chosenSaturdate.toString() %>
                     <% }) %>
                   <% }) %>
                   <% thisTutorPostFitzroys.forEach(function (thisTutorPostFitzroy) { %>
