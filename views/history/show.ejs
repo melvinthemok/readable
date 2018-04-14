@@ -16,7 +16,9 @@
       <div class="d-flex flex-wrap justify-content-left mb-4">
         <% if (allPreSchools.length > 0) { %>  
           <% var psUniqueTutors = [...new Set(allPreSchools.map(function (preSchool) { %>
-            <% return preSchool.attendance.map(function (indivAtten) { %>
+            <% return preSchool.attendance.filter(function (indivAttendance) { %>
+              <% return indivAttendance.date.toString() === chosenSaturdate.toString() %>
+            <% }).map(function (indivAtten) { %>
               <% return indivAtten.tutor %>
             <% }) %>
           <% }).reduce(function (a, b) { %>
@@ -61,7 +63,9 @@
       <div class="d-flex flex-wrap justify-content-left mb-4">
         <% if (allFitzroys.length > 0) { %>
           <% var fUniqueTutors = [...new Set(allFitzroys.map(function (fitzroy) { %>
-            <% return fitzroy.attendance.map(function (indivAtten) { %>
+            <% return fitzroy.attendance.filter(function (indivAttendance) { %>
+              <% return indivAttendance.date.toString() === chosenSaturdate.toString() %>
+            <% }).map(function (indivAtten) { %>
               <% return indivAtten.tutor %>
             <% }) %>
           <% }).reduce(function (a, b) { %>
@@ -119,7 +123,9 @@
       <div class="d-flex flex-wrap justify-content-left mb-4">
         <% if (allPostFitzroys.length > 0) { %>
           <% var pfUniqueTutors = [...new Set(allPostFitzroys.map(function (postFitzroy) { %>
-            <% return postFitzroy.attendance.map(function (indivAtten) { %>
+            <% return postFitzroy.attendance.filter(function (indivAttendance) { %>
+              <% return indivAttendance.date.toString() === chosenSaturdate.toString() %>
+            <% }).map(function (indivAtten) { %>
               <% return indivAtten.tutor %>
             <% }) %>
           <% }).reduce(function (a, b) { %>
