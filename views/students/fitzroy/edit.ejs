@@ -13,6 +13,9 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <form action="/students/fitzroy/update/<%= chosenFitzroy._id %>?_method=PUT" method="POST" class="mb-5">
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
+        <br>
+        <br>
         <div class="form-group">
           <label class="control-label mb-0">Attendance</label><br>
           <small class="form-text text-muted mt-0 mb-2">Check the date(s) of previous session(s) attended by this student.<br>Select the tutor for this student at this session, or "Unknown" if unclear.<br>Select the Fitzroy book level covered during each session, or whether the student did some other activity.<br>If a Fitzroy book was covered, indicate whether that book level was completed.</small>
@@ -375,8 +378,6 @@
           <% }) %>
         </div>
         <% } %>
-        <br>
-        <button id="submitButton" class="btn btn-primary float-right" type="submit" style="cursor:pointer;">Submit</button>
       </form>
     </div>
   </div>
