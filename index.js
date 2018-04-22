@@ -75,7 +75,7 @@ app.use('/comments', isLoggedIn, comment)
 // app.use('/attend', attend)
 // app.use('/group', group)
 
-cron.scheduleJob({ dayOfWeek: 0, hour: 0, minute: 0 }, function () {
+cron.scheduleJob({ dayOfWeek: 1, hour: 16, minute: 0 }, function () {
   resetStudentAttendance()
 })
 
