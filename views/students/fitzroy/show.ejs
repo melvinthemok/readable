@@ -91,24 +91,276 @@
 <div class="container mb-5">
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
-      <div class="d-flex flex-wrap justify-content-left mb-4">
-        <% if (chosenFitzroy.attendance.length > 0) { %>
-          <% [...new Set(chosenFitzroy.attendance.map(item => item.book))].sort(function (a, b) { %>
-            <% return a - b %>
-          <% }).forEach(function (indivBook) { %>
+      <script>
+        function formatDateShort (dateString) {
+          date = new Date(dateString)
+          var dayOfMonth = date.getDate()
+          var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+          var monthIndex = date.getMonth()
+          var year = date.getFullYear()
+          return dayOfMonth + ' ' + monthNames[monthIndex] + ' ' + year
+        }
+        function fitzroyBookLevelPlusX (level) {
+          level < 41
+          ? level % 10 === 1 ||
+            level % 10 === 2 ||
+            level % 10 === 3 ||
+            level % 10 === 4 ||
+            level % 10 === 5
+            ? level = (level + level % 10) / 2
+            : level % 10 === 0
+              ? level = level / 2 + 'x'
+              : level = (level + level % 10 - 10) / 2 + 'x'
+          : level -= 20
+          return level.toString()
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+          var sort = document.getElementById('sort')
+          var sortResult = document.getElementById('sort-result')
+          var attendance = <%- JSON.stringify(chosenFitzroy.attendance) %>
+          var comments = <%- JSON.stringify(allComments) %>
+          var sortCriteria
+          if (document.getElementById('sort')) {
+            sort.addEventListener('change', function () {
+              var sortCriteria = this.value
+              sortResult.innerHTML = ''
+              if (sortCriteria == 'date') {
+                if (attendance.length > 0) {
+                  [...new Set(attendance.map(item => item.date))].sort(function (a, b) {
+                    return b.date - a.date
+                  }).forEach(function (indivItem) {
+                    var card = document.createElement('div')
+                    card.classList.add('card', 'm-2')
+                    card.setAttribute('style', 'width: 21rem;')
+                    var cardHeader = document.createElement('div')
+                    cardHeader.classList.add('card-header')
+                    var a = document.createElement('a')
+                    a.href = '/history/' + indivItem._id
+                    a.appendChild(document.createTextNode(formatDateShort(indivItem.date)))
+                    cardHeader.appendChild(a)
+                    var cardBlock = document.createElement('div')
+                    cardBlock.classList.add('card-block')
+                    var listGroup = document.createElement('div')
+                    listGroup.classList.add('list-group')
+                    attendance.filter(function (dateAttendance) {
+                      return dateAttendance.date.date === indivItem.date
+                    }).forEach(function (indivAttendance) {
+                      var listGroupItem = document.createElement('div')
+                      listGroupItem.classList.add('list-group-item', 'justify-content-start')
+                      var bookDiv = document.createElement('div')
+                      bookDiv.setAttribute('style', 'flex-grow: 1;')
+                      var bookBadge = document.createElement('span')
+                      bookBadge.classList.add('badge', 'badge-pill', !indivAttendance.completed ? 'badge-warning' : 'badge-success' )
+                      bookBadge.appendChild(document.createTextNode(indivAttendance.book === 0 ? 'Other' : `Book ${fitzroyBookLevelPlusX(indivAttendance.book)}`))
+                      bookDiv.appendChild(bookBadge)
+                      listGroupItem.appendChild(bookDiv)
+                      if (comments.length > 0) {
+                        comments.filter(function (comment) {
+                          return comment.date._id === indivAttendance.date._id
+                        }).forEach(function (comment) {
+                          var commentDiv = document.createElement('div')
+                          commentDiv.setAttribute('style', indivAttendance.tutor ? 'flex-grow: 1; cursor: pointer;' : 'flex-grow: 2; cursor: pointer;')
+                          var commentA = document.createElement('a')
+                          commentA.setAttribute('data-toggle', 'popover')
+                          commentA.setAttribute('tabindex', '0')
+                          commentA.setAttribute('data-content', `<a href='/comments/${comment._id}'>${comment.contents}</a>`)
+                          var commentBadge = document.createElement('span')
+                          commentBadge.classList.add('badge', 'badge-pill', 'badge-info')
+                          commentBadge.appendChild(document.createTextNode('\' \''))
+                          commentA.appendChild(commentBadge)
+                          commentDiv.appendChild(commentA)
+                          listGroupItem.appendChild(commentDiv)
+                        })
+                      }
+                      if (indivAttendance.tutor) {
+                        var tutorA = document.createElement('a')
+                        tutorA.setAttribute('href', `/tutors/${indivAttendance.tutor._id}`)
+                        var tutorBadge = document.createElement('span')
+                        tutorBadge.classList.add('badge', 'badge-pill', 'badge-default')
+                        tutorBadge.appendChild(document.createTextNode(indivAttendance.tutor.name))
+                        tutorA.appendChild(tutorBadge)
+                        listGroupItem.appendChild(tutorA)
+                      }
+                      listGroup.appendChild(listGroupItem)
+                    })
+                    cardBlock.appendChild(listGroup)
+                    card.appendChild(cardHeader)
+                    card.appendChild(cardBlock)
+                    sortResult.appendChild(card)
+                  })
+                }
+              } else if (sortCriteria == 'book') {
+                if (attendance.length > 0) {
+                  [...new Set(attendance.map(item => item.book))].sort(function (a, b) {
+                    return b - a
+                  }).forEach(function (indivItem) {
+                    var card = document.createElement('div')
+                    card.classList.add('card', 'm-2')
+                    card.setAttribute('style', 'width: 21rem;')
+                    var cardHeader = document.createElement('div')
+                    cardHeader.classList.add('card-header')
+                    cardHeader.appendChild(document.createTextNode(indivItem === 0 ? 'Other activities' : `Book ${fitzroyBookLevelPlusX(indivItem)}`))
+                    var cardBlock = document.createElement('div')
+                    cardBlock.classList.add('card-block')
+                    var listGroup = document.createElement('div')
+                    listGroup.classList.add('list-group')
+                    attendance.filter(function (dateAttendance) {
+                      return dateAttendance.book === indivItem
+                    }).forEach(function (indivAttendance) {
+                      var listGroupItem = document.createElement('div')
+                      listGroupItem.classList.add('list-group-item', 'justify-content-start')
+                      var dateDiv = document.createElement('div')
+                      dateDiv.setAttribute('style', 'flex-grow: 1;')
+                      var dateA = document.createElement('a')
+                      dateA.setAttribute('href', `/history/${indivAttendance.date._id}`)
+                      var dateBadge = document.createElement('span')
+                      dateBadge.classList.add('badge', 'badge-pill', !indivAttendance.completed ? 'badge-warning' : 'badge-success' )
+                      dateBadge.appendChild(document.createTextNode(formatDateShort(indivAttendance.date.date)))
+                      dateA.appendChild(dateBadge)
+                      dateDiv.appendChild(dateA)
+                      listGroupItem.appendChild(dateDiv)
+                      if (comments.length > 0) {
+                        comments.filter(function (comment) {
+                          return comment.date._id === indivAttendance.date._id
+                        }).forEach(function (comment) {
+                          var commentDiv = document.createElement('div')
+                          commentDiv.setAttribute('style', indivAttendance.tutor ? 'flex-grow: 1; cursor: pointer;' : 'flex-grow: 2; cursor: pointer;')
+                          var commentA = document.createElement('a')
+                          commentA.setAttribute('data-toggle', 'popover')
+                          commentA.setAttribute('tabindex', '0')
+                          commentA.setAttribute('data-content', `<a href='/comments/${comment._id}'>${comment.contents}</a>`)
+                          var commentBadge = document.createElement('span')
+                          commentBadge.classList.add('badge', 'badge-pill', 'badge-info')
+                          commentBadge.appendChild(document.createTextNode('\' \''))
+                          commentA.appendChild(commentBadge)
+                          commentDiv.appendChild(commentA)
+                          listGroupItem.appendChild(commentDiv)
+                        })
+                      }
+                      if (indivAttendance.tutor) {
+                        var tutorA = document.createElement('a')
+                        tutorA.setAttribute('href', `/tutors/${indivAttendance.tutor._id}`)
+                        var tutorBadge = document.createElement('span')
+                        tutorBadge.classList.add('badge', 'badge-pill', 'badge-default')
+                        tutorBadge.appendChild(document.createTextNode(indivAttendance.tutor.name))
+                        tutorA.appendChild(tutorBadge)
+                        listGroupItem.appendChild(tutorA)
+                      }
+                      listGroup.appendChild(listGroupItem)
+                    })
+                    cardBlock.appendChild(listGroup)
+                    card.appendChild(cardHeader)
+                    card.appendChild(cardBlock)
+                    sortResult.appendChild(card)
+                  })
+                }
+              } else { // sortCriteria == 'tutor'
+                if (attendance.length > 0) {
+                  [...new Set(attendance.map(item => item.tutor))].sort(function (a, b) {
+                    if (!a) return 1
+                    else if (!b) return -1
+                    else if (a.name === b.name) return 0
+                    else if (a.name < b.name) return -1
+                    else if (a.name > b.name) return 1
+                  }).filter(function (tutorAttendance, ind, arr) {
+                    return arr.includes(null) && arr.includes(undefined) ? tutorAttendance !== null : true
+                  }).forEach(function (indivItem) {
+                    var card = document.createElement('div')
+                    card.classList.add('card', 'm-2')
+                    card.setAttribute('style', 'width: 21rem;')
+                    var cardHeader = document.createElement('div')
+                    cardHeader.classList.add('card-header')
+                    if (indivItem) {
+                      var a = document.createElement('a')
+                      a.href = '/tutors/' + indivItem._id
+                      indivItem && a.appendChild(document.createTextNode(indivItem.name))
+                      cardHeader.appendChild(a)
+                    } else {
+                      cardHeader.appendChild(document.createTextNode('Unknown tutor'))
+                    }
+                    var cardBlock = document.createElement('div')
+                    cardBlock.classList.add('card-block')
+                    var listGroup = document.createElement('div')
+                    listGroup.classList.add('list-group')
+                    attendance.filter(function (tutorAttendance) {
+                      return (!indivItem && !tutorAttendance.tutor) || (tutorAttendance.tutor && indivItem && tutorAttendance.tutor._id === indivItem._id)
+                    }).forEach(function (indivAttendance) {
+                      var listGroupItem = document.createElement('div')
+                      listGroupItem.classList.add('list-group-item', 'justify-content-start')
+                      var bookDiv = document.createElement('div')
+                      bookDiv.setAttribute('style', 'flex-grow: 1;')
+                      var bookBadge = document.createElement('span')
+                      bookBadge.classList.add('badge', 'badge-pill', !indivAttendance.completed ? 'badge-warning' : 'badge-success' )
+                      bookBadge.appendChild(document.createTextNode(indivAttendance.book === 0 ? 'Other' : `Book ${fitzroyBookLevelPlusX(indivAttendance.book)}`))
+                      bookDiv.appendChild(bookBadge)
+                      listGroupItem.appendChild(bookDiv)
+                      if (comments.length > 0) {
+                        comments.filter(function (comment) {
+                          return comment.date._id === indivAttendance.date._id
+                        }).forEach(function (comment) {
+                          var commentDiv = document.createElement('div')
+                          commentDiv.setAttribute('style', indivAttendance.tutor ? 'flex-grow: 1; cursor: pointer;' : 'flex-grow: 2; cursor: pointer;')
+                          var commentA = document.createElement('a')
+                          commentA.setAttribute('data-toggle', 'popover')
+                          commentA.setAttribute('tabindex', '0')
+                          commentA.setAttribute('data-content', `<a href='/comments/${comment._id}'>${comment.contents}</a>`)
+                          var commentBadge = document.createElement('span')
+                          commentBadge.classList.add('badge', 'badge-pill', 'badge-info')
+                          commentBadge.appendChild(document.createTextNode('\' \''))
+                          commentA.appendChild(commentBadge)
+                          commentDiv.appendChild(commentA)
+                          listGroupItem.appendChild(commentDiv)
+                        })
+                      }
+                      var dateA = document.createElement('a')
+                      dateA.setAttribute('href', `/history/${indivAttendance.date._id}`)
+                      var dateBadge = document.createElement('span')
+                      dateBadge.classList.add('badge', 'badge-pill', 'badge-default')
+                      dateBadge.appendChild(document.createTextNode(formatDateShort(indivAttendance.date.date)))
+                      dateA.appendChild(dateBadge)
+                      listGroupItem.appendChild(dateA)
+                      listGroup.appendChild(listGroupItem)
+                    })
+                    cardBlock.appendChild(listGroup)
+                    card.appendChild(cardHeader)
+                    card.appendChild(cardBlock)
+                    sortResult.appendChild(card)
+                  })
+                }
+              }
+              $(function () {
+                $('[data-toggle="popover"]').popover({
+                  container: 'body',
+                  html: true,
+                  placement: 'top',
+                  trigger: 'focus'
+                })
+              })
+            })
+          }
+        })
+      </script>
+      <% if (chosenFitzroy.attendance.length > 0) { %>
+        <select id="sort" class="custom-select my-5">
+          <option value="date" selected>Sort by date</option>
+          <option value="book">Sort by book</option>
+          <option value="tutor">Sort by tutor</option>
+        </select>
+        <div id="sort-result" class="d-flex flex-wrap justify-content-left mb-4">
+          <% [...new Set(chosenFitzroy.attendance.map(item => item.date))].sort(function (a, b) { %>
+            <% return b.date - a.date %>
+          <% }).forEach(function (indivDate) { %>
             <div class="card m-2" style="width: 21rem;">
               <div class="card-header">
-                <% if (indivBook === 0) { %>
-                  Other activities
-                <% } else { %>
-                  Book <%= fitzroyBookLevelPlusX(indivBook) %>
-                <% } %>
+                <a href="/history/<%= indivDate.id %>" >
+                  <%= formatDateShort(indivDate.date) %>
+                </a>
               </div>
               <div class="card-block">
                 <div class="list-group">
                   <% var badgeStyle = "" %>
-                  <% chosenFitzroy.attendance.filter(function (bookAttendance) { %>
-                    <% return bookAttendance.book === indivBook %>
+                  <% chosenFitzroy.attendance.filter(function (dateAttendance) { %>
+                    <% return dateAttendance.date.date === indivDate.date %>
                   <% }).forEach(function (indivAttendance) { %>
                     <div class="list-group-item justify-content-start">
                       <% if (!indivAttendance.completed) { %>
@@ -117,11 +369,13 @@
                         <% badgeStyle = "badge-success" %>
                       <% } %>
                       <div style="flex-grow: 1;">
-                        <a href="/history/<%= indivAttendance.date.id %>" >
-                          <span class="badge badge-pill <%= badgeStyle %>">
-                            <%= formatDateShort(indivAttendance.date.date) %>
-                          </span>
-                        </a>
+                        <span class="badge badge-pill <%= badgeStyle %>">
+                          <% if (indivAttendance.book === 0) { %>
+                            Other
+                          <% } else { %>
+                            Book <%= fitzroyBookLevelPlusX(indivAttendance.book) %>
+                          <% } %>
+                        </span>
                       </div>
                       <% if (allComments.length > 0) { %>
                         <% allComments.filter(function (comment) { %>
@@ -149,10 +403,11 @@
               </div>
             </div>
           <% }) %>
-        <% } else { %>
-          <p>No sessions yet</p>
-        <% } %>
-      </div>
+        </div>
+      <% } else { %>
+        <br>
+        <p>No sessions yet</p>
+      <% } %>
     </div>
   </div>
 </div>
