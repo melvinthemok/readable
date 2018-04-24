@@ -105,16 +105,28 @@ var saturdateController = {
   },
 
   create: function (req, res) {
-    var newSaturdate = new Saturdate({
-      date: req.body.date
-    })
-    newSaturdate.save(function (err, savedSaturdate) {
+    Saturdate.findOne({ date: req.body.date }, function (err, sameSaturdate) {
       if (err) {
         req.flash('error', err.toString())
         res.redirect('/history')
       } else {
-        req.flash('success', formatDateLong(savedSaturdate.date) + ' successfully added!')
-        res.redirect('/history')
+        if (sameSaturdate) {
+          req.flash('error', 'A session on that date already exists')
+          res.redirect('/history')
+        } else {
+          var newSaturdate = new Saturdate({
+            date: req.body.date
+          })
+          newSaturdate.save(function (err, savedSaturdate) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/history')
+            } else {
+              req.flash('success', formatDateLong(savedSaturdate.date) + ' successfully added!')
+              res.redirect('/history')
+            }
+          })
+        }
       }
     })
   },
