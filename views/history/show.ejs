@@ -103,12 +103,14 @@
                       <span class="d-inline-block text-truncate" style="max-width: 83%;">
                         <%= thisTutorFitzroy.name %>
                       </span>
-                      <% if (thisFDate.book) { %>
-                        &nbsp
-                        <span class="badge badge-pill float-right <%= fBadgeStyle %>">
+                      &nbsp
+                      <span class="badge badge-pill float-right <%= fBadgeStyle %>">
+                        <% if (thisFDate.book) { %>  
                           <%= fitzroyBookLevelPlusX(thisFDate.book) %>
-                        </span>
-                      <% } %>
+                        <% } else { %>
+                          Other
+                        <% } %>
+                      </span>
                     </a>
                   <% }) %>
                 </div>
