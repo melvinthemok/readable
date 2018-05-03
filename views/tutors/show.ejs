@@ -132,15 +132,17 @@
                     <% fBadgeStyle = "badge-success" %>
                   <% } %>
                   <a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisDateFitzroy.id %>">
-                    <span class="d-inline-block text-truncate" style="max-width: 83%;">
+                    <span class="d-inline-block text-truncate" style="max-width: 78%;">
                       <%= thisDateFitzroy.name %>
                     </span>
-                    <% if (thisFDate.book) { %>
-                      &nbsp
-                      <span class="badge badge-pill float-right <%= fBadgeStyle %>">
+                    &nbsp
+                    <span class="badge badge-pill float-right <%= fBadgeStyle %>">
+                      <% if (thisFDate.book) { %>
                         <%= fitzroyBookLevelPlusX(thisFDate.book) %>
-                      </span>
-                    <% } %>
+                      <% } else { %>
+                        Other
+                      <% } %>
+                    </span>
                   </a>
                 <% }) %>
                 </div>
