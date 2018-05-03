@@ -134,7 +134,7 @@ describe('Tutors', function () {
                   .end(done)
     })
 
-    it('Should redirect to homepage if tutor is successfully saved', function (done) {
+    it('Should redirect to attendance page if tutor is successfully saved', function (done) {
       var signUpPassword = process.env.SIGNUP_PASSWORD
       request(app).post('/auth/tutor/signup')
                   .set('Accept', 'application/json')
@@ -143,7 +143,7 @@ describe('Tutors', function () {
                     createTutorWithFaultyAttr({}),
                     { tutorSignUpAttempt: signUpPassword })
                   )
-                  .expect('Location', '/')
+                  .expect('Location', /^\/tutors\/attendance\/[0-9a-f]{24}$/)
                   .end(done)
     })
   })
@@ -170,7 +170,7 @@ describe('Tutors', function () {
                     email: 'wrongemail@readable.com',
                     password: '12345678'
                   })
-                  .expect('Location', '/auth/login')
+                  .expect('Location', '/auth/tutor/login')
                   .end(done)
     })
 
@@ -182,20 +182,25 @@ describe('Tutors', function () {
                     email: 'tutor@readable.com',
                     password: '123456789'
                   })
-                  .expect('Location', '/auth/login')
+                  .expect('Location', '/auth/tutor/login')
                   .end(done)
     })
 
     it('Should redirect to homepage if the correct email and password are provided', function (done) {
-      request(app).post('/auth/tutor/login')
+      Tutor.findOne({ 'email': 'tutor@readable.com' }, function (err, tutor) {
+        if (err) console.log(err)
+        else {
+          request(app).post('/auth/tutor/login')
                   .set('Accept', 'application/json')
                   .type('form')
                   .send({
                     email: 'tutor@readable.com',
                     password: '12345678'
                   })
-                  .expect('Location', '/')
+                  .expect('Location', '/tutors/attendance/' + tutor.id)
                   .end(done)
+        }
+      })
     })
   })
 })
