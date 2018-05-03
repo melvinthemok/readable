@@ -58,7 +58,7 @@ var TutorSchema = new mongoose.Schema({
       '36 to 45',
       '46 to 55',
       '56 to 65',
-      'Above 66'
+      'above 65'
     ],
     required: [
       true,
