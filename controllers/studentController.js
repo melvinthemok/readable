@@ -814,33 +814,24 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/')
                 } else {
-                  Saturdate.findOne({ date: {
-                    $gt: Date.now(),
-                    $lt: Date.now() + 7 * 24 * 60 * 60 * 1000
-                  }}, function (err, futureSaturdate) {
+                  Saturdate.find({}, function (err, allSaturdates) {
                     if (err) {
                       req.flash('error', err.toString())
                       res.redirect('/')
                     } else {
-                      if (futureSaturdate === null) {
-                        Saturdate.findOne({}).sort('-date').exec(function (err, latestSaturdate) {
-                          res.render('students/attendance', {
-                            comingSaturdate: latestSaturdate,
-                            formatDateLong: formatDateLong,
-                            allPreSchools: sortByProperty(allPreSchools, 'name'),
-                            allFitzroys: sortByProperty(allFitzroys, 'name'),
-                            allPostFitzroys: sortByProperty(allPostFitzroys, 'name')
-                          })
-                        })
-                      } else {
-                        res.render('students/attendance', {
-                          comingSaturdate: futureSaturdate,
-                          formatDateLong: formatDateLong,
-                          allPreSchools: sortByProperty(allPreSchools, 'name'),
-                          allFitzroys: sortByProperty(allFitzroys, 'name'),
-                          allPostFitzroys: sortByProperty(allPostFitzroys, 'name')
-                        })
-                      }
+                      var sortedAllSaturdates = sortByProperty(allSaturdates, 'date')
+                      var nextSaturdateIndex = sortedAllSaturdates.findIndex(function (saturdate) {
+                        return saturdate.date > Date.now() - 64 * 60 * 60 * 1000
+                      })
+                      var comingSaturdates = sortedAllSaturdates.slice(nextSaturdateIndex)
+                      var comingSaturdate = comingSaturdates[0]
+                      res.render('students/attendance', {
+                        comingSaturdate: comingSaturdate,
+                        formatDateLong: formatDateLong,
+                        allPreSchools: sortByProperty(allPreSchools, 'name'),
+                        allFitzroys: sortByProperty(allFitzroys, 'name'),
+                        allPostFitzroys: sortByProperty(allPostFitzroys, 'name')
+                      })
                     }
                   })
                 }

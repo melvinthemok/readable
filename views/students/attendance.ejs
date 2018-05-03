@@ -2,20 +2,20 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6 offset-sm-3">
-        <% if (comingSaturdate.date > Date.now()) { %>
+        <% if (comingSaturdate.date > Date.now() - 64 * 60 * 60 * 1000) { %>
           <h2 class="display-4">who is attending?</h2><br>
           <hr class="my-4">
           <p>on <%= formatDateLong(comingSaturdate.date) %></p>
         <% } else { %>
-          <h2 class="display-4">add the <a target="_blank" rel="noopener noreferrer" href="/history">next session</a></h2>
+          <h2 class="display-4">add the <a target="_blank" rel="noopener noreferrer" href="/history">next session that has been scheduled</a></h2>
           <hr class="my-4">
-          <p>after <%= formatDateLong(comingSaturdate.date) %>, then refresh this page!</p>
+          <p>then refresh this page!</p>
         <% } %>
       </div>
     </div>
   </div>
 </div>
-<% if (comingSaturdate.date > Date.now()) { %>
+<% if (comingSaturdate.date > Date.now() - 64 * 60 * 60 * 1000) { %>
   <div class="container">
     <div class="row">
       <div class="col-sm-6 offset-sm-3">

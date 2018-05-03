@@ -2,8 +2,10 @@ var Tutor = require('../models/tutor')
 var PreSchool = require('../models/preSchool')
 var Fitzroy = require('../models/fitzroy')
 var PostFitzroy = require('../models/postFitzroy')
+var Saturdate = require('../models/saturdate')
 
 var formatDateShort = require('../helpers/formatDateShort')
+var formatDateLong = require('../helpers/formatDateLong')
 var sortByProperty = require('../helpers/sortByProperty')
 var studentsOfTutor = require('../helpers/studentsOfTutor')
 var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
@@ -37,13 +39,13 @@ var tutorController = {
                       allTutors: sortByProperty(allTutors, 'name')
                     })
                   }
-                }) // PostFitzroy fetch
-              } // PreSchool else
-            }) // PreSchool fetch
-          } // Fitzroy else
-        }) // Fitzroy fetch
-      } // Tutor else
-    }) // Tutor.find
+                })
+              }
+            })
+          }
+        })
+      }
+    })
   },
 
   show: function (req, res) {
@@ -125,8 +127,92 @@ var tutorController = {
         res.redirect('/tutors')
       }
     })
-  }
+  },
 
+  attendance: {
+    index: function (req, res) {
+      Tutor.find({})
+        .populate({
+          path: 'attendance.date',
+          model: 'Saturdate'
+        }).exec(function (err, allTutors) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/tutors')
+        } else {
+          res.render('tutors/attendance/index', {
+            allTutors: sortByProperty(allTutors, 'name'),
+            formatDateShort: formatDateShort
+          })
+        }
+      })
+    },
+
+    edit: function (req, res) {
+      Tutor.findById(req.params.id)
+        .populate({
+          path: 'attendance.date',
+          model: 'Saturdate'
+        }).exec(function (err, chosenTutor) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/tutors')
+          } else {
+            Saturdate.find({}, function (err, allSaturdates) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/tutors')
+              } else {
+                var sortedAllSaturdates = sortByProperty(allSaturdates, 'date')
+                var nextSaturdateIndex = sortedAllSaturdates.findIndex(function (saturdate) {
+                  return saturdate.date > Date.now() - 64 * 60 * 60 * 1000
+                })
+                res.render('tutors/attendance/show', {
+                  chosenTutor: chosenTutor,
+                  isCurrentUser: req.user.id === req.params.id,
+                  latestSaturdates: sortedAllSaturdates.slice(nextSaturdateIndex,  nextSaturdateIndex + 4),
+                  formatDateLong: formatDateLong
+                })
+              }
+            })
+          }
+        })
+    },
+
+    update: function (req, res) {
+      var attendance = []
+      for (var key in req.body) {
+        attendance.push({
+          'date': key,
+          'attending': req.body[key]
+        })
+      }
+      Tutor.update({
+        _id: req.params.id
+      }, {
+        attendance: []
+      }, function (err, clearedTutor) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/tutors/attendance/' + req.params.id)
+        } else {
+          Tutor.update({
+            _id: req.params.id
+          }, {
+            attendance: attendance
+          }, function (err, updatedTutor) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/tutors/attendance/' + req.params.id)
+            } else {
+              req.flash('success', 'Your attendance successfully updated!')
+              res.redirect('/tutors/attendance/' + req.params.id)
+            }
+          })
+        }
+      })
+    }
+  }
 }
 
 module.exports = tutorController

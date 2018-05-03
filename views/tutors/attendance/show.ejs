@@ -1,0 +1,89 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <% if (latestSaturdates.length === 0) { %>
+          <h2 class="display-4">add the <a target="_blank" rel="noopener noreferrer" href="/history">next 4 sessions that have been scheduled</a></h2><br>
+        <% } else if (latestSaturdates.length > 0 && latestSaturdates.length < 4) { %>
+          <% if (isCurrentUser) { %>
+            <h2 class="display-4">add the <a target="_blank" rel="noopener noreferrer" href="/history">next
+              <% if (latestSaturdates.length === 1) { %>
+                3 sessions that have been scheduled
+              <% } else if (latestSaturdates.length === 2) { %>
+                2 sessions that have been scheduled
+              <% } else { %>
+                session that has been scheduled
+              <% } %>
+            </a> and let us know if you'll be teaching on</h2><br>
+          <% } else { %>
+            <h2 class="display-4"><%= chosenTutor.name %> should be teaching on</h2><br>
+          <% } %>
+        <% } else { %>
+          <% if (isCurrentUser) { %>
+            <h2 class="display-4">let us know if you'll be teaching on</h2><br>
+          <% } else { %>
+            <h2 class="display-4"><%= chosenTutor.name %> should be teaching on</h2><br>
+          <% } %>
+        <% } %>
+        <hr class="my-4">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/tutors/attendance/<%= chosenTutor._id %>?_method=PUT" method="POST">
+        <% if (latestSaturdates.length > 0) { %>
+          <div class="list-group">
+            <% latestSaturdates.forEach(function (saturdate, ind) { %>
+              <div class="list-group-item flex-column align-items-start form-group <%= ind === 0 ? 'required-group' : '' %>">
+                <div class="d-flex w-100 flex-nowrap justify-content-between">
+                  <span class="d-inline-block text-truncate mt-2 mr-1" style="flex-grow: 1;">
+                    <%= formatDateLong(saturdate.date) %>
+                  </span>
+                  <% var tutorAttendingDate = chosenTutor.attendance.find(function (indivAttendance) { %>
+                    <% return indivAttendance.date.date.toString() === saturdate.date.toString()  %>
+                  <% }) %>
+                  <div class="form-check form-check-inline mr-2" style="flex-shrink: 0;">
+                    <label class="form-check-label mt-2">
+                      <input class="form-check-input align-top mr-1" type="radio" name="<%= saturdate.id %>" value="false"
+                        <% if (tutorAttendingDate && tutorAttendingDate.attending === false) { %>
+                          checked
+                        <% } %>
+                      >
+                        No
+                      </input>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline" style="flex-shrink: 0;">
+                    <label class="form-check-label mt-2">
+                      <input class="form-check-input align-top" type="radio" name="<%= saturdate.id %>" value="true"
+                        <% if (tutorAttendingDate && tutorAttendingDate.attending === true) { %>
+                          checked
+                        <% } %>
+                      >
+                        Yes
+                      </input>
+                    </label>
+                  </div>
+                </div>
+                <div class="d-flex w-100 flex-row-reverse">
+                  <small class="form-text form-control-feedback mr-4"></small>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } %>
+        <br>
+        <% if (isCurrentUser && latestSaturdates.length > 0) { %>
+          <button id="submitButton" class="btn btn-primary float-right mt-3" type="submit" disabled>
+            Update
+          </button>
+        <% } %>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="/client_side_helpers/tutorAttenCheckToSubmit.js"></script>

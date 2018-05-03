@@ -1,4 +1,4 @@
-process.env.NODE_ENV === 'production' && require('newrelic')
+require('newrelic')
 var express = require('express')
 var app = express()
 var path = require('path')
@@ -20,8 +20,6 @@ var saturdate = require('./routes/saturdateRouter')
 var student = require('./routes/studentRouter')
 var tutor = require('./routes/tutorRouter')
 var comment = require('./routes/commentRouter')
-// var attend = require('./routes/attendRouter')
-// var group = require('./routes/groupRouter')
 
 var resetStudentAttendance = require('./cron/resetStudentAttendance')
 
@@ -72,8 +70,6 @@ app.use('/students', isLoggedIn, student)
 app.use('/tutors', isLoggedIn, tutor)
 app.use('/history', isLoggedIn, saturdate)
 app.use('/comments', isLoggedIn, comment)
-// app.use('/attend', attend)
-// app.use('/group', group)
 
 cron.scheduleJob({ dayOfWeek: 1, hour: 16, minute: 0 }, function () {
   resetStudentAttendance()

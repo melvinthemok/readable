@@ -32,8 +32,7 @@ var authController = {
       startDate: req.body.startDate,
       password: req.body.password,
       userType: 'tutor',
-      admin: req.body.adminPasswordAttempt === process.env.ADMIN_PASSWORD,
-      attending: false
+      admin: req.body.adminPasswordAttempt === process.env.ADMIN_PASSWORD
     })
     if (req.body.tutorSignUpAttempt !== process.env.SIGNUP_PASSWORD) {
       req.flash('error', 'The signup passphrase you have entered is incorrect')

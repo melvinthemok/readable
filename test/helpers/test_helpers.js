@@ -10,8 +10,7 @@ function createTutorWithFaultyAttr (attributesToChange) {
     startDate: '06/09/2017',
     password: '12345678',
     userType: 'tutor',
-    admin: true,
-    attending: false
+    admin: true
   }
   for (var key in attributesToChange) {
     newTutor[key] = attributesToChange[key]

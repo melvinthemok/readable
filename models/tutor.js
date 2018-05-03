@@ -110,10 +110,25 @@ var TutorSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
-  attending: {
-    type: Boolean,
-    required: true
-  }
+  attendance: [
+    {
+      date: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Saturdate',
+        required: [
+          true,
+          'please specify the date of attendance'
+        ]
+      },
+      attending: {
+        type: Boolean,
+        required: [
+          true,
+          'please specify if you are attending on this date'
+        ]
+      }
+    }
+  ]
 })
 
 TutorSchema.pre('save', function (next) {
