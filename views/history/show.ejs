@@ -4,7 +4,7 @@
       <div class="col-sm-6 offset-sm-3">
         <h2 class="display-4"><%= formatDateLong(chosenSaturdate.date) %></h2>
         <hr class="my-4">
-        <p>past ReadAble session</p>
+        <p><%= chosenSaturdate.date < Date.now() - 16 * 60 * 60 * 1000 ? 'past' : chosenSaturdate.date > Date.now() + 8 * 60 * 60 * 1000 ? 'future' : 'today\'s' %> ReadAble session</p>
       </div>
     </div>
   </div>
