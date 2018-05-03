@@ -38,13 +38,13 @@ var authController = {
       req.flash('error', 'The signup passphrase you have entered is incorrect')
       res.redirect('/auth/tutor/signup')
     } else {
-      tutor.save(function (err) {
+      tutor.save(function (err, savedTutor) {
         if (err) {
           req.flash('error', err.toString())
           res.redirect('/auth/tutor/signup')
         } else {
           passport.authenticate('tutor-local', {
-            successRedirect: '/',
+            successRedirect: '/tutors/attendance/' + savedTutor.id,
             successFlash: (req.body.adminPasswordAttempt === process.env.ADMIN_PASSWORD ? 'Administrator ' : 'Tutor ' ) + 'account set up successfully, ' + req.body.name + '! You\'re logged in'
           })(req, res)
         }
@@ -70,7 +70,7 @@ var authController = {
           res.redirect('/auth/catchPlus/signup')
         } else {
           passport.authenticate('catchPlus-local', {
-            successRedirect: '/',
+            successRedirect: '/students/attendance',
             successFlash: 'Account set up successfully, ' + req.body.name + '! You\'re logged in'
           })(req, res)
         }
@@ -370,16 +370,24 @@ var authController = {
     res.render('./auth/catchPlus/login')
   },
 
-  postTutorLogIn: passport.authenticate('tutor-local', {
-    successRedirect: '/',
-    failureRedirect: '/auth/login',
-    failureFlash: true,
-    successFlash: 'You have successfully logged in'
-  }),
+  postTutorLogIn: function (req, res, next) {
+    passport.authenticate('tutor-local', function (err, user, info) {
+      if (err) return next(err)
+      if (!user) {
+        req.flash('error', info.message)
+        res.redirect('/auth/tutor/login')
+      }
+      req.logIn(user, function (err) {
+        if (err) return next(err)
+        req.flash('success', 'You have successfully logged in')
+        res.redirect('/tutors/attendance/' + user.id)
+      })
+    })(req, res, next)
+  },
 
   postCatchPlusLogIn: passport.authenticate('catchPlus-local', {
     successRedirect: '/students/attendance',
-    failureRedirect: '/auth/login',
+    failureRedirect: '/auth/catchPlus/login',
     failureFlash: true,
     successFlash: 'You have successfully logged in'
   }),
