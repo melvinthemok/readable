@@ -45,15 +45,17 @@
             <% }) %>
           <% } %>
         </p>
-        <% var psUniqueDates = [...new Set(allPreSchools.map(function (preSchool) { %>
-          <% return preSchool.attendance.map(function (indivAtten) { %>
-            <% return indivAtten.date %>
-          <% }) %>
-        <% }).reduce(function (a, b) { %>
-          <% return a.concat(b) %>
-        <% }, []))] %>
-        <% psUniqueDates.forEach(function (psUniqueDate) { %>
-          <div class="d-flex flex-wrap justify-content-left mb-4">
+        <div class="d-flex flex-wrap justify-content-left mb-4">
+          <% var psUniqueDates = [...new Set(allPreSchools.map(function (preSchool) { %>
+            <% return preSchool.attendance.map(function (indivAtten) { %>
+              <% return indivAtten.date %>
+            <% }) %>
+          <% }).reduce(function (a, b) { %>
+            <% return a.concat(b) %>
+          <% }, []).filter(function (item, ind, arr) { %>
+            <% return arr.includes(null) && arr.includes(undefined) ? item !== null : true %>
+          <% }))] %>
+          <% psUniqueDates.forEach(function (psUniqueDate) { %>
             <div class="card m-2" style="width: 21rem;">
               <div class="card-header">
                 <a href="/history/<%= psUniqueDate.id %>"><%= formatDateShort(psUniqueDate.date) %></a>
@@ -75,8 +77,8 @@
                 </div>
               </div>
             </div>
-          </div>
-        <% }) %>
+          <% }) %>
+        </div>
       <% } else { %>
         <p>No sessions yet</p>
       <% } %>
@@ -101,15 +103,17 @@
             <% }) %>
           <% } %>
         </p>
-        <% var fUniqueDates = [...new Set(allFitzroys.map(function (fitzroy) { %>
-          <% return fitzroy.attendance.map(function (indivAtten) { %>
-            <% return indivAtten.date %>
-          <% }) %>
-        <% }).reduce(function (a, b) { %>
-          <% return a.concat(b) %>
-        <% }, []))] %>
-        <% fUniqueDates.forEach(function (fUniqueDate) { %>
-          <div class="d-flex flex-wrap justify-content-left mb-4">
+        <div class="d-flex flex-wrap justify-content-left mb-4">
+          <% var fUniqueDates = [...new Set(allFitzroys.map(function (fitzroy) { %>
+            <% return fitzroy.attendance.map(function (indivAtten) { %>
+              <% return indivAtten.date %>
+            <% }) %>
+          <% }).reduce(function (a, b) { %>
+            <% return a.concat(b) %>
+          <% }, []).filter(function (item, ind, arr) { %>
+            <% return arr.includes(null) && arr.includes(undefined) ? item !== null : true %>
+          <% }))] %>
+          <% fUniqueDates.forEach(function (fUniqueDate) { %>
             <div class="card m-2" style="width: 21rem;">
               <div class="card-header">
                 <a href="/history/<%= fUniqueDate.id %>"><%= formatDateShort(fUniqueDate.date) %></a>
@@ -148,8 +152,8 @@
                 </div>
               </div>
             </div>
-          </div>
-        <% }) %>
+          <% }) %>
+        </div>
       <% } else { %>
         <p>No sessions yet</p>
       <% } %>
@@ -174,15 +178,17 @@
             <% }) %>
           <% } %>
         </p>
-        <% var pfUniqueDates = [...new Set(allPostFitzroys.map(function (postFitzroy) { %>
-          <% return postFitzroy.attendance.map(function (indivAtten) { %>
-            <% return indivAtten.date %>
-          <% }) %>
-        <% }).reduce(function (a, b) { %>
-          <% return a.concat(b) %>
-        <% }, []))] %>
-        <% pfUniqueDates.forEach(function (pfUniqueDate) { %>
-          <div class="d-flex flex-wrap justify-content-left mb-4">
+        <div class="d-flex flex-wrap justify-content-left mb-4">
+          <% var pfUniqueDates = [...new Set(allPostFitzroys.map(function (postFitzroy) { %>
+            <% return postFitzroy.attendance.map(function (indivAtten) { %>
+              <% return indivAtten.date %>
+            <% }) %>
+          <% }).reduce(function (a, b) { %>
+            <% return a.concat(b) %>
+          <% }, []).filter(function (item, ind, arr) { %>
+            <% return arr.includes(null) && arr.includes(undefined) ? item !== null : true %>
+          <% }))] %>
+          <% pfUniqueDates.forEach(function (pfUniqueDate) { %>
             <div class="card m-2" style="width: 21rem;">
               <div class="card-header">
                 <a href="/history/<%= pfUniqueDate.id %>"><%= formatDateShort(pfUniqueDate.date) %></a>
@@ -204,8 +210,8 @@
                 </div>
               </div>
             </div>
-          </div>
-        <% }) %>
+          <% }) %>
+        </div>
       <% } else { %>
         <p>No sessions yet</p>
       <% } %>
