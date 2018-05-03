@@ -21,5 +21,6 @@ exports.config = {
      * production applications.
      */
     level: 'info'
-  }
+  },
+  agent_enabled: process.env.NODE_ENV === 'production'
 }
