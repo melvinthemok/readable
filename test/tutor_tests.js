@@ -144,7 +144,12 @@ describe('Tutors', function () {
                     { tutorSignUpAttempt: signUpPassword })
                   )
                   .expect('Location', /^\/tutors\/attendance\/[0-9a-f]{24}$/)
-                  .end(done)
+                  .end(function () {
+                    Tutor.findOne({ 'email': 'tutor@readable.com' }, function (err, savedTutor) {
+                      savedTutor.should.be.an.instanceof(Tutor)
+                      done()
+                    })
+                  })
     })
   })
 
@@ -171,7 +176,9 @@ describe('Tutors', function () {
                     password: '12345678'
                   })
                   .expect('Location', '/auth/tutor/login')
-                  .end(done)
+                  .end(function (err, res) {
+                    done()
+                  })
     })
 
     it('Should redirect to log in page if a wrong password is given', function (done) {
@@ -183,23 +190,23 @@ describe('Tutors', function () {
                     password: '123456789'
                   })
                   .expect('Location', '/auth/tutor/login')
-                  .end(done)
+                  .end(function (err, res) {
+                    done()
+                  })
     })
 
     it('Should redirect to homepage if the correct email and password are provided', function (done) {
       Tutor.findOne({ 'email': 'tutor@readable.com' }, function (err, tutor) {
-        if (err) console.log(err)
-        else {
-          request(app).post('/auth/tutor/login')
-                  .set('Accept', 'application/json')
-                  .type('form')
-                  .send({
-                    email: 'tutor@readable.com',
-                    password: '12345678'
-                  })
-                  .expect('Location', '/tutors/attendance/' + tutor.id)
-                  .end(done)
-        }
+        tutor.should.be.an.instanceof(Tutor)
+        request(app).post('/auth/tutor/login')
+          .set('Accept', 'application/json')
+          .type('form')
+          .send({
+            email: 'tutor@readable.com',
+            password: '12345678'
+          })
+          .expect('Location', '/tutors/attendance/' + tutor.id)
+          .end(done)
       })
     })
   })
