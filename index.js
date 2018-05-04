@@ -10,6 +10,13 @@ var methodOverride = require('method-override')
 var session = require('express-session')
 var flash = require('connect-flash')
 var cron = require('node-schedule')
+var rollBar = require('rollbar')
+
+var rollbar = new rollBar({
+  accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
+  captureUncaught: true,
+  captureUnhandledRejections: true
+})
 
 var passport = require('./config/pp-config')
 
@@ -74,6 +81,8 @@ app.use('/comments', isLoggedIn, comment)
 cron.scheduleJob({ dayOfWeek: 1, hour: 16, minute: 0 }, function () {
   resetStudentAttendance()
 })
+
+app.use(rollbar.errorHandler())
 
 app.listen(process.env.PORT || 3000)
 
