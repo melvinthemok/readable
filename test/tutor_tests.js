@@ -176,9 +176,7 @@ describe('Tutors', function () {
                     password: '12345678'
                   })
                   .expect('Location', '/auth/tutor/login')
-                  .end(function (err, res) {
-                    done()
-                  })
+                  .end(done)
     })
 
     it('Should redirect to log in page if a wrong password is given', function (done) {
@@ -190,9 +188,7 @@ describe('Tutors', function () {
                     password: '123456789'
                   })
                   .expect('Location', '/auth/tutor/login')
-                  .end(function (err, res) {
-                    done()
-                  })
+                  .end(done)
     })
 
     it('Should redirect to homepage if the correct email and password are provided', function (done) {

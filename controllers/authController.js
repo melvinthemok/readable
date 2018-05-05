@@ -376,12 +376,13 @@ var authController = {
       if (!user) {
         req.flash('error', info.message)
         res.redirect('/auth/tutor/login')
+      } else {
+        req.logIn(user, function (err) {
+          if (err) return next(err)
+          req.flash('success', 'You have successfully logged in')
+          res.redirect('/tutors/attendance/' + user.id)
+        })
       }
-      req.logIn(user, function (err) {
-        if (err) return next(err)
-        req.flash('success', 'You have successfully logged in')
-        res.redirect('/tutors/attendance/' + user.id)
-      })
     })(req, res, next)
   },
 
