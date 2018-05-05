@@ -2,6 +2,7 @@ var Saturdate = require('../models/saturdate')
 var Fitzroy = require('../models/fitzroy')
 var PreSchool = require('../models/preSchool')
 var PostFitzroy = require('../models/postFitzroy')
+var Comment = require('../models/comment')
 var Tutor = require('../models/tutor')
 
 var formatDateLong = require('../helpers/formatDateLong')
@@ -74,41 +75,56 @@ var saturdateController = {
                           req.flash('error', err.toString())
                           res.redirect('/history')
                         } else {
-                          Tutor.find({})
+                          Comment.find({})
                             .populate({
-                              path: 'attendance.date',
+                              path: 'date',
                               model: 'Saturdate'
                             })
-                            .exec(function (err, allTutors) {
+                            .exec(function (err, allComments) {
                               if (err) {
                                 req.flash('error', err.toString())
                                 res.redirect('/history')
                               } else {
-                                res.render('history/show', {
-                                  chosenSaturdate: chosenSaturdate,
-                                  allPreSchools: allPreSchools.filter(function (preSchool) {
-                                    return preSchool.attendance.some(function (indivAttendance) {
-                                      return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
-                                    })
-                                  }),
-                                  allFitzroys: allFitzroys.filter(function (fitzroy) {
-                                    return fitzroy.attendance.some(function (indivAttendance) {
-                                      return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
-                                    })
-                                  }),
-                                  allPostFitzroys: allPostFitzroys.filter(function (postFitzroy) {
-                                    return postFitzroy.attendance.some(function (indivAttendance) {
-                                      return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
-                                    })
-                                  }),
-                                  allTutors: allTutors.filter(function (tutor) {
-                                    return tutor.attendance.some(function (indivAttendance) {
-                                      return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
-                                    })
-                                  }),
-                                  formatDateLong: formatDateLong,
-                                  fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
-                                })
+                                Tutor.find({})
+                                  .populate({
+                                    path: 'attendance.date',
+                                    model: 'Saturdate'
+                                  })
+                                  .exec(function (err, allTutors) {
+                                    if (err) {
+                                      req.flash('error', err.toString())
+                                      res.redirect('/history')
+                                    } else {
+                                      res.render('history/show', {
+                                        chosenSaturdate: chosenSaturdate,
+                                        allPreSchools: allPreSchools.filter(function (preSchool) {
+                                          return preSchool.attendance.some(function (indivAttendance) {
+                                            return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
+                                          })
+                                        }),
+                                        allFitzroys: allFitzroys.filter(function (fitzroy) {
+                                          return fitzroy.attendance.some(function (indivAttendance) {
+                                            return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
+                                          })
+                                        }),
+                                        allPostFitzroys: allPostFitzroys.filter(function (postFitzroy) {
+                                          return postFitzroy.attendance.some(function (indivAttendance) {
+                                            return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
+                                          })
+                                        }),
+                                        allComments: allComments.filter(function (comment) {
+                                          return comment.date.id.toString() === chosenSaturdate.id.toString()
+                                        }),
+                                        allTutors: allTutors.filter(function (tutor) {
+                                          return tutor.attendance.some(function (indivAttendance) {
+                                            return indivAttendance.date.id.toString() === chosenSaturdate.id.toString()
+                                          })
+                                        }),
+                                        formatDateLong: formatDateLong,
+                                        fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
+                                      })
+                                    }
+                                  })
                               }
                             })
                         }
