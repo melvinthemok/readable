@@ -26,7 +26,9 @@
               <% allPreSchools.forEach(function (preSchool) { %>
                 <div class="list-group-item flex-nowrap">
                   <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
-                    <%= preSchool.name %>
+                    <a href="/students/pre-school/<%= preSchool.id %>">
+                      <%= preSchool.name %>
+                    </a>
                   </span>
                   <div class="form-check form-check-inline mr-2" style="flex-shrink: 0;">
                     <label class="form-check-label mt-2">
@@ -60,7 +62,9 @@
               <% allFitzroys.forEach(function (fitzroy) { %>
                 <div class="list-group-item flex-nowrap">
                   <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
-                    <%= fitzroy.name %>
+                    <a href="/students/fitzroy/<%= fitzroy.id %>">
+                      <%= fitzroy.name %>
+                    </a>
                   </span>
                   <div class="form-check form-check-inline mr-2" style="flex-shrink: 0;">
                     <label class="form-check-label mt-2">
@@ -94,7 +98,9 @@
               <% allPostFitzroys.forEach(function (postFitzroy) { %>
                 <div class="list-group-item flex-nowrap">
                   <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
-                    <%= postFitzroy.name %>
+                    <a href="/students/post-fitzroy/<%= postFitzroy.id %>">
+                      <%= postFitzroy.name %>
+                    </a>
                   </span>
                   <div class="form-check form-check-inline mr-2" style="flex-shrink: 0;">
                     <label class="form-check-label mt-2">
