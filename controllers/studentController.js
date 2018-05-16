@@ -802,22 +802,22 @@ var studentController = {
       PreSchool.find({}, function (err, allPreSchools) {
         if (err) {
           req.flash('error', err.toString())
-          res.redirect('/')
+          res.redirect('/index')
         } else {
           Fitzroy.find({}, function (err, allFitzroys) {
             if (err) {
               req.flash('error', err.toString())
-              res.redirect('/')
+              res.redirect('/index')
             } else {
               PostFitzroy.find({}, function (err, allPostFitzroys) {
                 if (err) {
                   req.flash('error', err.toString())
-                  res.redirect('/')
+                  res.redirect('/index')
                 } else {
                   Saturdate.find({}, function (err, allSaturdates) {
                     if (err) {
                       req.flash('error', err.toString())
-                      res.redirect('/')
+                      res.redirect('/index')
                     } else {
                       var sortedAllSaturdates = sortByProperty(allSaturdates, 'date')
                       var nextSaturdateIndex = sortedAllSaturdates.findIndex(function (saturdate) {

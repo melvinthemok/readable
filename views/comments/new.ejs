@@ -27,10 +27,20 @@
         <div class="form-group">
           <label for="tutor">Tutor</label><br>
           <select class="custom-select" id="tutor" name="tutor">
-            <option value="" selected disabled hidden>Please select</option>
+            <option value=""
+              <% if (!currentUser || currentUser.userType !== "tutor" || !allTutors.some(function (tutor) { %>
+                <% tutor.id === currentUser.id %>
+              <% })) { %>
+                selected
+              <% } %>
+            disabled hidden>Please select</option>
             <% if (allTutors.length > 0) { %>
               <% allTutors.forEach(function (tutor) { %>
-                <option value="<%= tutor.id %>"><%= tutor.name %></option>
+                <option value="<%= tutor.id %>"
+                  <% if (currentUser && currentUser.userType === "tutor" && currentUser.id === tutor.id) { %>
+                    selected
+                  <% } %>
+                ><%= tutor.name %></option>
               <% }) %>
             <% } %>
           </select>

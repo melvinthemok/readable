@@ -396,7 +396,7 @@ var authController = {
   getLogOut: function (req, res) {
     req.logout()
     req.flash('success', 'You have successfully logged out. See you soon!')
-    res.redirect('/')
+    res.redirect('/auth/login')
   }
 
 }

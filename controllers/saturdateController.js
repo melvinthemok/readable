@@ -13,7 +13,7 @@ var saturdateController = {
     Saturdate.find({}, function (err, allSaturdates) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/')
+        res.redirect('/index')
       } else {
         res.render('history/index', {
           allSaturdates: allSaturdates.sort(function (date1, date2) {
