@@ -15,22 +15,22 @@ var tutorController = {
     Tutor.find({}, function (err, allTutors) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/')
+        res.redirect('/index')
       } else {
         Fitzroy.distinct('attendance.tutor', function (err, fitzroyTutors) {
           if (err) {
             req.flash('error', err.toString())
-            res.redirect('/')
+            res.redirect('/index')
           } else {
             PreSchool.distinct('attendance.tutor', function (err, preSchoolTutors) {
               if (err) {
                 req.flash('error', err.toString())
-                res.redirect('/')
+                res.redirect('/index')
               } else {
                 PostFitzroy.distinct('attendance.tutor', function (err, postFitzroyTutors) {
                   if (err) {
                     req.flash('error', err.toString())
-                    res.redirect('/')
+                    res.redirect('/index')
                   } else {
                     res.render('tutors/index', {
                       fitzroyTutors: fitzroyTutors,

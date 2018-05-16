@@ -72,6 +72,10 @@ app.get('/', function (req, res) {
   res.render('./auth/login')
 })
 
+app.get('/index', function (req, res) {
+  res.render('./index')
+})
+
 app.use('/auth', auth)
 app.use('/students', isLoggedIn, student)
 app.use('/tutors', isLoggedIn, tutor)

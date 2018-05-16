@@ -20,7 +20,7 @@ var commentController = {
       .exec(function (err, allComments) {
         if (err) {
           req.flash('error', err.toString())
-          res.redirect('/')
+          res.redirect('/index')
         } else {
           res.render('comments/index', {
             allComments: sortByProperty(allComments, 'date.date', true),
