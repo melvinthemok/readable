@@ -71,8 +71,10 @@
               <% } %>
                 <span>
                 <% chosenFitzroy.preferredTutors.forEach(function(preferredTutor, index, array) { %>
-                  <% if (array.length === 1 || index === array.length - 2) { %>
+                  <% if (array.length === 1) { %>
                     <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>&nbsp;
+                  <% } else if (index === array.length - 2) { %>
+                    <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
                   <% } else if (index === array.length - 1) { %>
                     and <a href="/tutors/<%= preferredTutor.id %>"><%= preferredTutor.name %></a>
                   <% } else { %>
