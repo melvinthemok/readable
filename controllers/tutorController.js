@@ -8,6 +8,7 @@ var formatDateShort = require('../helpers/formatDateShort')
 var formatDateLong = require('../helpers/formatDateLong')
 var sortByProperty = require('../helpers/sortByProperty')
 var studentsOfTutor = require('../helpers/studentsOfTutor')
+var studentsPreferringTutor = require('../helpers/studentsPreferringTutor')
 var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
 
 var tutorController = {
@@ -101,9 +102,12 @@ var tutorController = {
                       } else {
                         res.render('tutors/show', {
                           chosenTutor: chosenTutor,
-                          allPreSchools: studentsOfTutor(allPreSchools, chosenTutor),
-                          allFitzroys: studentsOfTutor(allFitzroys, chosenTutor),
-                          allPostFitzroys: studentsOfTutor(allPostFitzroys, chosenTutor),
+                          allPreferringPreSchools: studentsPreferringTutor(allPreSchools, chosenTutor),
+                          allTutoredPreSchools: studentsOfTutor(allPreSchools, chosenTutor),
+                          allPreferringFitzroys: studentsPreferringTutor(allFitzroys, chosenTutor),
+                          allTutoredFitzroys: studentsOfTutor(allFitzroys, chosenTutor),
+                          allPreferringPostFitzroys: studentsPreferringTutor(allPostFitzroys, chosenTutor),
+                          allTutoredPostFitzroys: studentsOfTutor(allPostFitzroys, chosenTutor),
                           formatDateShort: formatDateShort,
                           fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
                         })

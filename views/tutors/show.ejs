@@ -26,9 +26,9 @@
     <div class="col-sm-8 offset-sm-2">
       <a href="/tutors/attendance/<%= chosenTutor.id %>"><h4 class="mt-5 mb-4">indicated future attendance</h4></a>
       <a href="/students/pre-school"><h4 class="mt-5 mb-4">pre-school</h4></a>
-      <% if (allPreSchools.length > 0) { %>
+      <% if (allPreferringPreSchools.length > 0) { %>
         <p>
-          <% var psPreferred = allPreSchools.filter(function (preSchool) { %>
+          <% var psPreferred = allPreferringPreSchools.filter(function (preSchool) { %>
             <% return preSchool.preferredTutors.some(function (tutor) { %>
               <% return tutor.equals(chosenTutor.id) %>
             <% }) %>
@@ -46,8 +46,10 @@
             <% }) %>
           <% } %>
         </p>
+      <% } %>
+      <% if (allTutoredPreSchools.length > 0) { %>
         <div class="d-flex flex-wrap justify-content-left mb-4">
-          <% var psUniqueDates = [...new Set(allPreSchools.map(function (preSchool) { %>
+          <% var psUniqueDates = [...new Set(allTutoredPreSchools.map(function (preSchool) { %>
             <% return preSchool.attendance.map(function (indivAtten) { %>
               <% return indivAtten.date %>
             <% }) %>
@@ -63,7 +65,7 @@
               </div>
               <div class="card-block">
                 <div class="list-group">
-                <% var thisDatePreSchools = allPreSchools.filter(function (preSchool) { %>
+                <% var thisDatePreSchools = allTutoredPreSchools.filter(function (preSchool) { %>
                   <% return preSchool.attendance.some(function (indivAtten) { %>
                     <% return indivAtten.date === psUniqueDate %>
                   <% }) %>
@@ -84,9 +86,9 @@
         <p>No sessions yet</p>
       <% } %>
       <a href="/students/fitzroy"><h4 class="mt-5 mb-4">fitzroy</h4></a>
-      <% if (allFitzroys.length > 0) { %>
+      <% if (allPreferringFitzroys.length > 0) { %>
         <p>
-          <% var fPreferred = allFitzroys.filter(function (fitzroy) { %>
+          <% var fPreferred = allPreferringFitzroys.filter(function (fitzroy) { %>
             <% return fitzroy.preferredTutors.some(function (tutor) { %>
               <% return tutor.equals(chosenTutor.id) %>
             <% }) %>
@@ -104,8 +106,10 @@
             <% }) %>
           <% } %>
         </p>
+      <% } %>
+      <% if (allTutoredFitzroys.length > 0) { %>
         <div class="d-flex flex-wrap justify-content-left mb-4">
-          <% var fUniqueDates = [...new Set(allFitzroys.map(function (fitzroy) { %>
+          <% var fUniqueDates = [...new Set(allTutoredFitzroys.map(function (fitzroy) { %>
             <% return fitzroy.attendance.map(function (indivAtten) { %>
               <% return indivAtten.date %>
             <% }) %>
@@ -121,7 +125,7 @@
               </div>
               <div class="card-block">
                 <div class="list-group">
-                <% var thisDateFitzroys = allFitzroys.filter(function (fitzroy) { %>
+                <% var thisDateFitzroys = allTutoredFitzroys.filter(function (fitzroy) { %>
                   <% return fitzroy.attendance.some(function (indivAtten) { %>
                     <% return indivAtten.date === fUniqueDate %>
                   <% }) %>
@@ -159,9 +163,9 @@
         <p>No sessions yet</p>
       <% } %>
       <a href="/students/post-fitzroy"><h4 class="mt-5 mb-4">post-fitzroy</h4></a>
-      <% if (allPostFitzroys.length > 0) { %>
+      <% if (allPreferringPostFitzroys.length > 0) { %>
         <p>
-          <% var pfPreferred = allPostFitzroys.filter(function (postFitzroy) { %>
+          <% var pfPreferred = allPreferringPostFitzroys.filter(function (postFitzroy) { %>
             <% return postFitzroy.preferredTutors.some(function (tutor) { %>
               <% return tutor.equals(chosenTutor.id) %>
             <% }) %>
@@ -179,8 +183,10 @@
             <% }) %>
           <% } %>
         </p>
+      <% } %>
+      <% if (allTutoredPostFitzroys.length > 0) { %>
         <div class="d-flex flex-wrap justify-content-left mb-4">
-          <% var pfUniqueDates = [...new Set(allPostFitzroys.map(function (postFitzroy) { %>
+          <% var pfUniqueDates = [...new Set(allTutoredPostFitzroys.map(function (postFitzroy) { %>
             <% return postFitzroy.attendance.map(function (indivAtten) { %>
               <% return indivAtten.date %>
             <% }) %>
@@ -196,7 +202,7 @@
               </div>
               <div class="card-block">
                 <div class="list-group">
-                <% var thisDatePostFitzroys = allPostFitzroys.filter(function (postFitzroy) { %>
+                <% var thisDatePostFitzroys = allTutoredPostFitzroys.filter(function (postFitzroy) { %>
                   <% return postFitzroy.attendance.some(function (indivAtten) { %>
                     <% return indivAtten.date === pfUniqueDate %>
                   <% }) %>
