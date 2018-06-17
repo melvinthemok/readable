@@ -258,7 +258,7 @@
                 }
               } else { // sortCriteria == 'tutor'
                 if (attendance.length > 0) {
-                  [...new Set(attendance.map(item => item.tutor))].sort(function (a, b) {
+                  [...new Set(attendance.map(item => JSON.stringify(item.tutor)))].map(str => str ? JSON.parse(str) : str).sort(function (a, b) {
                     if (!a) return 1
                     else if (!b) return -1
                     else if (a.name === b.name) return 0
