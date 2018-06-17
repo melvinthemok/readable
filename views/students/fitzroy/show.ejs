@@ -128,7 +128,7 @@
               sortResult.innerHTML = ''
               if (sortCriteria == 'date') {
                 if (attendance.length > 0) {
-                  [...new Set(attendance.map(item => item.date))].sort(function (a, b) {
+                  attendance.map(item => item.date).sort(function (a, b) {
                     return b.date - a.date
                   }).forEach(function (indivItem) {
                     var card = document.createElement('div')
