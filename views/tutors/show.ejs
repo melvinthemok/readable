@@ -51,9 +51,7 @@
         <div class="d-flex flex-wrap justify-content-left mb-4">
           <% var psUniqueDates = [...new Set(allTutoredPreSchools.map(function (preSchool) { %>
             <% return preSchool.attendance.map(function (indivAtten) { %>
-              <% if (indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString()) { %>
-                <% return indivAtten.date %>
-              <% } %>
+              <% return indivAtten.date %>
             <% }) %>
           <% }).reduce(function (a, b) { %>
             <% return a.concat(b) %>
@@ -61,34 +59,27 @@
             <% return arr.includes(null) && arr.includes(undefined) ? item !== null : true %>
           <% }))] %>
           <% psUniqueDates.forEach(function (psUniqueDate) { %>
-            <% if (psUniqueDate) { %>
-              <div class="card m-2" style="width: 21rem;">
-                <div class="card-header">
-                  <a href="/history/<%= psUniqueDate.id %>"><%= formatDateShort(psUniqueDate.date) %></a>
-                </div>
-                <div class="card-block">
-                  <div class="list-group">
-                  <% var thisDatePreSchools = allTutoredPreSchools.filter(function (preSchool) { %>
-                    <% return preSchool.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.date === psUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
-                    <% }) %>
+            <div class="card m-2" style="width: 21rem;">
+              <div class="card-header">
+                <a href="/history/<%= psUniqueDate.id %>"><%= formatDateShort(psUniqueDate.date) %></a>
+              </div>
+              <div class="card-block">
+                <div class="list-group">
+                <% var thisDatePreSchools = allTutoredPreSchools.filter(function (preSchool) { %>
+                  <% return preSchool.attendance.some(function (indivAtten) { %>
+                    <% return indivAtten.date === psUniqueDate %>
                   <% }) %>
-                  <% thisDatePreSchools.forEach(function (thisDatePreSchool) { %>
-                    <% var thisPSDate = thisDatePreSchool.attendance.filter(function (indivAtten) { %>
-                      <% return indivAtten.date === psUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
-                    <% })[0] %>
-                    <% if (thisPSDate) { %>
-                      <a class="list-group-item list-group-item-action justify-content-between" href="/students/pre-school/<%= thisDatePreSchool.id %>">
-                        <span class="d-inline-block text-truncate">
-                          <%= thisDatePreSchool.name %>
-                        </span>
-                      </a>
-                    <% } %>
-                  <% }) %>
-                  </div>
+                <% }) %>
+                <% thisDatePreSchools.forEach(function (thisDatePreSchool) { %>
+                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/pre-school/<%= thisDatePreSchool.id %>">
+                    <span class="d-inline-block text-truncate">
+                      <%= thisDatePreSchool.name %>
+                    </span>
+                  </a>
+                <% }) %>
                 </div>
               </div>
-            <% } %>
+            </div>
           <% }) %>
         </div>
       <% } else { %>
@@ -120,9 +111,7 @@
         <div class="d-flex flex-wrap justify-content-left mb-4">
           <% var fUniqueDates = [...new Set(allTutoredFitzroys.map(function (fitzroy) { %>
             <% return fitzroy.attendance.map(function (indivAtten) { %>
-              <% if (indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString()) { %>
-                <% return indivAtten.date %>
-              <% } %>
+              <% return indivAtten.date %>
             <% }) %>
           <% }).reduce(function (a, b) { %>
             <% return a.concat(b) %>
@@ -130,48 +119,44 @@
             <% return arr.includes(null) && arr.includes(undefined) ? item !== null : true %>
           <% }))] %>
           <% fUniqueDates.forEach(function (fUniqueDate) { %>
-            <% if (fUniqueDate) { %>
-               <div class="card m-2" style="width: 21rem;">
-                 <div class="card-header">
-                   <a href="/history/<%= fUniqueDate.id %>"><%= formatDateShort(fUniqueDate.date) %></a>
-                </div>
-                <div class="card-block">
-                  <div class="list-group">
-                  <% var thisDateFitzroys = allTutoredFitzroys.filter(function (fitzroy) { %>
-                    <% return fitzroy.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.date === fUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
-                    <% }) %>
+            <div class="card m-2" style="width: 21rem;">
+              <div class="card-header">
+                <a href="/history/<%= fUniqueDate.id %>"><%= formatDateShort(fUniqueDate.date) %></a>
+              </div>
+              <div class="card-block">
+                <div class="list-group">
+                <% var thisDateFitzroys = allTutoredFitzroys.filter(function (fitzroy) { %>
+                  <% return fitzroy.attendance.some(function (indivAtten) { %>
+                    <% return indivAtten.date === fUniqueDate %>
                   <% }) %>
-                  <% thisDateFitzroys.forEach(function (thisDateFitzroy) { %>
-                    <% var fBadgeStyle = "" %>
-                    <% var thisFDate = thisDateFitzroy.attendance.filter(function (indivAtten) { %>
-                      <% return indivAtten.date === fUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
-                    <% })[0] %>
-                    <% if (thisFDate) { %>
-                      <% if (!thisFDate.completed) { %>
-                        <% fBadgeStyle = "badge-warning" %>
+                <% }) %>
+                <% thisDateFitzroys.forEach(function (thisDateFitzroy) { %>
+                  <% var fBadgeStyle = "" %>
+                  <% var thisFDate = thisDateFitzroy.attendance.filter(function (indivAtten) { %>
+                    <% return indivAtten.date === fUniqueDate %>
+                  <% })[0] %>
+                  <% if (!thisFDate.completed) { %>
+                    <% fBadgeStyle = "badge-warning" %>
+                  <% } else { %>
+                    <% fBadgeStyle = "badge-success" %>
+                  <% } %>
+                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisDateFitzroy.id %>">
+                    <span class="d-inline-block text-truncate" style="max-width: 78%;">
+                      <%= thisDateFitzroy.name %>
+                    </span>
+                    &nbsp
+                    <span class="badge badge-pill float-right <%= fBadgeStyle %>">
+                      <% if (thisFDate.book) { %>
+                        <%= fitzroyBookLevelPlusX(thisFDate.book) %>
                       <% } else { %>
-                        <% fBadgeStyle = "badge-success" %>
+                        Other
                       <% } %>
-                      <a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisDateFitzroy.id %>">
-                        <span class="d-inline-block text-truncate" style="max-width: 78%;">
-                          <%= thisDateFitzroy.name %>
-                        </span>
-                        &nbsp
-                        <span class="badge badge-pill float-right <%= fBadgeStyle %>">
-                          <% if (thisFDate.book) { %>
-                            <%= fitzroyBookLevelPlusX(thisFDate.book) %>
-                          <% } else { %>
-                            Other
-                          <% } %>
-                        </span>
-                      </a>
-                    <% } %>
-                  <% }) %>
+                    </span>
+                  </a>
+                <% }) %>
                 </div>
               </div>
             </div>
-            <% } %>
           <% }) %>
         </div>
       <% } else { %>
@@ -203,9 +188,7 @@
         <div class="d-flex flex-wrap justify-content-left mb-4">
           <% var pfUniqueDates = [...new Set(allTutoredPostFitzroys.map(function (postFitzroy) { %>
             <% return postFitzroy.attendance.map(function (indivAtten) { %>
-              <% if (indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString()) { %>
-                <% return indivAtten.date %>
-              <% } %>
+              <% return indivAtten.date %>
             <% }) %>
           <% }).reduce(function (a, b) { %>
             <% return a.concat(b) %>
@@ -213,34 +196,27 @@
             <% return arr.includes(null) && arr.includes(undefined) ? item !== null : true %>
           <% }))] %>
           <% pfUniqueDates.forEach(function (pfUniqueDate) { %>
-            <% if (pfUniqueDate) { %>
-              <div class="card m-2" style="width: 21rem;">
-                <div class="card-header">
-                  <a href="/history/<%= pfUniqueDate.id %>"><%= formatDateShort(pfUniqueDate.date) %></a>
-                </div>
-                <div class="card-block">
-                  <div class="list-group">
-                  <% var thisDatePostFitzroys = allTutoredPostFitzroys.filter(function (postFitzroy) { %>
-                    <% return postFitzroy.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.date === pfUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
-                    <% }) %>
+            <div class="card m-2" style="width: 21rem;">
+              <div class="card-header">
+                <a href="/history/<%= pfUniqueDate.id %>"><%= formatDateShort(pfUniqueDate.date) %></a>
+              </div>
+              <div class="card-block">
+                <div class="list-group">
+                <% var thisDatePostFitzroys = allTutoredPostFitzroys.filter(function (postFitzroy) { %>
+                  <% return postFitzroy.attendance.some(function (indivAtten) { %>
+                    <% return indivAtten.date === pfUniqueDate %>
                   <% }) %>
-                  <% thisDatePostFitzroys.forEach(function (thisDatePostFitzroy) { %>
-                    <% var thisPFDate = thisDatePostFitzroy.attendance.filter(function (indivAtten) { %>
-                      <% return indivAtten.date === pfUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
-                    <% })[0] %>
-                    <% if (thisPFDate) { %>
-                      <a class="list-group-item list-group-item-action justify-content-between" href="/students/post-fitzroy/<%= thisDatePostFitzroy.id %>">
-                        <span class="d-inline-block text-truncate">
-                          <%= thisDatePostFitzroy.name %>
-                        </span>
-                      </a>
-                    <% } %>
-                  <% }) %>
-                  </div>
+                <% }) %>
+                <% thisDatePostFitzroys.forEach(function (thisDatePostFitzroy) { %>
+                  <a class="list-group-item list-group-item-action justify-content-between" href="/students/post-fitzroy/<%= thisDatePostFitzroy.id %>">
+                    <span class="d-inline-block text-truncate">
+                      <%= thisDatePostFitzroy.name %>
+                    </span>
+                  </a>
+                <% }) %>
                 </div>
               </div>
-            <% } %>
+            </div>
           <% }) %>
         </div>
       <% } else { %>
