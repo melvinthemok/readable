@@ -70,12 +70,12 @@
                   <div class="list-group">
                   <% var thisDatePreSchools = allTutoredPreSchools.filter(function (preSchool) { %>
                     <% return preSchool.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.date === psUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
+                      <% return indivAtten.date === psUniqueDate && indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
                     <% }) %>
                   <% }) %>
                   <% thisDatePreSchools.forEach(function (thisDatePreSchool) { %>
                     <% var thisPSDate = thisDatePreSchool.attendance.filter(function (indivAtten) { %>
-                      <% return indivAtten.date === psUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
+                      <% return indivAtten.date === psUniqueDate && indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
                     <% })[0] %>
                     <% if (thisPSDate) { %>
                       <a class="list-group-item list-group-item-action justify-content-between" href="/students/pre-school/<%= thisDatePreSchool.id %>">
@@ -139,13 +139,13 @@
                   <div class="list-group">
                   <% var thisDateFitzroys = allTutoredFitzroys.filter(function (fitzroy) { %>
                     <% return fitzroy.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.date === fUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
+                      <% return indivAtten.date === fUniqueDate && indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
                     <% }) %>
                   <% }) %>
                   <% thisDateFitzroys.forEach(function (thisDateFitzroy) { %>
                     <% var fBadgeStyle = "" %>
                     <% var thisFDate = thisDateFitzroy.attendance.filter(function (indivAtten) { %>
-                      <% return indivAtten.date === fUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
+                      <% return indivAtten.date === fUniqueDate && indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
                     <% })[0] %>
                     <% if (thisFDate) { %>
                       <% if (!thisFDate.completed) { %>
@@ -222,12 +222,12 @@
                   <div class="list-group">
                   <% var thisDatePostFitzroys = allTutoredPostFitzroys.filter(function (postFitzroy) { %>
                     <% return postFitzroy.attendance.some(function (indivAtten) { %>
-                      <% return indivAtten.date === pfUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
+                      <% return indivAtten.date === pfUniqueDate && indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
                     <% }) %>
                   <% }) %>
                   <% thisDatePostFitzroys.forEach(function (thisDatePostFitzroy) { %>
                     <% var thisPFDate = thisDatePostFitzroy.attendance.filter(function (indivAtten) { %>
-                      <% return indivAtten.date === pfUniqueDate && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
+                      <% return indivAtten.date === pfUniqueDate && indivAtten.tutor && indivAtten.tutor.id.toString() === chosenTutor.id.toString() %>
                     <% })[0] %>
                     <% if (thisPFDate) { %>
                       <a class="list-group-item list-group-item-action justify-content-between" href="/students/post-fitzroy/<%= thisDatePostFitzroy.id %>">
