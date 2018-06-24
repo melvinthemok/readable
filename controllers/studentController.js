@@ -60,14 +60,28 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/pre-school')
                 } else {
-                  res.render('students/preSchool/show', {
-                    chosenPreSchool: chosenPreSchool,
-                    allComments: allComments.filter(function (comment) {
-                      return comment.preSchools.some(function(preSchool) {
-                        return preSchool.equals(chosenPreSchool.id)
+                  Saturdate.findOne({
+                    date: {
+                      $gt: Date.now() - 16 * 60 * 60 * 1000,
+                      $lte: Date.now() + 8 * 60 * 60 * 1000
+                    }
+                  }, function (err, todaySaturdate) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/fitzroy')
+                    } else {
+                      res.render('students/preSchool/show', {
+                        chosenPreSchool: chosenPreSchool,
+                        allComments: allComments.filter(function (comment) {
+                          return comment.preSchools.some(function(preSchool) {
+                            return preSchool.equals(chosenPreSchool.id)
+                          })
+                        }),
+                        formatDateShort: formatDateShort,
+                        sortByProperty: sortByProperty,
+                        todaySaturdate: todaySaturdate
                       })
-                    }),
-                    formatDateShort: formatDateShort
+                    }
                   })
                 }
               })
@@ -262,6 +276,86 @@ var studentController = {
           }
         )
       })
+    },
+
+    newAttend: function (req, res) {
+      PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/pre-school/')
+        } else {
+          Saturdate.findOne({
+            date: {
+              $gt: Date.now() - 16 * 60 * 60 * 1000,
+              $lte: Date.now() + 8 * 60 * 60 * 1000
+            }
+          }, function (err, todaySaturdate) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/pre-school/')
+            } else {
+              Tutor.find({}, function (err, allTutors) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/pre-school/')
+                } else {
+                  if (todaySaturdate === null) {
+                    req.flash('error', 'There doesn\'t seem to have been a session today')
+                    res.redirect('/students/pre-school/' + chosenPreSchool.id)
+                  } else if (chosenPreSchool.attendance.some(function (indivAtten) {
+                    return indivAtten.date.toString() === todaySaturdate.id.toString()
+                  })) {
+                    req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+                    res.redirect('/students/pre-school/edit/' + chosenPreSchool.id)
+                  } else {
+                    res.render('students/preSchool/new-attend', {
+                      chosenPreSchool: chosenPreSchool,
+                      todaySaturdate: todaySaturdate,
+                      formatDateLong: formatDateLong,
+                      allTutors: allTutors
+                    })
+                  }
+                }
+              })
+            }
+          })
+        }
+      })
+    },
+
+    createAttend: function (req, res) {
+      if (req.body.tutor === 'unknown') {
+        delete req.body.tutor
+      }
+      PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/pre-school/')
+        } else {
+          if (chosenPreSchool.attendance.some(function (indivAtten) {
+            return indivAtten.date.toString() === req.body.date
+          })) {
+            req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+            res.redirect('/students/pre-school/edit/' + chosenPreSchool.id)
+          } else {
+            PreSchool.findByIdAndUpdate(req.params.id, {
+              $push: {
+                attendance: req.body
+              },
+            }, {
+              upsert: true
+            }, function (err, chosenPreSchool) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/students/pre-school/' + req.params.id)
+              } else {
+                req.flash('success', 'Today\'s attendance of ' + chosenPreSchool.name + ' added! Add your comment')
+                res.redirect('/comments/new')
+              }
+            })
+          }
+        }
+      })
     }    
   },
 
@@ -305,15 +399,28 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/fitzroy')
                 } else {
-                  res.render('students/fitzroy/show', {
-                    chosenFitzroy: chosenFitzroy,
-                    allComments: allComments.filter(function (comment) {
-                      return comment.fitzroys.some(function(fitzroy) {
-                        return fitzroy.equals(chosenFitzroy.id)
+                  Saturdate.findOne({
+                    date: {
+                      $gt: Date.now() - 16 * 60 * 60 * 1000,
+                      $lte: Date.now() + 8 * 60 * 60 * 1000
+                    }
+                  }, function (err, todaySaturdate) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/fitzroy')
+                    } else {
+                      res.render('students/fitzroy/show', {
+                        chosenFitzroy: chosenFitzroy,
+                        allComments: allComments.filter(function (comment) {
+                          return comment.fitzroys.some(function(fitzroy) {
+                            return fitzroy.equals(chosenFitzroy.id)
+                          })
+                        }),
+                        formatDateShort: formatDateShort,
+                        fitzroyBookLevelPlusX: fitzroyBookLevelPlusX,
+                        todaySaturdate: todaySaturdate
                       })
-                    }),
-                    formatDateShort: formatDateShort,
-                    fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
+                    }
                   })
                 }
               })
@@ -546,6 +653,87 @@ var studentController = {
           }
         )
       })
+    },
+
+    newAttend: function (req, res) {
+      Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/fitzroy/')
+        } else {
+          Saturdate.findOne({
+            date: {
+              $gt: Date.now() - 16 * 60 * 60 * 1000,
+              $lte: Date.now() + 8 * 60 * 60 * 1000
+            }
+          }, function (err, todaySaturdate) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/fitzroy/')
+            } else {
+              Tutor.find({}, function (err, allTutors) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/fitzroy/')
+                } else {
+                  if (todaySaturdate === null) {
+                    req.flash('error', 'There doesn\'t seem to have been a session today')
+                    res.redirect('/students/fitzroy/' + chosenFitzroy.id)
+                  } else if (chosenFitzroy.attendance.some(function (indivAtten) {
+                    return indivAtten.date.toString() === todaySaturdate.id.toString()
+                  })) {
+                    req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+                    res.redirect('/students/fitzroy/edit/' + chosenFitzroy.id)
+                  } else {
+                    res.render('students/fitzroy/new-attend', {
+                      chosenFitzroy: chosenFitzroy,
+                      todaySaturdate: todaySaturdate,
+                      formatDateLong: formatDateLong,
+                      allTutors: allTutors,
+                      fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
+                    })
+                  }
+                }
+              })
+            }
+          })
+        }
+      })
+    },
+
+    createAttend: function (req, res) {
+      if (req.body.tutor === 'unknown') {
+        delete req.body.tutor
+      }
+      Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/fitzroy/')
+        } else {
+          if (chosenFitzroy.attendance.some(function (indivAtten) {
+            return indivAtten.date.toString() === req.body.date
+          })) {
+            req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+            res.redirect('/students/fitzroy/edit/' + chosenFitzroy.id)
+          } else {
+            Fitzroy.findByIdAndUpdate(req.params.id, {
+              $push: {
+                attendance: req.body
+              },
+            }, {
+              upsert: true
+            }, function (err, chosenFitzroy) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/students/fitzroy/' + req.params.id)
+              } else {
+                req.flash('success', 'Today\'s attendance of ' + chosenFitzroy.name + ' added! Add your comment')
+                res.redirect('/comments/new')
+              }
+            })
+          }
+        }
+      })
     }
   },
 
@@ -589,14 +777,28 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/post-fitzroy')
               } else {
-                res.render('students/postFitzroy/show', {
-                  chosenPostFitzroy: chosenPostFitzroy,
-                  allComments: allComments.filter(function (comment) {
-                    return comment.postFitzroys.some(function(postFitzroy) {
-                      return postFitzroy.equals(chosenPostFitzroy.id)
+                Saturdate.findOne({
+                  date: {
+                    $gt: Date.now() - 16 * 60 * 60 * 1000,
+                    $lte: Date.now() + 8 * 60 * 60 * 1000
+                  }
+                }, function (err, todaySaturdate) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/fitzroy')
+                  } else {
+                    res.render('students/postFitzroy/show', {
+                      chosenPostFitzroy: chosenPostFitzroy,
+                      allComments: allComments.filter(function (comment) {
+                        return comment.postFitzroys.some(function(postFitzroy) {
+                          return postFitzroy.equals(chosenPostFitzroy.id)
+                        })
+                      }),
+                      formatDateShort: formatDateShort,
+                      sortByProperty: sortByProperty,
+                      todaySaturdate: todaySaturdate
                     })
-                  }),
-                  formatDateShort: formatDateShort
+                  }
                 })
               }
             })
@@ -792,6 +994,86 @@ var studentController = {
             }
           }
         )
+      })
+    },
+
+    newAttend: function (req, res) {
+      PostFitzroy.findById(req.params.id, function (err, chosenPostFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/post-fitzroy/')
+        } else {
+          Saturdate.findOne({
+            date: {
+              $gt: Date.now() - 16 * 60 * 60 * 1000,
+              $lte: Date.now() + 8 * 60 * 60 * 1000
+            }
+          }, function (err, todaySaturdate) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/post-fitzroy/')
+            } else {
+              Tutor.find({}, function (err, allTutors) {
+                if (err) {
+                  req.flash('error', err.toString())
+                  res.redirect('/students/post-fitzroy/')
+                } else {
+                  if (todaySaturdate === null) {
+                    req.flash('error', 'There doesn\'t seem to have been a session today')
+                    res.redirect('/students/post-fitzroy/' + chosenPostFitzroy.id)
+                  } else if (chosenPostFitzroy.attendance.some(function (indivAtten) {
+                    return indivAtten.date.toString() === todaySaturdate.id.toString()
+                  })) {
+                    req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+                    res.redirect('/students/post-fitzroy/edit/' + chosenPostFitzroy.id)
+                  } else {
+                    res.render('students/postFitzroy/new-attend', {
+                      chosenPostFitzroy: chosenPostFitzroy,
+                      todaySaturdate: todaySaturdate,
+                      formatDateLong: formatDateLong,
+                      allTutors: allTutors
+                    })
+                  }
+                }
+              })
+            }
+          })
+        }
+      })
+    },
+
+    createAttend: function (req, res) {
+      if (req.body.tutor === 'unknown') {
+        delete req.body.tutor
+      }
+      PostFitzroy.findById(req.params.id, function (err, chosenPostFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/post-fitzroy/')
+        } else {
+          if (chosenPostFitzroy.attendance.some(function (indivAtten) {
+            return indivAtten.date.toString() === req.body.date
+          })) {
+            req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+            res.redirect('/students/post-fitzroy/edit/' + chosenPostFitzroy.id)
+          } else {
+            PostFitzroy.findByIdAndUpdate(req.params.id, {
+              $push: {
+                attendance: req.body
+              },
+            }, {
+              upsert: true
+            }, function (err, chosenPostFitzroy) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/students/post-fitzroy/' + req.params.id)
+              } else {
+                req.flash('success', 'Today\'s attendance of ' + chosenPostFitzroy.name + ' added! Add your comment')
+                res.redirect('/comments/new')
+              }
+            })
+          }
+        }
       })
     }
   },

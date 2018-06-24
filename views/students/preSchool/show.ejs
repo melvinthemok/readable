@@ -21,7 +21,10 @@
 <div class="container my-5">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <a href="/students/pre-school/edit/<%= chosenPreSchool.id %>"><button class="btn btn-primary" type="button" style="cursor:pointer;">Edit student details</button></a>
+      <% if (todaySaturdate) { %>
+        <a href="/students/pre-school/attend/<%= chosenPreSchool.id %>"><button class="btn btn-primary mb-2 mr-1" type="button" style="cursor:pointer;">Add today's attendance</button></a>
+      <% } %>
+      <a href="/students/pre-school/edit/<%= chosenPreSchool.id %>"><button class="btn btn-primary mb-2" type="button" style="cursor:pointer;">Edit student details</button></a>
     </div>
   </div>
 </div>
@@ -94,7 +97,7 @@
         <div class="card-block">
           <div class="list-group">
             <% if (chosenPreSchool.attendance.length > 0) { %>
-              <% chosenPreSchool.attendance.forEach(function (indivAttendance) { %>
+              <% sortByProperty(chosenPreSchool.attendance, "date", true).forEach(function (indivAttendance) { %>
                 <div class="list-group-item justify-content-start">
                   <div style="flex-grow: 1;">
                     <a href="/history/<%= indivAttendance.date.id %>">
