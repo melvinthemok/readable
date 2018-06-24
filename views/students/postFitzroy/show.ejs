@@ -21,7 +21,10 @@
 <div class="container my-5">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <a href="/students/post-fitzroy/edit/<%= chosenPostFitzroy.id %>"><button class="btn btn-primary" type="button" style="cursor:pointer;">Edit student details</button></a>
+      <% if (todaySaturdate) { %>
+        <a href="/students/post-fitzroy/attend/<%= chosenPostFitzroy.id %>"><button class="btn btn-primary mb-2 mr-1" type="button" style="cursor:pointer;">Add today's attendance</button></a>
+      <% } %>
+      <a href="/students/post-fitzroy/edit/<%= chosenPostFitzroy.id %>"><button class="btn btn-primary mb-2" type="button" style="cursor:pointer;">Edit student details</button></a>
     </div>
   </div>
 </div>
