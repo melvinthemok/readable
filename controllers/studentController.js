@@ -60,14 +60,28 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/pre-school')
                 } else {
-                  res.render('students/preSchool/show', {
-                    chosenPreSchool: chosenPreSchool,
-                    allComments: allComments.filter(function (comment) {
-                      return comment.preSchools.some(function(preSchool) {
-                        return preSchool.equals(chosenPreSchool.id)
+                  Saturdate.findOne({
+                    date: {
+                      $gt: Date.now() - 16 * 60 * 60 * 1000,
+                      $lte: Date.now() + 8 * 60 * 60 * 1000
+                    }
+                  }, function (err, todaySaturdate) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/fitzroy')
+                    } else {
+                      res.render('students/preSchool/show', {
+                        chosenPreSchool: chosenPreSchool,
+                        allComments: allComments.filter(function (comment) {
+                          return comment.preSchools.some(function(preSchool) {
+                            return preSchool.equals(chosenPreSchool.id)
+                          })
+                        }),
+                        formatDateShort: formatDateShort,
+                        sortByProperty: sortByProperty,
+                        todaySaturdate: todaySaturdate
                       })
-                    }),
-                    formatDateShort: formatDateShort
+                    }
                   })
                 }
               })
@@ -305,15 +319,28 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/fitzroy')
                 } else {
-                  res.render('students/fitzroy/show', {
-                    chosenFitzroy: chosenFitzroy,
-                    allComments: allComments.filter(function (comment) {
-                      return comment.fitzroys.some(function(fitzroy) {
-                        return fitzroy.equals(chosenFitzroy.id)
+                  Saturdate.findOne({
+                    date: {
+                      $gt: Date.now() - 16 * 60 * 60 * 1000,
+                      $lte: Date.now() + 8 * 60 * 60 * 1000
+                    }
+                  }, function (err, todaySaturdate) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/fitzroy')
+                    } else {
+                      res.render('students/fitzroy/show', {
+                        chosenFitzroy: chosenFitzroy,
+                        allComments: allComments.filter(function (comment) {
+                          return comment.fitzroys.some(function(fitzroy) {
+                            return fitzroy.equals(chosenFitzroy.id)
+                          })
+                        }),
+                        formatDateShort: formatDateShort,
+                        fitzroyBookLevelPlusX: fitzroyBookLevelPlusX,
+                        todaySaturdate: todaySaturdate
                       })
-                    }),
-                    formatDateShort: formatDateShort,
-                    fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
+                    }
                   })
                 }
               })
@@ -589,14 +616,28 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/post-fitzroy')
               } else {
-                res.render('students/postFitzroy/show', {
-                  chosenPostFitzroy: chosenPostFitzroy,
-                  allComments: allComments.filter(function (comment) {
-                    return comment.postFitzroys.some(function(postFitzroy) {
-                      return postFitzroy.equals(chosenPostFitzroy.id)
+                Saturdate.findOne({
+                  date: {
+                    $gt: Date.now() - 16 * 60 * 60 * 1000,
+                    $lte: Date.now() + 8 * 60 * 60 * 1000
+                  }
+                }, function (err, todaySaturdate) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/fitzroy')
+                  } else {
+                    res.render('students/postFitzroy/show', {
+                      chosenPostFitzroy: chosenPostFitzroy,
+                      allComments: allComments.filter(function (comment) {
+                        return comment.postFitzroys.some(function(postFitzroy) {
+                          return postFitzroy.equals(chosenPostFitzroy.id)
+                        })
+                      }),
+                      formatDateShort: formatDateShort,
+                      sortByProperty: sortByProperty,
+                      todaySaturdate: todaySaturdate
                     })
-                  }),
-                  formatDateShort: formatDateShort
+                  }
                 })
               }
             })
