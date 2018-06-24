@@ -1,0 +1,51 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">post-fitzroy</h2>
+        <hr class="my-4">
+        <p><a href="/students/post-fitzroy/<%= chosenPostFitzroy.id %>"><%= chosenPostFitzroy.name %></a>'s attendance on <a href="/history/<%= todaySaturdate.id %>"><%= formatDateLong(todaySaturdate.date) %></a></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/students/post-fitzroy/attend/<%= chosenPostFitzroy.id %>?_method=PUT" method="POST" class="mb-5">
+        <input type="hidden" id="date" name="date" value="<%= todaySaturdate.id %>" />
+        <div class="form-group required-group">
+          <label for="tutor">Tutor</label><br>
+          <small class="form-text text-muted mt-0 mb-2">Select the tutor for this student at today's session, or "Unknown" if unclear.</small>
+          <select class="custom-select form-control" id="tutor" name="tutor">
+            <option value="" <% if (!currentUser || currentUser.userType !== "tutor" || !allTutors.some(function (tutor) { %>
+                <% tutor.id === currentUser.id %>
+              <% })) { %>
+                selected
+              <% } %>
+            disabled hidden>Please select</option>
+            <option value="unknown">Unknown</option>
+            <% if (allTutors.length > 0) { %>
+              <% allTutors.forEach(function (tutor) { %>
+                <option value="<%= tutor.id %>" <% if (currentUser && currentUser.userType === "tutor" && currentUser.id === tutor.id) { %>
+                  selected
+                <% } %>><%= tutor.name %></option>
+              <% }) %>
+            <% } %>
+          </select>
+          <small class="form-text form-control-feedback"></small>
+        </div><br />
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" disabled>Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%
+  var javaScriptFiles = [
+    'newAttendChecksToSubmit'
+  ]
+  javaScriptFiles.forEach(function (file) {
+%>
+<script type="text/javascript" src="/client_side_helpers/<%= file %>.js"></script>
+<%  })  %>
