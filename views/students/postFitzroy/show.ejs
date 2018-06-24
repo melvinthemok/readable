@@ -94,7 +94,7 @@
         <div class="card-block">
           <div class="list-group">
             <% if (chosenPostFitzroy.attendance.length > 0) { %>
-              <% chosenPostFitzroy.attendance.forEach(function (indivAttendance) { %>
+              <% sortByProperty(chosenPostFitzroy.attendance, "date", true).forEach(function (indivAttendance) { %>
                 <div class="list-group-item justify-content-start">
                   <div style="flex-grow: 1;">
                     <a href="/history/<%= indivAttendance.date.id %>" style="flex-grow: 1;">

@@ -94,7 +94,7 @@
         <div class="card-block">
           <div class="list-group">
             <% if (chosenPreSchool.attendance.length > 0) { %>
-              <% chosenPreSchool.attendance.forEach(function (indivAttendance) { %>
+              <% sortByProperty(chosenPreSchool.attendance, "date", true).forEach(function (indivAttendance) { %>
                 <div class="list-group-item justify-content-start">
                   <div style="flex-grow: 1;">
                     <a href="/history/<%= indivAttendance.date.id %>">
