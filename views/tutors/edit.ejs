@@ -1,0 +1,106 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4"><%= chosenTutor.name %></h2>
+        <hr class="my-4">
+        <p>edit your details</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="/tutors/update/<%= chosenTutor._id %>?_method=PUT" method="POST" class="mb-5">
+        <div id="email-form-group" class="form-group required-group">
+          <label for="email">Email</label>
+          <input id="email" class="form-control" type="email" name="email" value="<%= chosenTutor.email %>">
+          <small id="emailRegexMessage" class="form-text form-control-feedback"></small>
+        </div>
+        <div id="name-form-group" class="form-group required-group">
+          <label for="name">Name</label>
+          <input id="name" class="form-control" type="text" name="name" value="<%= chosenTutor.name %>">
+          <small id="nameLengthMessage" class="form-text form-control-feedback"></small>
+        </div>
+        <div id="phone-form-group" class="form-group required-group">
+          <label for="phone" class="mb-0">Phone</label>
+          <small class="form-text text-muted mt-0 mb-2">+65 | Singapore</small>
+          <input id="phone" class="form-control" type="text" name="phone" value="<%= chosenTutor.phone %>">
+          <small id="phoneLengthMessage" class="form-text form-control-feedback"></small>
+        </div>
+        <div class="form-group required-group">
+          <label for="gender">Gender</label><br>
+          <select class="custom-select" id="gender" name="gender">
+            <% if (chosenTutor.gender === 'male') { %>
+              <option selected value="male">Male</option>
+              <option value="female">Female</option>
+            <% } else { %>
+              <option value="male">Male</option>
+              <option selected value="female">Female</option>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group required-group">
+          <label for="age">Age</label><br>
+          <select class="custom-select" id="age" name="age">
+            <% if (chosenTutor.age === '16 to 25') { %>
+              <option value="16 to 25" selected>16 to 25</option>
+            <% } else { %>
+              <option value="16 to 25">16 to 25</option>
+            <% } %>
+            <% if (chosenTutor.age === '26 to 35') { %>
+              <option value="26 to 35" selected>26 to 35</option>
+            <% } else { %>
+              <option value="26 to 35">26 to 35</option>
+            <% } %>
+            <% if (chosenTutor.age === '36 to 45') { %>
+              <option value="36 to 45" selected>36 to 45</option>
+            <% } else { %>
+              <option value="36 to 45">36 to 45</option>
+            <% } %>
+            <% if (chosenTutor.age === '46 to 55') { %>
+              <option value="46 to 55" selected>46 to 55</option>
+            <% } else { %>
+              <option value="46 to 55">46 to 55</option>
+            <% } %>
+            <% if (chosenTutor.age === '56 to 65') { %>
+              <option value="56 to 65" selected>56 to 65</option>
+            <% } else { %>
+              <option value="56 to 65">56 to 65</option>
+            <% } %>
+            <% if (chosenTutor.age === 'above 65') { %>
+              <option value="above 65" selected>Above 65</option>
+            <% } else { %>
+              <option value="above 65">Above 65</option>
+            <% } %>
+          </select>
+        </div>
+        <div id="experience-form-group" class="form-group">
+          <label for="experience" class="mb-0">Experience with kids</label><br>
+          <textarea id="experience" class="form-control" name="experience" rows="5"><%= chosenTutor.experience %></textarea>
+          <small id="experienceMessage" class="form-text form-control-feedback"></small>
+        </div>
+        <div class="form-group required-group">
+          <label for="startDate" class="mb-0">When did you join ReadAble?</label><br>
+          <small class="form-text text-muted mt-0 mb-2">day / month / year</small>
+          <input class="form-control" id="startDate" type="date" name="startDate"value="<%= chosenTutor.startDate.getFullYear() %>-<%= (chosenTutor.startDate.getMonth()+1).toString().length < 2 ? '0' + (chosenTutor.startDate.getMonth()+1).toString() : (chosenTutor.startDate.getMonth()+1).toString() %>-<%= (chosenTutor.startDate.getDate()).toString().length < 2 ? '0' + (chosenTutor.startDate.getDate()).toString() : (chosenTutor.startDate.getDate()).toString() %>">
+        </div><br>
+        <button id="submitButton" class="btn btn-primary float-right" type="submit" disabled>Update</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%
+  var javaScriptFiles = [
+    'emailRegexCheck',
+    'nameLengthCheck',
+    'phoneRegexCheck',
+    'expLengthCheck',
+    'allTutorEditChecksToSubmit'
+  ]
+  javaScriptFiles.forEach(function (file) {
+%>
+<script type="text/javascript" src="/client_side_helpers/<%= file %>.js"></script>
+<%  })  %>

@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var experienceFormGroup = document.getElementById('experience-form-group')
   var experience = document.getElementById('experience')
   var message = document.getElementById('experienceMessage')
-  experience.addEventListener('input', function() {
+
+  experience.addEventListener('input', function () {
     if (experience.value.length < 501) {
       experienceFormGroup.classList.add('has-success')
       experience.classList.add('form-control-success')

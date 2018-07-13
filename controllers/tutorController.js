@@ -102,6 +102,7 @@ var tutorController = {
                       } else {
                         res.render('tutors/show', {
                           chosenTutor: chosenTutor,
+                          isCurrentUser: req.user.id === req.params.id,
                           allPreferringPreSchools: studentsPreferringTutor(allPreSchools, chosenTutor),
                           allTutoredPreSchools: studentsOfTutor(allPreSchools, chosenTutor),
                           allPreferringFitzroys: studentsPreferringTutor(allFitzroys, chosenTutor),
@@ -118,6 +119,48 @@ var tutorController = {
               })
           }
         })
+      }
+    })
+  },
+
+  edit: function (req, res) {
+    Tutor.findById(req.params.id, function (err, chosenTutor) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/tutors')
+      } else {
+        res.render('tutors/edit', {
+          chosenTutor: chosenTutor
+        })
+      }
+    })
+  },
+
+  update: function (req, res) {
+    Tutor.updateOne({
+      _id: req.params.id
+    }, {
+      $set: {
+        email: req.body.email,
+        name: req.body.name,
+        phone: req.body.phone,
+        gender: req.body.gender,
+        age: req.body.age,
+        experience: req.body.experience,
+        startDate: req.body.startDate
+      }
+    }, {
+      runValidators: true
+    }, function (err, raw) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/tutors/' + req.params.id)
+      } else if (raw.n !== 1 || raw.nModified !== 1 || raw.ok !== 1) {
+        req.flash('error', raw.toString())
+        res.redirect('/tutors/' + req.params.id)
+      } else {
+        req.flash('success', 'Your details were successfully updated!')
+        res.redirect('/tutors/' + req.params.id)
       }
     })
   },

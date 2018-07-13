@@ -1,18 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
-  var listeningInputs = document.querySelectorAll('.required-group > input, #generalComment')
+  // different listeners for inputs and selects
+  var listeningInputs = document.querySelectorAll('.required-group > input, #experience')
+  var listeningSelects = document.querySelectorAll('.required-group > select')
   // enable submit only if other client-side helper checks succeed
+  var email = document.getElementById('email')
+  var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   var name = document.getElementById('name')
-  var generalComment = document.getElementById('generalComment')
-  var saturdatesCheckboxes = document.querySelectorAll("input[name='saturdates']")
+  var phone = document.getElementById('phone')
+  var phoneRegex = /^[6, 8, 9]\d{7}$/
+  var experience = document.getElementById('experience')
   var submitButton = document.getElementById('submitButton')
 
-  function runAllRequiredChecks () {
+  function allChecksAndToggleSubmitButton () {
     // checking if required form elements have values
     var requiredGroups = document.querySelectorAll('.required-group')
     var required = document.querySelectorAll('.required-group > input, .required-group > select')
-
+  
     requiredGroups.forEach(function (requiredGroup) {
-      var input = requiredGroup.querySelector('input:not(#name):not(.form-check-input)')
+      var input = requiredGroup.querySelector('input:not(#email):not(#name):not(#phone)')
       // to avoid encroaching on responsibility of individual checks
       var select = requiredGroup.querySelector('select')
 
@@ -59,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!Array.prototype.some.call(required, function (item) {
       return item.value === ''
-    }) && name.value.length > 2 && name.value.length < 41 && generalComment.value.length < 501) {
+    }) && emailRegex.test(email.value) && name.value.length > 2 && name.value.length < 41 && phoneRegex.test(phone.value) && (!experience || experience.value.length < 501)) {
       submitButton.removeAttribute('disabled')
       submitButton.setAttribute('style', 'cursor:pointer;')
     } else {
@@ -68,38 +73,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function attachEventListenersToSelects () {
-    var requiredSelects = document.querySelectorAll(".required-group > select:not([name='fitzroyBooks'])")
-    requiredSelects.forEach(function (requiredSelect) {
-      requiredSelect.addEventListener('change', runAllRequiredChecks)
-    })
-  }
+  allChecksAndToggleSubmitButton()
 
-  attachEventListenersToSelects()
-
-  listeningInputs.forEach(function (requiredInput) {
-    requiredInput.addEventListener('input', runAllRequiredChecks)
+  Array.prototype.forEach.call(listeningInputs, function (elem) {
+    elem.addEventListener('input', allChecksAndToggleSubmitButton)
   })
-
-  saturdatesCheckboxes.forEach(function (checkbox, index) {
-    var tutor = document.getElementById('student.' + index + '.tutor')
-
-    function prepareCheckboxDependentElementsAndRunChecks () {
-      if (checkbox.checked) {
-        tutor.classList.add('required-group')
-        tutor.removeAttribute('style')
-      } else {
-        tutor.classList.remove('required-group')
-        tutor.querySelector('select').selectedIndex = 0
-        tutor.setAttribute('style', 'display:none; visibility:hidden')
-      }
-      attachEventListenersToSelects()
-      runAllRequiredChecks()
-    }
-
-    prepareCheckboxDependentElementsAndRunChecks()
-    checkbox.addEventListener('change', prepareCheckboxDependentElementsAndRunChecks)
+  
+  Array.prototype.forEach.call(listeningSelects, function (elem) {
+    elem.addEventListener('change', allChecksAndToggleSubmitButton)
   })
-
-  runAllRequiredChecks()
 })

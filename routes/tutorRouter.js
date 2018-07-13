@@ -8,6 +8,8 @@ router.get('/', tutorController.index)
 router.get('/attendance', tutorController.attendance.index)
 
 router.get('/:id', tutorController.show)
+router.get('/edit/:id', isTutor, isCurrentUser, tutorController.edit)
+router.put('/update/:id', isTutor, isCurrentUser, tutorController.update)
 router.delete('/:id', tutorController.delete)
 
 router.get('/attendance/:id', tutorController.attendance.edit)

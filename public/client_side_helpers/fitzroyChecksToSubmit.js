@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   var listeningInputs = document.querySelectorAll('.required-group > input, #generalComment')
+  // enable submit only if other client-side helper checks succeed
   var name = document.getElementById('name')
   var generalComment = document.getElementById('generalComment')
   var saturdatesCheckboxes = document.querySelectorAll("input[name='saturdates']")
@@ -7,11 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var submitButton = document.getElementById('submitButton')
 
   function runAllRequiredChecks () {
+    // checking if required form elements have values
     var requiredGroups = document.querySelectorAll('.required-group')
     var required = document.querySelectorAll('.required-group > input, .required-group > select')
 
     requiredGroups.forEach(function (requiredGroup) {
       var input = requiredGroup.querySelector('input:not(#name):not(.form-check-input)')
+      // to avoid encroaching on responsibility of individual checks
       var select = requiredGroup.querySelector('select')
 
       if (input) {
@@ -84,14 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var book = document.getElementById('fitzroy.' + index + '.book')
     var completed = document.getElementById('fitzroy.' + index + '.completed')
 
-    if (checkbox.checked) {
-      tutor.classList.add('required-group')
-      tutor.removeAttribute('style')
-      book.classList.add('required-group')
-      book.removeAttribute('style')
-    }
-
-    checkbox.addEventListener('change', function () {
+    function prepareCheckboxDependentElementsAndRunChecks () {
       if (checkbox.checked) {
         tutor.classList.add('required-group')
         tutor.removeAttribute('style')
@@ -110,19 +106,17 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       attachEventListenersToNonBookSelects()
       runAllRequiredChecks()
-    })
+    }
+
+    prepareCheckboxDependentElementsAndRunChecks()
+    checkbox.addEventListener('change', prepareCheckboxDependentElementsAndRunChecks)
   })
 
   bookSelects.forEach(function (bookSelect, index) {
     var completed = document.getElementById('fitzroy.' + index + '.completed')
 
-    if (bookSelect.value > 0) {
-      completed.classList.add('required-group')
-      completed.removeAttribute('style')
-    }
-
-    bookSelect.addEventListener('change', function () {
-      if (this.value > 0) {
+    function prepareCompletedAndRunChecks () {
+      if (bookSelect.value > 0) {
         completed.classList.add('required-group')
         completed.removeAttribute('style')
       } else {
@@ -132,6 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       attachEventListenersToNonBookSelects()
       runAllRequiredChecks()
-    })
+    }
+
+    prepareCompletedAndRunChecks()
+    bookSelect.addEventListener('change', prepareCompletedAndRunChecks)
   })
+
+  runAllRequiredChecks()
 })

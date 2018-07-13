@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var password1 = document.getElementById('passwordDraft')
   var password2 = document.getElementById('password')
   var message = document.getElementById('passwordMessage')
+
   password2.addEventListener('input', function () {
     if (password1.value === password2.value && password1.value !== '' && password2.value !== '') {
       passwordFormGroup.classList.add('has-success')

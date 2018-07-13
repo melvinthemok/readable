@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var phone = document.getElementById('phone')
   var message = document.getElementById('phoneLengthMessage')
   var phoneRegex = /^[6, 8, 9]\d{7}$/
-  phone.addEventListener('input', function () {
+
+  function checkPhone () {
     if (phoneRegex.test(phone.value)) {
       phoneFormGroup.classList.add('has-success')
       phone.classList.add('form-control-success')
@@ -17,5 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
       phone.classList.remove('form-control-success')
       message.textContent = 'Please provide a valid phone number'
     }
-  })
+  }
+
+  checkPhone()
+  phone.addEventListener('input', checkPhone)
 })
