@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var generalCommentFormGroup = document.getElementById('general-comment-form-group')
   var generalComment = document.getElementById('generalComment')
   var message = document.getElementById('generalCommentMessage')
+
   generalComment.addEventListener('input', function() {
     if (generalComment.value.length < 501) {
       generalCommentFormGroup.classList.add('has-success')
