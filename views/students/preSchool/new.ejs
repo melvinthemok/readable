@@ -140,24 +140,8 @@
                   <input class="form-check-input mr-1" id="preSchool.<%= index %>.date" type="checkbox" name="saturdates" value="<%= saturdate.id %>">
                   <%= formatDateLong(saturdate.date) %>
                 </label>
-                <script>
-                  document.addEventListener('DOMContentLoaded', function () {
-                    (function (i) {
-                      var saturdatesCheckbox = document.getElementById('preSchool.' + i + '.date')
-                      var tutor = document.getElementById('preSchool.' + i + '.tutor')
-                      saturdatesCheckbox.addEventListener('change', function () {
-                        if (this.checked) {
-                          tutor.removeAttribute('style')
-                        } else {
-                          tutor.querySelector('select').selectedIndex = 0
-                          tutor.setAttribute('style', 'display:none; visibility:hidden')
-                        }
-                      })
-                    }(<%= index %>))
-                  })
-                </script>
                 <div class="row ml-1">
-                  <div id="preSchool.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
+                  <div id="student.<%= index %>.tutor" class="form-group mb-0" style="display: none; visibility: hidden">
                     <label class="text-muted mb-0 mt-1 ml-4"><small>Tutor</small></label><br>
                     <select class="custom-select mb-3 ml-4" name="preSchoolTutors">
                       <option value="" selected disabled hidden>Please select</option>
