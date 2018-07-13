@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var nameFormGroup = document.getElementById('name-form-group')
   var name = document.getElementById('name')
   var message = document.getElementById('nameLengthMessage')
-  name.addEventListener('input', function () {
+
+  function checkName () {
     if (name.value.length > 2 && name.value.length < 41) {
       nameFormGroup.classList.add('has-success')
       name.classList.add('form-control-success')
@@ -25,5 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
           message.textContent = 'Too long'
       }
     }
-  })
+  }
+
+  checkName()
+  name.addEventListener('input', checkName)
 })

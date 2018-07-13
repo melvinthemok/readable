@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var email = document.getElementById('email')
   var message = document.getElementById('emailRegexMessage')
   var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  email.addEventListener('input', function () {
+
+  function checkEmail () {
     if (emailRegex.test(email.value)) {
       emailFormGroup.classList.add('has-success')
       email.classList.add('form-control-success')
@@ -21,5 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
         message.textContent = 'Your email doesn\'t look right'
       }
     }
-  })
+  }
+
+  checkEmail()
+  email.addEventListener('input', checkEmail)
 })

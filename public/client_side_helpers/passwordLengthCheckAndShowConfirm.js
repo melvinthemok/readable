@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var passwordFormGroup = document.getElementById('password-form-group')
   // show alert if passwordDraft too short or too long
   var message = document.getElementById('passwordMessage')
-  password1.addEventListener('input', function () {
-    description.removeAttribute('style')
-    password2.removeAttribute('style')
+
+  function checkPassword() {
     if (password1.value.length > 7 && password1.value.length < 31) {
       passwordFormGroup.classList.remove('has-warning')
       password1.classList.remove('form-control-warning')
@@ -27,5 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
           message.textContent = 'Too long'
       }
     }
+  }
+
+  checkPassword()
+
+  password1.addEventListener('input', function () {
+    description.removeAttribute('style')
+    password2.removeAttribute('style')
+    checkPassword()
   })
 })
