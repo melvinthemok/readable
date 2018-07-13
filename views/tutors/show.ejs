@@ -17,6 +17,9 @@
         <p>
           <%= chosenTutor.experience %>
         </p>
+        <% if (isCurrentUser) { %>
+          <a href="/tutors/edit/<%= chosenTutor.id %>"><button class="btn btn-primary mt-3 mb-2" type="button" style="cursor:pointer;">Edit your details</button></a>
+        <% } %>
       </div>
     </div>
   </div>
