@@ -62,10 +62,10 @@ var studentController = {
                 } else {
                   Saturdate.findOne({
                     date: {
-                      $gt: Date.now() - 16 * 60 * 60 * 1000,
+                      $gt: Date.now() - 64 * 60 * 60 * 1000,
                       $lte: Date.now() + 8 * 60 * 60 * 1000
                     }
-                  }, function (err, todaySaturdate) {
+                  }, function (err, latestSaturdate) {
                     if (err) {
                       req.flash('error', err.toString())
                       res.redirect('/students/fitzroy')
@@ -79,7 +79,7 @@ var studentController = {
                         }),
                         formatDateShort: formatDateShort,
                         sortByProperty: sortByProperty,
-                        todaySaturdate: todaySaturdate
+                        latestSaturdate: latestSaturdate
                       })
                     }
                   })
@@ -286,10 +286,10 @@ var studentController = {
         } else {
           Saturdate.findOne({
             date: {
-              $gt: Date.now() - 16 * 60 * 60 * 1000,
+              $gt: Date.now() - 64 * 60 * 60 * 1000,
               $lte: Date.now() + 8 * 60 * 60 * 1000
             }
-          }, function (err, todaySaturdate) {
+          }, function (err, latestSaturdate) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/pre-school/')
@@ -299,18 +299,18 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/pre-school/')
                 } else {
-                  if (todaySaturdate === null) {
-                    req.flash('error', 'There doesn\'t seem to have been a session today')
+                  if (latestSaturdate === null) {
+                    req.flash('error', 'There doesn\'t seem to have been a recent session')
                     res.redirect('/students/pre-school/' + chosenPreSchool.id)
                   } else if (chosenPreSchool.attendance.some(function (indivAtten) {
-                    return indivAtten.date.toString() === todaySaturdate.id.toString()
+                    return indivAtten.date.toString() === latestSaturdate.id.toString()
                   })) {
-                    req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+                    req.flash('error', 'Looks like the latest attendance was already created; edit it instead')
                     res.redirect('/students/pre-school/edit/' + chosenPreSchool.id)
                   } else {
                     res.render('students/preSchool/new-attend', {
                       chosenPreSchool: chosenPreSchool,
-                      todaySaturdate: todaySaturdate,
+                      latestSaturdate: latestSaturdate,
                       formatDateLong: formatDateLong,
                       allTutors: allTutors
                     })
@@ -335,7 +335,7 @@ var studentController = {
           if (chosenPreSchool.attendance.some(function (indivAtten) {
             return indivAtten.date.toString() === req.body.date
           })) {
-            req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+            req.flash('error', 'Looks like the latest attendance was already created; edit it instead')
             res.redirect('/students/pre-school/edit/' + chosenPreSchool.id)
           } else {
             PreSchool.findByIdAndUpdate(req.params.id, {
@@ -349,7 +349,7 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/pre-school/' + req.params.id)
               } else {
-                req.flash('success', 'Today\'s attendance of ' + chosenPreSchool.name + ' added! Add your comment')
+                req.flash('success', 'Latest attendance of ' + chosenPreSchool.name + ' added! Add your comment')
                 res.redirect('/comments/new')
               }
             })
@@ -401,10 +401,10 @@ var studentController = {
                 } else {
                   Saturdate.findOne({
                     date: {
-                      $gt: Date.now() - 16 * 60 * 60 * 1000,
+                      $gt: Date.now() - 64 * 60 * 60 * 1000,
                       $lte: Date.now() + 8 * 60 * 60 * 1000
                     }
-                  }, function (err, todaySaturdate) {
+                  }, function (err, latestSaturdate) {
                     if (err) {
                       req.flash('error', err.toString())
                       res.redirect('/students/fitzroy')
@@ -418,7 +418,7 @@ var studentController = {
                         }),
                         formatDateShort: formatDateShort,
                         fitzroyBookLevelPlusX: fitzroyBookLevelPlusX,
-                        todaySaturdate: todaySaturdate
+                        latestSaturdate: latestSaturdate
                       })
                     }
                   })
@@ -663,10 +663,10 @@ var studentController = {
         } else {
           Saturdate.findOne({
             date: {
-              $gt: Date.now() - 16 * 60 * 60 * 1000,
+              $gt: Date.now() - 64 * 60 * 60 * 1000,
               $lte: Date.now() + 8 * 60 * 60 * 1000
             }
-          }, function (err, todaySaturdate) {
+          }, function (err, latestSaturdate) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/fitzroy/')
@@ -676,18 +676,18 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/fitzroy/')
                 } else {
-                  if (todaySaturdate === null) {
-                    req.flash('error', 'There doesn\'t seem to have been a session today')
+                  if (latestSaturdate === null) {
+                    req.flash('error', 'There doesn\'t seem to have been a recent session')
                     res.redirect('/students/fitzroy/' + chosenFitzroy.id)
                   } else if (chosenFitzroy.attendance.some(function (indivAtten) {
-                    return indivAtten.date.toString() === todaySaturdate.id.toString()
+                    return indivAtten.date.toString() === latestSaturdate.id.toString()
                   })) {
-                    req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+                    req.flash('error', 'Looks like the latest attendance was already created; edit it instead')
                     res.redirect('/students/fitzroy/edit/' + chosenFitzroy.id)
                   } else {
                     res.render('students/fitzroy/new-attend', {
                       chosenFitzroy: chosenFitzroy,
-                      todaySaturdate: todaySaturdate,
+                      latestSaturdate: latestSaturdate,
                       formatDateLong: formatDateLong,
                       allTutors: allTutors,
                       fitzroyBookLevelPlusX: fitzroyBookLevelPlusX
@@ -713,7 +713,7 @@ var studentController = {
           if (chosenFitzroy.attendance.some(function (indivAtten) {
             return indivAtten.date.toString() === req.body.date
           })) {
-            req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+            req.flash('error', 'Looks like the latest attendance was already created; edit it instead')
             res.redirect('/students/fitzroy/edit/' + chosenFitzroy.id)
           } else {
             Fitzroy.findByIdAndUpdate(req.params.id, {
@@ -727,7 +727,7 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/fitzroy/' + req.params.id)
               } else {
-                req.flash('success', 'Today\'s attendance of ' + chosenFitzroy.name + ' added! Add your comment')
+                req.flash('success', 'Latest attendance of ' + chosenFitzroy.name + ' added! Add your comment')
                 res.redirect('/comments/new')
               }
             })
@@ -779,10 +779,10 @@ var studentController = {
               } else {
                 Saturdate.findOne({
                   date: {
-                    $gt: Date.now() - 16 * 60 * 60 * 1000,
+                    $gt: Date.now() - 64 * 60 * 60 * 1000,
                     $lte: Date.now() + 8 * 60 * 60 * 1000
                   }
-                }, function (err, todaySaturdate) {
+                }, function (err, latestSaturdate) {
                   if (err) {
                     req.flash('error', err.toString())
                     res.redirect('/students/fitzroy')
@@ -796,7 +796,7 @@ var studentController = {
                       }),
                       formatDateShort: formatDateShort,
                       sortByProperty: sortByProperty,
-                      todaySaturdate: todaySaturdate
+                      latestSaturdate: latestSaturdate
                     })
                   }
                 })
@@ -1005,10 +1005,10 @@ var studentController = {
         } else {
           Saturdate.findOne({
             date: {
-              $gt: Date.now() - 16 * 60 * 60 * 1000,
+              $gt: Date.now() - 64 * 60 * 60 * 1000,
               $lte: Date.now() + 8 * 60 * 60 * 1000
             }
-          }, function (err, todaySaturdate) {
+          }, function (err, latestSaturdate) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/post-fitzroy/')
@@ -1018,18 +1018,18 @@ var studentController = {
                   req.flash('error', err.toString())
                   res.redirect('/students/post-fitzroy/')
                 } else {
-                  if (todaySaturdate === null) {
-                    req.flash('error', 'There doesn\'t seem to have been a session today')
+                  if (latestSaturdate === null) {
+                    req.flash('error', 'There doesn\'t seem to have been a recent session')
                     res.redirect('/students/post-fitzroy/' + chosenPostFitzroy.id)
                   } else if (chosenPostFitzroy.attendance.some(function (indivAtten) {
-                    return indivAtten.date.toString() === todaySaturdate.id.toString()
+                    return indivAtten.date.toString() === latestSaturdate.id.toString()
                   })) {
-                    req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+                    req.flash('error', 'Looks like the latest attendance was already created; edit it instead')
                     res.redirect('/students/post-fitzroy/edit/' + chosenPostFitzroy.id)
                   } else {
                     res.render('students/postFitzroy/new-attend', {
                       chosenPostFitzroy: chosenPostFitzroy,
-                      todaySaturdate: todaySaturdate,
+                      latestSaturdate: latestSaturdate,
                       formatDateLong: formatDateLong,
                       allTutors: allTutors
                     })
@@ -1054,7 +1054,7 @@ var studentController = {
           if (chosenPostFitzroy.attendance.some(function (indivAtten) {
             return indivAtten.date.toString() === req.body.date
           })) {
-            req.flash('error', 'Looks like today\'s attendance was already created; edit it instead')
+            req.flash('error', 'Looks like the latest attendance was already created; edit it instead')
             res.redirect('/students/post-fitzroy/edit/' + chosenPostFitzroy.id)
           } else {
             PostFitzroy.findByIdAndUpdate(req.params.id, {
@@ -1068,7 +1068,7 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/post-fitzroy/' + req.params.id)
               } else {
-                req.flash('success', 'Today\'s attendance of ' + chosenPostFitzroy.name + ' added! Add your comment')
+                req.flash('success', 'Latest attendance of ' + chosenPostFitzroy.name + ' added! Add your comment')
                 res.redirect('/comments/new')
               }
             })

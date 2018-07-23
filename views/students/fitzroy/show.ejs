@@ -21,8 +21,8 @@
 <div class="container my-5">
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
-      <% if (todaySaturdate) { %>
-        <a href="/students/fitzroy/attend/<%= chosenFitzroy.id %>"><button class="btn btn-primary mb-2 mr-1" type="button" style="cursor:pointer;">Add today's attendance</button></a>
+      <% if (latestSaturdate) { %>
+        <a href="/students/fitzroy/attend/<%= chosenFitzroy.id %>"><button class="btn btn-primary mb-2 mr-1" type="button" style="cursor:pointer;">Add latest attendance</button></a>
       <% } %>
       <a href="/students/fitzroy/edit/<%= chosenFitzroy.id %>"><button class="btn btn-primary mb-2" type="button" style="cursor:pointer;">Edit student details</button></a>
     </div>

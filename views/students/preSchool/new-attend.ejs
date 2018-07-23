@@ -4,7 +4,7 @@
       <div class="col-sm-6 offset-sm-3">
         <h2 class="display-4">pre-school</h2>
         <hr class="my-4">
-        <p><a href="/students/pre-school/<%= chosenPreSchool.id %>"><%= chosenPreSchool.name %></a>'s attendance on <a href="/history/<%= todaySaturdate.id %>"><%= formatDateLong(todaySaturdate.date) %></a></p>
+        <p><a href="/students/pre-school/<%= chosenPreSchool.id %>"><%= chosenPreSchool.name %></a>'s attendance on <a href="/history/<%= latestSaturdate.id %>"><%= formatDateLong(latestSaturdate.date) %></a></p>
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <form action="/students/pre-school/attend/<%= chosenPreSchool.id %>?_method=PUT" method="POST" class="mb-5">
-        <input type="hidden" id="date" name="date" value="<%= todaySaturdate.id %>" />
+        <input type="hidden" id="date" name="date" value="<%= latestSaturdate.id %>" />
         <div class="form-group required-group">
           <label for="tutor">Tutor</label><br>
           <small class="form-text text-muted mt-0 mb-2">Select the tutor for this student at today's session, or "Unknown" if unclear.</small>
