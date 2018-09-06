@@ -9,16 +9,22 @@
 </div>
 <div class="container">
   <div class="row">
+    <%
+      var isAdmin = ""
+      if (currentUser && !currentUser.admin) {
+        isAdmin = "display:none; visibility: hidden;"
+      }
+    %>
     <div class="col-sm-6 offset-sm-3">
       Pre-school<br>
       <a class="btn btn-primary mt-1 mb-4" href="/students/pre-school">Overview</a>
-      <a class="btn btn-primary mt-1 mb-4 ml-2" href="/students/pre-school/new">Sign up a new student</a><br>
+      <a class="btn btn-primary mt-1 mb-4 ml-2" href="/students/pre-school/new" style="<%= isAdmin %>">Sign up a new student</a><br>
       Fitzroy<br>
       <a class="btn btn-primary mt-1 mb-4" href="/students/fitzroy">Overview</a>
-      <a class="btn btn-primary mt-1 mb-4 ml-2" href="/students/fitzroy/new">Sign up a new student</a><br>
+      <a class="btn btn-primary mt-1 mb-4 ml-2" href="/students/fitzroy/new" style="<%= isAdmin %>">Sign up a new student</a><br>
       Post-Fitzroy<br>
       <a class="btn btn-primary mt-1" href="/students/post-fitzroy">Overview</a>
-      <a class="btn btn-primary mt-1 ml-2" href="/students/post-fitzroy/new">Sign up a new student</a>
+      <a class="btn btn-primary mt-1 ml-2" href="/students/post-fitzroy/new" style="<%= isAdmin %>">Sign up a new student</a>
     </div>
   </div>
 </div>
