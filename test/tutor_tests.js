@@ -191,7 +191,7 @@ describe('Tutors', function () {
                   .end(done)
     })
 
-    it('Should redirect to homepage if the correct email and password are provided', function (done) {
+    it('Should redirect to students page if the correct email and password are provided', function (done) {
       Tutor.findOne({ 'email': 'tutor@readable.com' }, function (err, tutor) {
         tutor.should.be.an.instanceof(Tutor)
         request(app).post('/auth/tutor/login')
@@ -201,7 +201,7 @@ describe('Tutors', function () {
             email: 'tutor@readable.com',
             password: '12345678'
           })
-          .expect('Location', '/tutors/attendance/' + tutor.id)
+          .expect('Location', '/students')
           .end(done)
       })
     })
