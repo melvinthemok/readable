@@ -324,8 +324,11 @@ var studentController = {
     },
 
     createAttend: function (req, res) {
-      if (req.body.tutor === 'unknown') {
-        delete req.body.tutor
+      var newAttend = {
+        date: req.body.date
+      }
+      if (req.body.tutor !== 'unknown') {
+        newAttend.tutor = req.body.tutor
       }
       PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
         if (err) {
@@ -340,7 +343,7 @@ var studentController = {
           } else {
             PreSchool.findByIdAndUpdate(req.params.id, {
               $push: {
-                attendance: req.body
+                attendance: newAttend
               },
             }, {
               upsert: true
@@ -349,8 +352,23 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/pre-school/' + req.params.id)
               } else {
-                req.flash('success', 'Latest attendance of ' + chosenPreSchool.name + ' added! Add your comment')
-                res.redirect('/comments/new')
+                var newComment = new Comment({
+                  date: req.body.date,
+                  preSchools: [chosenPreSchool],
+                  contents: req.body.comment
+                })
+                if (req.body.tutor !== 'unknown') {
+                  newComment.tutor = req.body.tutor
+                }
+                newComment.save(function (err, savedComment) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/pre-school/' + req.params.id)
+                  } else {
+                    req.flash('success', 'Latest attendance of ' + chosenPreSchool.name + ' added!')
+                    res.redirect('/students/pre-school/' + req.params.id)
+                  }
+                })
               }
             })
           }
@@ -702,8 +720,13 @@ var studentController = {
     },
 
     createAttend: function (req, res) {
-      if (req.body.tutor === 'unknown') {
-        delete req.body.tutor
+      var newAttend = {
+        date: req.body.date,
+        book: req.body.book,
+        completed: req.body.completed
+      }
+      if (req.body.tutor !== 'unknown') {
+        newAttend.tutor = req.body.tutor
       }
       Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
         if (err) {
@@ -718,7 +741,7 @@ var studentController = {
           } else {
             Fitzroy.findByIdAndUpdate(req.params.id, {
               $push: {
-                attendance: req.body
+                attendance: newAttend
               },
             }, {
               upsert: true
@@ -727,8 +750,23 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/fitzroy/' + req.params.id)
               } else {
-                req.flash('success', 'Latest attendance of ' + chosenFitzroy.name + ' added! Add your comment')
-                res.redirect('/comments/new')
+                var newComment = new Comment({
+                  date: req.body.date,
+                  fitzroys: [chosenFitzroy],
+                  contents: req.body.comment
+                })
+                if (req.body.tutor !== 'unknown') {
+                  newComment.tutor = req.body.tutor
+                }
+                newComment.save(function (err, savedComment) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/fitzroy/' + req.params.id)
+                  } else {
+                    req.flash('success', 'Latest attendance of ' + chosenFitzroy.name + ' added!')
+                    res.redirect('/students/fitzroy/' + req.params.id)
+                  }
+                })
               }
             })
           }
@@ -1043,8 +1081,11 @@ var studentController = {
     },
 
     createAttend: function (req, res) {
-      if (req.body.tutor === 'unknown') {
-        delete req.body.tutor
+      var newAttend = {
+        date: req.body.date
+      }
+      if (req.body.tutor !== 'unknown') {
+        newAttend.tutor = req.body.tutor
       }
       PostFitzroy.findById(req.params.id, function (err, chosenPostFitzroy) {
         if (err) {
@@ -1059,7 +1100,7 @@ var studentController = {
           } else {
             PostFitzroy.findByIdAndUpdate(req.params.id, {
               $push: {
-                attendance: req.body
+                attendance: newAttend
               },
             }, {
               upsert: true
@@ -1068,8 +1109,23 @@ var studentController = {
                 req.flash('error', err.toString())
                 res.redirect('/students/post-fitzroy/' + req.params.id)
               } else {
-                req.flash('success', 'Latest attendance of ' + chosenPostFitzroy.name + ' added! Add your comment')
-                res.redirect('/comments/new')
+                var newComment = new Comment({
+                  date: req.body.date,
+                  postFitzroys: [chosenPostFitzroy],
+                  contents: req.body.comment
+                })
+                if (req.body.tutor !== 'unknown') {
+                  newComment.tutor = req.body.tutor
+                }
+                newComment.save(function (err, savedComment) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/students/post-fitzroy/' + req.params.id)
+                  } else {
+                    req.flash('success', 'Latest attendance of ' + chosenPostFitzroy.name + ' added!')
+                    res.redirect('/students/post-fitzroy/' + req.params.id)
+                  }
+                })
               }
             })
           }
