@@ -4,7 +4,11 @@
       <div class="col-sm-6 offset-sm-3">
         <h2 class="display-4">comments</h2>
         <hr class="my-4">
-        <p class="mb-1">by <a href="/tutors/<%= chosenComment.tutor.id %>"><%= chosenComment.tutor.name %></a> on <a href="/history/<%= chosenComment.date.id %>"><%= formatDateLong(chosenComment.date.date) %></a></p>
+        <% if (chosenComment.tutor) { %>
+          <p class="mb-1">by <a href="/tutors/<%= chosenComment.tutor.id %>"><%= chosenComment.tutor.name %></a> on <a href="/history/<%= chosenComment.date.id %>"><%= formatDateLong(chosenComment.date.date) %></a></p>
+        <% } else { %>
+          on <a href="/history/<%= chosenComment.date.id %>"><%= formatDateLong(chosenComment.date.date) %></a></p>
+        <% } %>
         <p>
           <% if (chosenComment.preSchools.length > 0) { %>
             <% chosenComment.preSchools.forEach(function (preSchool) { %>

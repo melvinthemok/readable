@@ -11,11 +11,7 @@ var CommentSchema = new mongoose.Schema({
   },
   tutor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Tutor',
-    required: [
-      true,
-      'please specify the tutor leaving this comment'
-    ]
+    ref: 'Tutor'
   },
   preSchools: [
     {

@@ -3,24 +3,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function runAllRequiredChecks () {
     var requiredGroups = document.querySelectorAll('.required-group')
-    var required = document.querySelectorAll('.required-group > select')
+    var required = document.querySelectorAll('.required-group > select') && document.querySelectorAll('.required-group > textarea')
 
     requiredGroups.forEach(function (requiredGroup) {
-      var select = requiredGroup.querySelector('select')
+      var formEl = requiredGroup.querySelector('select') || requiredGroup.querySelector('textarea')
 
-      if (select.value !== '') {
+      if (formEl.value !== '') {
         requiredGroup.classList.add('has-success')
         requiredGroup.classList.remove('has-warning')
-        select.classList.add('form-control-success')
-        select.classList.remove('form-control-warning')
+        formEl.classList.add('form-control-success')
+        formEl.classList.remove('form-control-warning')
         if (requiredGroup.querySelector('.form-control-feedback')) {
           requiredGroup.querySelector('.form-control-feedback').textContent = ''
         }
       } else {
         requiredGroup.classList.remove('has-success')
         requiredGroup.classList.add('has-warning')
-        select.classList.remove('form-control-success')
-        select.classList.add('form-control-warning')
+        formEl.classList.remove('form-control-success')
+        formEl.classList.add('form-control-warning')
         if (requiredGroup.querySelector('.form-control-feedback')) {
           requiredGroup.querySelector('.form-control-feedback').textContent = 'Required'
         }
@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
   tutorSelectGroup.addEventListener('change', runAllRequiredChecks)
 
   var bookSelect = document.querySelector("select[name='book']")
-  var completedSelectGroup = document.querySelector("select[name='completed']").closest("div")
+  var completedSelectGroup = document.querySelector("select[name='completed']") && document.querySelector("select[name='completed']").closest("div")
 
-  bookSelect.addEventListener('change', function () {
+  bookSelect && bookSelect.addEventListener('change', function () {
     if (this.value > 0) {
       completedSelectGroup.classList.add('required-group')
       completedSelectGroup.removeAttribute('style')
@@ -59,4 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     runAllRequiredChecks()
   })
+
+  var commentGroup = document.querySelector("textarea[name='comment']").closest("div")
+
+  commentGroup.addEventListener('input', runAllRequiredChecks)
 })
