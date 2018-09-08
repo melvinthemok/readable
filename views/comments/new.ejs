@@ -34,6 +34,7 @@
                 selected
               <% } %>
             disabled hidden>Please select</option>
+            <option value="unknown">Unknown</option>
             <% if (allTutors.length > 0) { %>
               <% allTutors.forEach(function (tutor) { %>
                 <option value="<%= tutor.id %>"

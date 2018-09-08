@@ -30,9 +30,10 @@
         <div class="form-group">
           <label for="tutor">Tutor</label><br>
           <select class="custom-select" id="tutor" name="tutor">
+            <option value="unknown">Unknown</option>
             <% if (allTutors.length > 0) { %>
               <% allTutors.forEach(function (tutor) { %>
-                <% if (tutor.id === chosenComment.tutor.id) { %>
+                <% if (chosenComment.tutor && tutor.id === chosenComment.tutor.id) { %>
                   <option selected value="<%= tutor.id %>"><%= tutor.name %></option>
                 <% } else { %>
                   <option value="<%= tutor.id %>"><%= tutor.name %></option>

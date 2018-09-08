@@ -99,12 +99,14 @@ var commentController = {
   create: function (req, res) {
     var newComment = new Comment({
       date: req.body.date,
-      tutor: req.body.tutor,
       preSchools: req.body.preSchools,
       fitzroys: req.body.fitzroys,
       postFitzroys: req.body.postFitzroys,
       contents: req.body.contents
     })
+    if (req.body.tutor !== 'unknown') {
+      newComment.tutor = req.body.tutor
+    }
     newComment.save(function (err, savedComment) {
       if (err) {
         req.flash('error', err.toString())
@@ -177,14 +179,22 @@ var commentController = {
   },
 
   update: function (req, res) {
-    Comment.findOneAndUpdate({ _id: req.params.id}, {
-      date: req.body.date,
-      tutor: req.body.tutor,
-      preSchools: req.body.preSchools || [],
-      fitzroys: req.body.fitzroys || [],
-      postFitzroys: req.body.postFitzroys || [],
-      contents: req.body.contents
-    }, { runValidators: true }, function (err, chosenComment) {
+    var newComment = {
+      $set: {
+        date: req.body.date,
+        preSchools: req.body.preSchools || [],
+        fitzroys: req.body.fitzroys || [],
+        postFitzroys: req.body.postFitzroys || [],
+        contents: req.body.contents
+      }
+    }
+    if (req.body.tutor !== 'unknown') {
+      newComment.$set.tutor = req.body.tutor
+    } else {
+      newComment.$unset = {}
+      newComment.$unset.tutor = ''
+    }
+    Comment.findOneAndUpdate({ _id: req.params.id}, newComment, { runValidators: true }, function (err, chosenComment) {
       if (err) {
         req.flash('error', err.toString())
         res.redirect('/comments/edit/' + req.params.id)
