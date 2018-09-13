@@ -77,6 +77,18 @@ var saturdateController = {
                               path: 'date',
                               model: 'Saturdate'
                             })
+                            .populate({
+                              path: 'preSchools',
+                              model: 'PreSchool'
+                            })
+                            .populate({
+                              path: 'fitzroys',
+                              model: 'Fitzroy'
+                            })
+                            .populate({
+                              path: 'postFitzroys',
+                              model: 'PostFitzroy'
+                            })
                             .exec(function (err, allComments) {
                               if (err) {
                                 req.flash('error', err.toString())
