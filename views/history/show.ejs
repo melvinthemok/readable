@@ -45,11 +45,33 @@
                     <% }) %>
                   <% }) %>
                   <% thisTutorPreSchools.forEach(function (thisTutorPreSchool) { %>
-                    <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= thisTutorPreSchool.id %>">
-                      <span class="d-inline-block text-truncate">
-                        <%= thisTutorPreSchool.name %>
+                    <% var psWidth = "" %>
+                    <div class="list-group-item">
+                      <% var thisPreSchoolComment = allComments.find(function (comment) { %>
+                        <% return comment.preSchools.some(function (indivPS) { %>
+                          <% return indivPS.id === thisTutorPreSchool.id %>
+                        <% }) %>
+                      <% }) %>
+                      <% if (thisPreSchoolComment) { %>
+                        <% psWidth = "86%" %>
+                      <% } else { %>
+                        <% psWidth = "100%" %>
+                      <% } %>
+                      <span class="d-inline-block text-truncate" style="width: <%= psWidth %>;">
+                        <a href="/students/pre-school/<%= thisTutorPreSchool.id %>">
+                          <%= thisTutorPreSchool.name %>
+                        </a>
                       </span>
-                    </a>
+                      <% if (thisPreSchoolComment) { %>
+                        <span class="badge badge-pill float-right" style="cursor: pointer;">
+                          <a data-toggle="popover" tabindex="0" data-content="<a href='/comments/<%= thisPreSchoolComment.id %>'><%= thisPreSchoolComment.contents %></a>">
+                            <span class="badge badge-pill badge-info">
+                              ' '
+                            </span>
+                          </a>
+                        </span>
+                      <% } %>
+                    </div>
                   <% }) %>
                 </div>
               </div>
@@ -91,6 +113,7 @@
                   <% }) %>
                   <% thisTutorFitzroys.forEach(function (thisTutorFitzroy) { %>
                     <% var fBadgeStyle = "" %>
+                    <% var fMinWidth = "" %>
                     <% var thisFDate = thisTutorFitzroy.attendance.filter(function (indivAtten) { %>
                       <% return indivAtten.date.toString() === chosenSaturdate.toString() %>
                     <% })[0] %>
@@ -99,11 +122,31 @@
                     <% } else { %>
                       <% fBadgeStyle = "badge-success" %>
                     <% } %>
-                    <a class="list-group-item list-group-item-action justify-content-between" href="/students/fitzroy/<%= thisTutorFitzroy.id %>">
-                      <span class="d-inline-block text-truncate" style="max-width: 78%;">
-                        <%= thisTutorFitzroy.name %>
+                    <div class="list-group-item justify-content-between">
+                      <% var thisFitzroyComment = allComments.find(function (comment) { %>
+                        <% return comment.fitzroys.some(function (indivF) { %>
+                          <% return indivF.id === thisTutorFitzroy.id %>
+                        <% }) %>
+                      <% }) %>
+                      <% if (thisFitzroyComment) { %>
+                        <% fMinWidth = "60%" %>
+                      <% } else { %>
+                        <% fMinWidth = "85%" %>
+                      <% } %>
+                      <span class="d-inline-block text-truncate" style="min-width: <%= fMinWidth %>; max-width: 71%;">
+                        <a href="/students/fitzroy/<%= thisTutorFitzroy.id %>">
+                          <%= thisTutorFitzroy.name %>
+                        </a>
                       </span>
-                      &nbsp
+                      <% if (thisFitzroyComment) { %>
+                        <span class="badge badge-pill float-right" style="cursor: pointer;">
+                          <a data-toggle="popover" tabindex="0" data-content="<a href='/comments/<%= thisFitzroyComment.id %>'><%= thisFitzroyComment.contents %></a>">
+                            <span class="badge badge-pill badge-info">
+                              ' '
+                            </span>
+                          </a>
+                        </span>
+                      <% } %>
                       <span class="badge badge-pill float-right <%= fBadgeStyle %>">
                         <% if (thisFDate.book) { %>  
                           <%= fitzroyBookLevelPlusX(thisFDate.book) %>
@@ -111,7 +154,7 @@
                           Other
                         <% } %>
                       </span>
-                    </a>
+                    </div>
                   <% }) %>
                 </div>
               </div>
@@ -152,11 +195,33 @@
                     <% }) %>
                   <% }) %>
                   <% thisTutorPostFitzroys.forEach(function (thisTutorPostFitzroy) { %>
-                    <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= thisTutorPostFitzroy.id %>">
-                      <span class="d-inline-block text-truncate">
-                        <%= thisTutorPostFitzroy.name %>
+                    <% var pfWidth = "" %>
+                    <div class="list-group-item" >
+                      <% var thisPostFitzroyComment = allComments.find(function (comment) { %>
+                        <% return comment.postFitzroys.some(function (indivPF) { %>
+                          <% return indivPF.id === thisTutorPostFitzroy.id %>
+                        <% }) %>
+                      <% }) %>
+                      <% if (thisPostFitzroyComment) { %>
+                        <% pfWidth = "86%" %>
+                      <% } else { %>
+                        <% pfWidth = "100%" %>
+                      <% } %>
+                      <span class="d-inline-block text-truncate" style="width: <%= pfWidth %>;">
+                        <a href="/students/post-fitzroy/<%= thisTutorPostFitzroy.id %>">
+                          <%= thisTutorPostFitzroy.name %>
+                        </a>
                       </span>
-                    </a>
+                      <% if (thisPostFitzroyComment) { %>
+                        <span class="badge badge-pill float-right" style="cursor: pointer;">
+                          <a data-toggle="popover" tabindex="0" data-content="<a href='/comments/<%= thisPostFitzroyComment.id %>'><%= thisPostFitzroyComment.contents %></a>">
+                            <span class="badge badge-pill badge-info">
+                              ' '
+                            </span>
+                          </a>
+                        </span>
+                      <% } %>
+                    </div>
                   <% }) %>
                 </div>
               </div>
@@ -166,9 +231,9 @@
           <p>No students attended this session</p>
         <% } %>
       </div>
-    </div>      
-  </div>    
-</div>      
+    </div>
+  </div>
+</div>
 <div class="container mb-5">
   <div class="row">
     <div class="col-sm-6 offset-sm-3 text-center text-md-right">
