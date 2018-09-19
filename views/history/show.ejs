@@ -53,7 +53,7 @@
                         <% }) %>
                       <% }) %>
                       <% if (thisPreSchoolComment) { %>
-                        <% psWidth = "86%" %>
+                        <% psWidth = "85%" %>
                       <% } else { %>
                         <% psWidth = "100%" %>
                       <% } %>
@@ -130,10 +130,10 @@
                     <% var thisFDate = thisTutorFitzroy.attendance.filter(function (indivAtten) { %>
                       <% return indivAtten.date.toString() === chosenSaturdate.toString() %>
                     <% })[0] %>
-                    <% if (!thisFDate.completed) { %>
-                      <% fBadgeStyle = "badge-warning" %>
-                    <% } else { %>
+                    <% if (thisFDate.completed || !thisFDate.hasOwnProperty('completed')) { %>
                       <% fBadgeStyle = "badge-success" %>
+                    <% } else { %>
+                      <% fBadgeStyle = "badge-warning" %>
                     <% } %>
                     <div class="list-group-item justify-content-between">
                       <% var thisFitzroyComment = allComments.find(function (comment) { %>
@@ -144,7 +144,7 @@
                       <% if (thisFitzroyComment) { %>
                         <% fMinWidth = "60%" %>
                       <% } else { %>
-                        <% fMinWidth = "85%" %>
+                        <% fMinWidth = "80%" %>
                       <% } %>
                       <span class="d-inline-block text-truncate" style="min-width: <%= fMinWidth %>; max-width: 66%;">
                         <a href="/students/fitzroy/<%= thisTutorFitzroy.id %>">
@@ -216,7 +216,7 @@
                         <% }) %>
                       <% }) %>
                       <% if (thisPostFitzroyComment) { %>
-                        <% pfWidth = "86%" %>
+                        <% pfWidth = "85%" %>
                       <% } else { %>
                         <% pfWidth = "100%" %>
                       <% } %>
