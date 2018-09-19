@@ -130,10 +130,10 @@
                     <% var thisFDate = thisTutorFitzroy.attendance.filter(function (indivAtten) { %>
                       <% return indivAtten.date.toString() === chosenSaturdate.toString() %>
                     <% })[0] %>
-                    <% if (!thisFDate.completed) { %>
-                      <% fBadgeStyle = "badge-warning" %>
-                    <% } else { %>
+                    <% if (thisFDate.completed || !thisFDate.hasOwnProperty('completed')) { %>
                       <% fBadgeStyle = "badge-success" %>
+                    <% } else { %>
+                      <% fBadgeStyle = "badge-warning" %>
                     <% } %>
                     <div class="list-group-item justify-content-between">
                       <% var thisFitzroyComment = allComments.find(function (comment) { %>

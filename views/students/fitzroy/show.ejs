@@ -156,7 +156,7 @@
                         var bookDiv = document.createElement('div')
                         bookDiv.setAttribute('style', 'flex-grow: 1;')
                         var bookBadge = document.createElement('span')
-                        bookBadge.classList.add('badge', 'badge-pill', !indivAttendance.completed ? 'badge-warning' : 'badge-success' )
+                        bookBadge.classList.add('badge', 'badge-pill', indivAttendance.completed || !indivAttendance.hasOwnProperty('completed') ? 'badge-success' : 'badge-warning' )
                         bookBadge.appendChild(document.createTextNode(indivAttendance.book === 0 ? 'Other' : `Book ${fitzroyBookLevelPlusX(indivAttendance.book)}`))
                         bookDiv.appendChild(bookBadge)
                         listGroupItem.appendChild(bookDiv)
@@ -220,7 +220,7 @@
                         var dateA = document.createElement('a')
                         dateA.setAttribute('href', `/history/${indivAttendance.date._id}`)
                         var dateBadge = document.createElement('span')
-                        dateBadge.classList.add('badge', 'badge-pill', !indivAttendance.completed ? 'badge-warning' : 'badge-success' )
+                        dateBadge.classList.add('badge', 'badge-pill', indivAttendance.completed || !indivAttendance.hasOwnProperty('completed') ? 'badge-success' : 'badge-warning' )
                         dateBadge.appendChild(document.createTextNode(formatDateShort(indivAttendance.date.date)))
                         dateA.appendChild(dateBadge)
                         dateDiv.appendChild(dateA)
@@ -296,7 +296,7 @@
                         var bookDiv = document.createElement('div')
                         bookDiv.setAttribute('style', 'flex-grow: 1;')
                         var bookBadge = document.createElement('span')
-                        bookBadge.classList.add('badge', 'badge-pill', !indivAttendance.completed ? 'badge-warning' : 'badge-success' )
+                        bookBadge.classList.add('badge', 'badge-pill', indivAttendance.completed || !indivAttendance.hasOwnProperty('completed') ? 'badge-success' : 'badge-warning' )
                         bookBadge.appendChild(document.createTextNode(indivAttendance.book === 0 ? 'Other' : `Book ${fitzroyBookLevelPlusX(indivAttendance.book)}`))
                         bookDiv.appendChild(bookBadge)
                         listGroupItem.appendChild(bookDiv)
@@ -381,10 +381,10 @@
                     <% return dateAttendance.date.date === indivDate.date %>
                   <% }).forEach(function (indivAttendance) { %>
                     <div class="list-group-item justify-content-start">
-                      <% if (!indivAttendance.completed) { %>
-                        <% badgeStyle = "badge-warning" %>
-                      <% } else { %>
+                      <% if (indivAttendance.completed || !indivAttendance.hasOwnProperty('completed')) { %>
                         <% badgeStyle = "badge-success" %>
+                      <% } else { %>
+                        <% badgeStyle = "badge-warning" %>
                       <% } %>
                       <div style="flex-grow: 1;">
                         <span class="badge badge-pill <%= badgeStyle %>">
