@@ -23,6 +23,16 @@
           <% if (allPreSchools.length > 0) { %>
             <a href="/students/pre-school"><h4 class="mt-5 mb-4">pre-school</h4></a>
             <div class="list-group">
+              <a data-toggle="popover" tabindex="0" data-content="Please click &quot;Submit&quot; below to update this count!" class="list-group-item list-group-item-action list-group-item-info flex-nowrap" style="cursor: pointer;">
+                <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
+                  Attendance
+                </span>
+                <span class="mr-2" style="flex-shrink: 0;">
+                  <%= allPreSchools.filter(function (preSchool) {
+                    return preSchool.attending
+                  }).length %> / <%= allPreSchools.length %>
+                </span>
+              </a>
               <% allPreSchools.forEach(function (preSchool) { %>
                 <div class="list-group-item flex-nowrap">
                   <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
@@ -59,6 +69,16 @@
           <% if (allFitzroys.length > 0) { %>
             <a href="/students/fitzroy"><h4 class="mt-5 mb-4">fitzroy</h4></a>
             <div class="list-group">
+              <a data-toggle="popover" tabindex="0" data-content="Please click &quot;Submit&quot; below to update this count!" class="list-group-item list-group-item-action list-group-item-info flex-nowrap" style="cursor: pointer;"">
+                <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
+                  Attendance
+                </span>
+                <span class="mr-2" style="flex-shrink: 0;">
+                  <%= allFitzroys.filter(function (fitzroy) {
+                    return fitzroy.attending
+                  }).length %> / <%= allFitzroys.length %>
+                </span>
+              </a>
               <% allFitzroys.forEach(function (fitzroy) { %>
                 <div class="list-group-item flex-nowrap">
                   <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
@@ -95,6 +115,16 @@
           <% if (allPostFitzroys.length > 0) { %>
             <a href="/students/post-fitzroy"><h4 class="mt-5 mb-4">post-fitzroy</h4></a>
             <div class="list-group">
+              <a data-toggle="popover" tabindex="0" data-content="Please click &quot;Submit&quot; below to update this count!" class="list-group-item list-group-item-action list-group-item-info flex-nowrap" style="cursor: pointer;">
+                <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
+                  Attendance
+                </span>
+                <span class="mr-2" style="flex-shrink: 0;">
+                  <%= allPostFitzroys.filter(function (postFitzroy) {
+                    return postFitzroy.attending
+                  }).length %> / <%= allPostFitzroys.length %>
+                </span>
+              </a>
               <% allPostFitzroys.forEach(function (postFitzroy) { %>
                 <div class="list-group-item flex-nowrap">
                   <span class="d-inline-block text-truncate mr-1" style="flex-grow: 1;">
