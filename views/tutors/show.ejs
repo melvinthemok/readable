@@ -97,7 +97,20 @@
       <% } else { %>
         <p>No sessions yet</p>
       <% } %>
-      <a href="/students/fitzroy"><h4 class="mt-5 mb-4">fitzroy</h4></a>
+      <div class="mt-5 mb-2 d-flex flex-wrap justify-content-between">
+        <a href="/students/fitzroy"><h4 class="mb-2 mr-2">fitzroy</h4></a>
+        <% if (allTutoredFitzroys.length > 0) { %>
+          <div class="d-flex mb-3 justify-content-lg-end align-items-center" style="width: 21rem;">
+            Book legend:
+            <span class="badge badge-pill badge-success ml-2">
+              Completed
+            </span>
+            <span class="badge badge-pill badge-warning ml-2">
+              Not completed
+            </span>
+          </div>
+        <% } %>
+      </div>
       <% if (allPreferringFitzroys.length > 0) { %>
         <p>
           <% var fPreferred = allPreferringFitzroys.filter(function (fitzroy) { %>
