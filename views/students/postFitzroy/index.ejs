@@ -12,7 +12,16 @@
 <div class="container my-5">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <a href="/students/post-fitzroy/new"><button class="btn btn-primary" type="button" style="cursor:pointer;">Sign up a new student</button></a>
+      <div class="d-flex flex-column flex-md-row">
+        <a href="/students/post-fitzroy/new" class="btn btn-primary my-2 mx-2">Sign up a new student</a>
+        <%
+          var isAdmin = ""
+          if (currentUser && !currentUser.admin) {
+            isAdmin = "display: none; visibility: hidden;"
+          }
+        %>
+        <a href="/students/post-fitzroy/archived" class="btn btn-primary my-2 mx-2" style="<%= isAdmin %>">Archived students</a>
+      </div>
     </div>
   </div>
 </div>

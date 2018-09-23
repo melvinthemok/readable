@@ -10,6 +10,7 @@ router.get('/attendance', studentController.attendance.edit)
 router.put('/attendance', isAdminOrCatchPlus, studentController.attendance.update)
 
 router.get('/pre-school', studentController.preSchool.index)
+router.get('/pre-school/archived', studentController.preSchool.indexArchived)
 router.get('/pre-school/new', isAdminOrCatchPlus, studentController.preSchool.new)
 router.get('/pre-school/:id', studentController.preSchool.show)
 router.get('/pre-school/edit/:id', studentController.preSchool.edit)
@@ -19,6 +20,7 @@ router.put('/pre-school/update/:id', isTutor, studentController.preSchool.update
 router.put('/pre-school/attend/:id', isTutor, studentController.preSchool.createAttend)
 
 router.get('/fitzroy', studentController.fitzroy.index)
+router.get('/fitzroy/archived', studentController.fitzroy.indexArchived)
 router.get('/fitzroy/new', isAdminOrCatchPlus, studentController.fitzroy.new)
 router.get('/fitzroy/:id', studentController.fitzroy.show)
 router.get('/fitzroy/edit/:id', studentController.fitzroy.edit)
@@ -28,6 +30,7 @@ router.put('/fitzroy/update/:id', isTutor, studentController.fitzroy.update)
 router.put('/fitzroy/attend/:id', isTutor, studentController.fitzroy.createAttend)
 
 router.get('/post-fitzroy', studentController.postFitzroy.index)
+router.get('/post-fitzroy/archived', studentController.postFitzroy.indexArchived)
 router.get('/post-fitzroy/new', isAdminOrCatchPlus, studentController.postFitzroy.new)
 router.get('/post-fitzroy/:id', studentController.postFitzroy.show)
 router.get('/post-fitzroy/edit/:id', studentController.postFitzroy.edit)

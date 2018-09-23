@@ -1,0 +1,39 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">fitzroy</h2>
+        <hr class="my-4">
+        <p>archived</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <div class="d-flex flex-column flex-md-row">
+        <a href="/students/fitzroy/" class="btn btn-primary my-2 mx-2">Active students</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <% if (allFitzroys.length > 0) { %>
+        <div class="list-group">
+          <% allFitzroys.forEach(function (fitzroy) { %>
+            <a class="list-group-item list-group-item-action" href="/students/fitzroy/<%= fitzroy.id %>">
+              <span class="d-inline-lock text-truncate">
+                <%= fitzroy.name %>
+              </span>
+            </a>
+          <% }) %>
+        </div>
+      <% } else { %>
+        No archived students yet
+      <% } %>
+    </div>
+  </div>
+</div>
