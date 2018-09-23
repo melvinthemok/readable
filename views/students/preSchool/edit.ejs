@@ -234,9 +234,9 @@
           <div class="form-check">
             <label class="form-check-label">
               <% if (!chosenPreSchool.oneOnOne) { %>
-                <input checked class="form-check-input mr-1" type="radio" name="oneOnOne" value="false" checked>
+                <input checked class="form-check-input mr-1" type="radio" name="oneOnOne" value="false">
               <% } else { %>
-                <input class="form-check-input mr-1" type="radio" name="oneOnOne" value="false" checked>
+                <input class="form-check-input mr-1" type="radio" name="oneOnOne" value="false">
               <% } %>
               No
             </label>
@@ -257,9 +257,9 @@
           <div class="form-check">
             <label class="form-check-label">
               <% if (!chosenPreSchool.intervention) { %>
-                <input checked class="form-check-input mr-1" type="radio" name="intervention" value="false" checked>
+                <input checked class="form-check-input mr-1" type="radio" name="intervention" value="false">
               <% } else { %>
-                <input class="form-check-input mr-1" type="radio" name="intervention" value="false" checked>
+                <input class="form-check-input mr-1" type="radio" name="intervention" value="false">
               <% } %>
               No
             </label>
@@ -310,6 +310,35 @@
           <% }) %>
         </div>
         <% } %>
+        <%
+          var isAdmin = ""
+          if (currentUser && !currentUser.admin) {
+            isAdmin = "display: none; visibility: hidden;"
+          }
+        %>
+        <div class="form-group required-group" style="<%= isAdmin %>">
+          <label for="archived">Is this student active or archived?</label><br>
+          <div class="form-check">
+            <label class="form-check-label">
+              <% if (!chosenPreSchool.archived) { %>
+                <input checked class="form-check-input mr-1" type="radio" name="archived" value="false">
+              <% } else { %>
+                <input class="form-check-input mr-1" type="radio" name="archived" value="false">
+              <% } %>
+              Active
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <% if (chosenPreSchool.archived) { %>
+                <input checked class="form-check-input mr-1" type="radio" name="archived" value="true">
+              <% } else { %>
+                <input class="form-check-input mr-1" type="radio" name="archived" value="true">
+              <% } %>
+              Archived
+            </label>
+          </div>
+        </div>
       </form>
     </div>
   </div>

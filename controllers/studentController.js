@@ -244,6 +244,7 @@ var studentController = {
               return obj
             })
             : []
+        chosenPreSchool.archived = req.body.archived
         chosenPreSchool.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -639,6 +640,7 @@ var studentController = {
               return obj
             })
             : []
+        chosenFitzroy.archived = req.body.archived
         chosenFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -1001,6 +1003,7 @@ var studentController = {
               return obj
             })
             : []
+        chosenPostFitzroy.archived = req.body.archived
         chosenPostFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
