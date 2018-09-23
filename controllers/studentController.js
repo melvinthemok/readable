@@ -21,14 +21,34 @@ var studentController = {
   },
 
   preSchool: {
-    
+
     index: function (req, res) {
-      PreSchool.find({}, function (err, allPreSchools) {
+      PreSchool.find({
+        $or: [
+          { archived: { $exists: false } },
+          { archived: false }
+        ]
+      }, function (err, allPreSchools) {
         if (err) {
           req.flash('error', err.toString())
           res.redirect('/students')
         } else {
           res.render('students/preSchool/index', {
+            allPreSchools: sortByProperty(allPreSchools, 'name')
+          })
+        }
+      })
+    },
+
+    indexArchived: function (req, res) {
+      PreSchool.find({
+        archived: true
+      }, function (err, allPreSchools) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students')
+        } else {
+          res.render('students/preSchool/index-archived', {
             allPreSchools: sortByProperty(allPreSchools, 'name')
           })
         }
@@ -244,6 +264,7 @@ var studentController = {
               return obj
             })
             : []
+        chosenPreSchool.archived = req.body.archived
         chosenPreSchool.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -380,12 +401,32 @@ var studentController = {
   fitzroy: {
 
     index: function (req, res) {
-      Fitzroy.find({}, function (err, allFitzroys) {
+      Fitzroy.find({
+        $or: [
+          { archived: { $exists: false } },
+          { archived: false }
+        ]
+      }, function (err, allFitzroys) {
         if (err) {
           req.flash('error', err.toString())
           res.redirect('/students')
         } else {
           res.render('students/fitzroy/index', {
+            allFitzroys: sortByProperty(allFitzroys, 'name')
+          })
+        }
+      })
+    },
+
+    indexArchived: function (req, res) {
+      Fitzroy.find({
+        archived: true
+      }, function (err, allFitzroys) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students')
+        } else {
+          res.render('students/fitzroy/index-archived', {
             allFitzroys: sortByProperty(allFitzroys, 'name')
           })
         }
@@ -639,6 +680,7 @@ var studentController = {
               return obj
             })
             : []
+        chosenFitzroy.archived = req.body.archived
         chosenFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -776,14 +818,34 @@ var studentController = {
   },
 
   postFitzroy: {
-    
+
     index: function (req, res) {
-      PostFitzroy.find({}, function (err, allPostFitzroys) {
+      PostFitzroy.find({
+        $or: [
+          { archived: { $exists: false } },
+          { archived: false }
+        ]
+      }, function (err, allPostFitzroys) {
         if (err) {
           req.flash('error', err.toString())
           res.redirect('/students')
         } else {
           res.render('students/postFitzroy/index', {
+            allPostFitzroys: sortByProperty(allPostFitzroys, 'name')
+          })
+        }
+      })
+    },
+
+    indexArchived: function (req, res) {
+      PostFitzroy.find({
+        archived: true
+      }, function (err, allPostFitzroys) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students')
+        } else {
+          res.render('students/postFitzroy/index-archived', {
             allPostFitzroys: sortByProperty(allPostFitzroys, 'name')
           })
         }
@@ -1001,6 +1063,7 @@ var studentController = {
               return obj
             })
             : []
+        chosenPostFitzroy.archived = req.body.archived
         chosenPostFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -1137,17 +1200,32 @@ var studentController = {
   attendance: {
 
     edit: function (req, res) {
-      PreSchool.find({}, function (err, allPreSchools) {
+      PreSchool.find({
+        $or: [
+          { archived: { $exists: false } },
+          { archived: false }
+        ]
+      }, function (err, allPreSchools) {
         if (err) {
           req.flash('error', err.toString())
           res.redirect('/index')
         } else {
-          Fitzroy.find({}, function (err, allFitzroys) {
+          Fitzroy.find({
+            $or: [
+              { archived: { $exists: false } },
+              { archived: false }
+            ]
+          }, function (err, allFitzroys) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/index')
             } else {
-              PostFitzroy.find({}, function (err, allPostFitzroys) {
+              PostFitzroy.find({
+                $or: [
+                  { archived: { $exists: false } },
+                  { archived: false }
+                ]
+              }, function (err, allPostFitzroys) {
                 if (err) {
                   req.flash('error', err.toString())
                   res.redirect('/index')
@@ -1191,8 +1269,7 @@ var studentController = {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/attendance')
-            }
-            else {
+            } else {
               chosenPreSchool.attending = preSchools[preSchoolId]
               chosenPreSchool.save(function(err) {
                 if (err) {
@@ -1214,8 +1291,7 @@ var studentController = {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/attendance')
-            }
-            else {
+            } else {
               chosenFitzroy.attending = fitzroys[fitzroyId]
               chosenFitzroy.save(function(err) {
                 if (err) {
@@ -1237,8 +1313,7 @@ var studentController = {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/attendance')
-            }
-            else {
+            } else {
               postFitzroy.attending = postFitzroys[postFitzroyId]
               postFitzroy.save(function(err) {
                 if (err) {

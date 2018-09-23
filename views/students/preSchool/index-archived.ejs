@@ -1,0 +1,39 @@
+<div class="jumbotron" style="background-color:#d9edf7">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h2 class="display-4">pre-school</h2>
+        <hr class="my-4">
+        <p>archived</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <div class="d-flex flex-column flex-md-row">
+        <a href="/students/pre-school/" class="btn btn-primary my-2 mx-2">Active students</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <% if (allPreSchools.length > 0) { %>
+        <div class="list-group">
+          <% allPreSchools.forEach(function (preSchool) { %>
+            <a class="list-group-item list-group-item-action" href="/students/pre-school/<%= preSchool.id %>">
+              <span class="d-inline-block text-truncate">
+                <%= preSchool.name %>
+              </span>
+            </a>
+          <% }) %>
+        </div>
+      <% } else { %>
+        No archived students yet
+      <% } %>
+    </div>
+  </div>
+</div>
