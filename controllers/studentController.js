@@ -1200,17 +1200,32 @@ var studentController = {
   attendance: {
 
     edit: function (req, res) {
-      PreSchool.find({}, function (err, allPreSchools) {
+      PreSchool.find({
+        $or: [
+          { archived: { $exists: false } },
+          { archived: false }
+        ]
+      }, function (err, allPreSchools) {
         if (err) {
           req.flash('error', err.toString())
           res.redirect('/index')
         } else {
-          Fitzroy.find({}, function (err, allFitzroys) {
+          Fitzroy.find({
+            $or: [
+              { archived: { $exists: false } },
+              { archived: false }
+            ]
+          }, function (err, allFitzroys) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/index')
             } else {
-              PostFitzroy.find({}, function (err, allPostFitzroys) {
+              PostFitzroy.find({
+                $or: [
+                  { archived: { $exists: false } },
+                  { archived: false }
+                ]
+              }, function (err, allPostFitzroys) {
                 if (err) {
                   req.flash('error', err.toString())
                   res.redirect('/index')
@@ -1254,8 +1269,7 @@ var studentController = {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/attendance')
-            }
-            else {
+            } else {
               chosenPreSchool.attending = preSchools[preSchoolId]
               chosenPreSchool.save(function(err) {
                 if (err) {
@@ -1277,8 +1291,7 @@ var studentController = {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/attendance')
-            }
-            else {
+            } else {
               chosenFitzroy.attending = fitzroys[fitzroyId]
               chosenFitzroy.save(function(err) {
                 if (err) {
@@ -1300,8 +1313,7 @@ var studentController = {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/attendance')
-            }
-            else {
+            } else {
               postFitzroy.attending = postFitzroys[postFitzroyId]
               postFitzroy.save(function(err) {
                 if (err) {
