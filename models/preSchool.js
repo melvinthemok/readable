@@ -116,6 +116,11 @@ var PreSchoolSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
     required: true
+  },
+  archived: {
+    type: Boolean,
+    default: false,
+    required: true
   }
 })
 
