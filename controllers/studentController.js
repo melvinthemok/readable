@@ -115,7 +115,12 @@ var studentController = {
           req.flash('error', err.toString())
           res.redirect('/students/pre-school')
         } else {
-          PreSchool.find({}, function (err, allPreSchools) {
+          PreSchool.find({
+            $or: [
+              { archived: { $exists: false } },
+              { archived: false }
+            ]
+          }, function (err, allPreSchools) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/pre-school')
@@ -493,7 +498,12 @@ var studentController = {
           req.flash('error', err.toString())
           res.redirect('/students/fitzroy')
         } else {
-          Fitzroy.find({}, function (err, allFitzroys) {
+          Fitzroy.find({
+            $or: [
+              { archived: { $exists: false } },
+              { archived: false }
+            ]
+          }, function (err, allFitzroys) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/fitzroy')
@@ -912,7 +922,12 @@ var studentController = {
           req.flash('error', err.toString())
           res.redirect('/students/post-fitzroy')
         } else {
-          PostFitzroy.find({}, function (err, allPostFitzroys) {
+          PostFitzroy.find({
+            $or: [
+              { archived: { $exists: false } },
+              { archived: false }
+            ]
+          }, function (err, allPostFitzroys) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/students/post-fitzroy')
