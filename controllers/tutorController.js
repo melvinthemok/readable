@@ -227,7 +227,12 @@ var tutorController = {
 
   attendance: {
     index: function (req, res) {
-      Tutor.find({})
+      Tutor.find({
+        $or: [
+          { archived: { $exists: false } },
+          { archived: false }
+        ]
+      })
         .populate({
           path: 'attendance.date',
           model: 'Saturdate'
