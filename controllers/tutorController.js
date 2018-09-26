@@ -165,14 +165,18 @@ var tutorController = {
     })
   },
 
-  delete: function (req, res) {
-    Tutor.findByIdAndRemove(req.params.id, function (err, chosenTutor) {
+  archive: function (req, res) {
+    Tutor.update({
+      _id: req.params.id
+    }, {
+      archived: req.body.archived
+    }, function (err) {
       if (err) {
         req.flash('error', err.toString())
-        res.redirect('/tutors')
+        res.redirect('/tutors/' + req.params.id)
       } else {
-        req.flash('success', chosenTutor.name + ' successfully deleted!')
-        res.redirect('/tutors')
+        req.flash('success', 'Tutor\'s status successfully updated')
+        res.redirect('/tutors/' + req.params.id)
       }
     })
   },
