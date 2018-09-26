@@ -6,6 +6,7 @@ var isAdmin = require('../middleware/isAdmin')
 var tutorController = require('../controllers/tutorController')
 
 router.get('/', tutorController.index)
+router.get('/archived', tutorController.indexArchived)
 router.get('/attendance', tutorController.attendance.index)
 
 router.get('/:id', tutorController.show)

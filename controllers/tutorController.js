@@ -13,7 +13,12 @@ var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
 
 var tutorController = {
   index: function (req, res) {
-    Tutor.find({}, function (err, allTutors) {
+    Tutor.find({
+      $or: [
+        { archived: { $exists: false } },
+        { archived: false }
+      ]
+    }, function (err, allTutors) {
       if (err) {
         req.flash('error', err.toString())
         res.redirect('/index')
@@ -34,6 +39,45 @@ var tutorController = {
                     res.redirect('/index')
                   } else {
                     res.render('tutors/index', {
+                      fitzroyTutors: fitzroyTutors,
+                      preSchoolTutors: preSchoolTutors,
+                      postFitzroyTutors: postFitzroyTutors,
+                      allTutors: sortByProperty(allTutors, 'name')
+                    })
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+    })
+  },
+
+  indexArchived: function (req, res) {
+    Tutor.find({
+      archived: true
+    }, function (err, allTutors) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/index')
+      } else {
+        Fitzroy.distinct('attendance.tutor', function (err, fitzroyTutors) {
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/index')
+          } else {
+            PreSchool.distinct('attendance.tutor', function (err, preSchoolTutors) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/index')
+              } else {
+                PostFitzroy.distinct('attendance.tutor', function (err, postFitzroyTutors) {
+                  if (err) {
+                    req.flash('error', err.toString())
+                    res.redirect('/index')
+                  } else {
+                    res.render('tutors/index-archived', {
                       fitzroyTutors: fitzroyTutors,
                       preSchoolTutors: preSchoolTutors,
                       postFitzroyTutors: postFitzroyTutors,
