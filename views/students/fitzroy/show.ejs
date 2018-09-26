@@ -502,10 +502,10 @@
 
 <%
   var javaScriptFiles = [
-    'studentArchiveCheck',
-    'studentDeleteCheck'
+    'targetArchiveCheck',
+    'targetDeleteCheck'
   ]
   javaScriptFiles.forEach(function (file) {
 %>
-<script id="<%= file %>" data-student-name="<%= chosenFitzroy.name %>" type="text/javascript" src="/client_side_helpers/<%= file %>.js"></script>
+<script id="<%= file %>" data-target-name="<%= chosenFitzroy.name %>" type="text/javascript" src="/client_side_helpers/<%= file %>.js"></script>
 <%  })  %>

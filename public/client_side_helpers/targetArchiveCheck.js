@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   var archiveCheck = document.getElementById('archiveCheck')
-  var name = document.getElementById('studentArchiveCheck').getAttribute('data-student-name')
+  var name = document.getElementById('targetArchiveCheck').getAttribute('data-target-name')
   var archiveButton = document.getElementById('archiveButton')
 
   var checkAndToggleArchiveButton = function () {

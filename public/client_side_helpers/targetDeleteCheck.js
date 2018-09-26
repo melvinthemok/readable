@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   var deleteCheck = document.getElementById('deleteCheck')
-  var name = document.getElementById('studentDeleteCheck').getAttribute('data-student-name')
+  var name = document.getElementById('targetDeleteCheck').getAttribute('data-target-name')
   var deleteButton = document.getElementById('deleteButton')
 
   var checkAndToggleDeleteButton = function () {
