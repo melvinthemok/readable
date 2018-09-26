@@ -206,7 +206,7 @@ var commentController = {
   },
 
   delete: function (req, res) {
-    Comment.findByIdAndRemove(req.params.id, function (err, chosenComment) {
+    Comment.findByIdAndRemove(req.params.id, function (err) {
       if (err) {
         req.flash('error', err.toString())
         res.redirect('/comments')

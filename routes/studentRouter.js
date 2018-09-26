@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var isAdminOrCatchPlus = require('../middleware/isAdminOrCatchPlus')
 var isTutor = require('../middleware/isTutor')
+var isAdmin = require('../middleware/isAdmin')
 var studentController = require('../controllers/studentController')
 
 router.get('/', studentController.index)
@@ -18,6 +19,7 @@ router.get('/pre-school/attend/:id', isTutor, studentController.preSchool.newAtt
 router.post('/pre-school', isAdminOrCatchPlus, studentController.preSchool.create)
 router.put('/pre-school/update/:id', isTutor, studentController.preSchool.update)
 router.put('/pre-school/attend/:id', isTutor, studentController.preSchool.createAttend)
+router.delete('/pre-school/:id', isAdmin, studentController.preSchool.delete)
 
 router.get('/fitzroy', studentController.fitzroy.index)
 router.get('/fitzroy/archived', studentController.fitzroy.indexArchived)
@@ -28,6 +30,7 @@ router.get('/fitzroy/attend/:id', isTutor, studentController.fitzroy.newAttend)
 router.post('/fitzroy', isAdminOrCatchPlus, studentController.fitzroy.create)
 router.put('/fitzroy/update/:id', isTutor, studentController.fitzroy.update)
 router.put('/fitzroy/attend/:id', isTutor, studentController.fitzroy.createAttend)
+router.delete('/fitzroy/:id', isAdmin, studentController.fitzroy.delete)
 
 router.get('/post-fitzroy', studentController.postFitzroy.index)
 router.get('/post-fitzroy/archived', studentController.postFitzroy.indexArchived)
@@ -38,5 +41,6 @@ router.get('/post-fitzroy/attend/:id', isTutor, studentController.postFitzroy.ne
 router.post('/post-fitzroy', isAdminOrCatchPlus, studentController.postFitzroy.create)
 router.put('/post-fitzroy/update/:id', isTutor, studentController.postFitzroy.update)
 router.put('/post-fitzroy/attend/:id', isTutor, studentController.postFitzroy.createAttend)
+router.delete('/post-fitzroy/:id', isAdmin, studentController.postFitzroy.delete)
 
 module.exports = router

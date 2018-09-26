@@ -304,6 +304,56 @@ var studentController = {
       })
     },
 
+    delete: function (req, res) {
+      PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/pre-school/')
+        } else {
+          PreSchool.update(
+            { _id: { $in: chosenPreSchool.kidsToAvoid }},
+            { $pull: { kidsToAvoid: chosenPreSchool.id }},
+            { multi: true },
+            function (err) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/students/pre-school/')
+              } else {
+                Comment.update(
+                  { preSchools: { $elemMatch: { $eq: chosenPreSchool.id }}},
+                  { $pull: { preSchools: chosenPreSchool.id }},
+                  { multi: true },
+                  function (err) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/pre-school/')
+                    } else {
+                      Comment.remove({ preSchools: { $exists: true, $eq: [] }}, function (err) {
+                        if (err) {
+                          req.flash('error', err.toString())
+                          res.redirect('/students/pre-school/')
+                        } else {
+                          PreSchool.findByIdAndRemove(chosenPreSchool.id, function (err, chosenPreSchool) {
+                            if (err) {
+                              req.flash('error', err.toString())
+                              res.redirect('/students/pre-school/')
+                            } else {
+                              req.flash('success', chosenPreSchool.name + ' successfully removed')
+                              res.redirect('/students/pre-school/')
+                            }
+                          })
+                        }
+                      })
+                    }
+                  }
+                )
+              }
+            }
+          )
+        }
+      })
+    },
+
     newAttend: function (req, res) {
       PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
         if (err) {
@@ -725,6 +775,56 @@ var studentController = {
       })
     },
 
+    delete: function (req, res) {
+      Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/fitzroy/')
+        } else {
+          Fitzroy.update(
+            { _id: { $in: chosenFitzroy.kidsToAvoid }},
+            { $pull: { kidsToAvoid: chosenFitzroy.id }},
+            { multi: true },
+            function (err) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/students/fitzroy/')
+              } else {
+                Comment.update(
+                  { fitzroys: { $elemMatch: { $eq: chosenFitzroy.id }}},
+                  { $pull: { fitzroys: chosenFitzroy.id }},
+                  { multi: true },
+                  function (err) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/fitzroy/')
+                    } else {
+                      Comment.remove({ fitzroys: { $exists: true, $eq: [] }}, function (err) {
+                        if (err) {
+                          req.flash('error', err.toString())
+                          res.redirect('/students/fitzroy/')
+                        } else {
+                          Fitzroy.findByIdAndRemove(chosenFitzroy.id, function (err, chosenFitzroy) {
+                            if (err) {
+                              req.flash('error', err.toString())
+                              res.redirect('/students/fitzroy/')
+                            } else {
+                              req.flash('success', chosenFitzroy.name + ' successfully removed')
+                              res.redirect('/students/fitzroy/')
+                            }
+                          })
+                        }
+                      })
+                    }
+                  }
+                )
+              }
+            }
+          )
+        }
+      })
+    },
+
     newAttend: function (req, res) {
       Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
         if (err) {
@@ -1110,6 +1210,56 @@ var studentController = {
             }
           }
         )
+      })
+    },
+
+    delete: function (req, res) {
+      PostFitzroy.findById(req.params.id, function (err, chosenPostFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/post-fitzroy/')
+        } else {
+          PostFitzroy.update(
+            { _id: { $in: chosenPostFitzroy.kidsToAvoid }},
+            { $pull: { kidsToAvoid: chosenPostFitzroy.id }},
+            { multi: true },
+            function (err) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/students/post-fitzroy/')
+              } else {
+                Comment.update(
+                  { postFitzroys: { $elemMatch: { $eq: chosenPostFitzroy.id }}},
+                  { $pull: { postFitzroys: chosenPostFitzroy.id }},
+                  { multi: true },
+                  function (err) {
+                    if (err) {
+                      req.flash('error', err.toString())
+                      res.redirect('/students/post-fitzroy/')
+                    } else {
+                      Comment.remove({ postFitzroys: { $exists: true, $eq: [] }}, function (err) {
+                        if (err) {
+                          req.flash('error', err.toString())
+                          res.redirect('/students/post-fitzroy/')
+                        } else {
+                          PostFitzroy.findByIdAndRemove(chosenPostFitzroy.id, function (err, chosenPostFitzroy) {
+                            if (err) {
+                              req.flash('error', err.toString())
+                              res.redirect('/students/post-fitzroy/')
+                            } else {
+                              req.flash('success', chosenPostFitzroy.name + ' successfully removed')
+                              res.redirect('/students/post-fitzroy/')
+                            }
+                          })
+                        }
+                      })
+                    }
+                  }
+                )
+              }
+            }
+          )
+        }
       })
     },
 
