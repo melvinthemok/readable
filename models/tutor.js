@@ -128,7 +128,12 @@ var TutorSchema = new mongoose.Schema({
         ]
       }
     }
-  ]
+  ],
+  archived: {
+    type: Boolean,
+    default: false,
+    required: true
+  }
 })
 
 TutorSchema.pre('save', function (next) {

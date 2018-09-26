@@ -28,63 +28,63 @@
 <div class="container mb-5">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          var filter = document.getElementById('filter')
-          var filterResult = document.getElementById('filter-result')
-          var all = <%- JSON.stringify(allPostFitzroys) %>
-          var result
-          if (document.getElementById('filter')) {
-            filter.addEventListener('change', function () {
-              if (this.value === 'all') {
-                result = all
-              } else if (this.value === 'oneOnOne') {
-                result = all.filter(function (postFitzroy) {
-                  return postFitzroy.oneOnOne
+      <% if (allPostFitzroys.length > 0) { %>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var filter = document.getElementById('filter')
+            var filterResult = document.getElementById('filter-result')
+            var all = <%- JSON.stringify(allPostFitzroys) %>
+            var result
+            if (document.getElementById('filter')) {
+              filter.addEventListener('change', function () {
+                if (this.value === 'all') {
+                  result = all
+                } else if (this.value === 'oneOnOne') {
+                  result = all.filter(function (postFitzroy) {
+                    return postFitzroy.oneOnOne
+                  })
+                } else if (this.value === 'intervention') {
+                  result = all.filter(function(postFitzroy) {
+                    return postFitzroy.intervention
+                  })
+                }
+                filterResult.innerHTML = ''
+                result.forEach(function (postFitzroy) {
+                  var a = document.createElement('a')
+                  a.classList.add('list-group-item', 'list-group-item-action')
+                  a.href = '/students/post-fitzroy/' + postFitzroy._id
+                  a.appendChild(document.createTextNode(postFitzroy.name))
+                  filterResult.appendChild(a)
                 })
-              } else if (this.value === 'intervention') {
-                result = all.filter(function(postFitzroy) {
-                  return postFitzroy.intervention
-                })
-              }
-              filterResult.innerHTML = ''
-              result.forEach(function (postFitzroy) {
-                var a = document.createElement('a')
-                a.classList.add('list-group-item', 'list-group-item-action')
-                a.href = '/students/post-fitzroy/' + postFitzroy._id
-                a.appendChild(document.createTextNode(postFitzroy.name))
-                filterResult.appendChild(a)
               })
-            })
-          }
-        })
-      </script>
-      <% if (allPostFitzroys.length > 0) { %>
-      <select id="filter" class="custom-select mb-2">
-        <option value="all" selected>All students</option>
-        <% if (allPostFitzroys.some(function (postFitzroy) {
-          return postFitzroy.oneOnOne
-        })) { %>
-          <option value="oneOnOne">One-on-one attention</option>
-        <% } %>
-        <% if (allPostFitzroys.some(function (postFitzroy) {
-          return postFitzroy.intervention
-        })) { %>
-          <option value="intervention">Intervention owing to absenteeism</option>
-        <% } %>
-      </select>
+            }
+          })
+        </script>
+        <select id="filter" class="custom-select mb-2">
+          <option value="all" selected>All students</option>
+          <% if (allPostFitzroys.some(function (postFitzroy) {
+            return postFitzroy.oneOnOne
+          })) { %>
+            <option value="oneOnOne">One-on-one attention</option>
+          <% } %>
+          <% if (allPostFitzroys.some(function (postFitzroy) {
+            return postFitzroy.intervention
+          })) { %>
+            <option value="intervention">Intervention owing to absenteeism</option>
+          <% } %>
+        </select>
+        <div id="filter-result" class="list-group">
+          <% allPostFitzroys.forEach(function (postFitzroy) { %>
+            <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= postFitzroy.id %>">
+              <span class="d-inline-block text-truncate">
+                <%= postFitzroy.name %>
+              </span>
+            </a>
+          <% }) %>
+        </div>
+      <% } else { %>
+        No students yet
       <% } %>
-      <div id="filter-result" class="list-group">
-      <% if (allPostFitzroys.length > 0) { %>
-        <% allPostFitzroys.forEach(function (postFitzroy) { %>
-          <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= postFitzroy.id %>">
-            <span class="d-inline-block text-truncate">
-              <%= postFitzroy.name %>
-            </span>
-          </a>
-        <% }) %>
-      <% } %>
-      </div>
     </div>
   </div>
 </div>

@@ -28,63 +28,63 @@
 <div class="container mb-5">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          var filter = document.getElementById('filter')
-          var filterResult = document.getElementById('filter-result')
-          var all = <%- JSON.stringify(allFitzroys) %>
-          var result
-          if (document.getElementById('filter')) {
-            filter.addEventListener('change', function () {
-              if (this.value === 'all') {
-                result = all
-              } else if (this.value === 'oneOnOne') {
-                result = all.filter(function (fitzroy) {
-                  return fitzroy.oneOnOne
-                })
-              } else if (this.value === 'intervention') {
-                result = all.filter(function (fitzroy) {
-                  return fitzroy.intervention
-                })
-              }
-              filterResult.innerHTML = ''
-              result.forEach(function (fitzroy) {
-                var a = document.createElement('a')
-                a.classList.add('list-group-item', 'list-group-item-action')
-                a.href = '/students/fitzroy/' + fitzroy._id
-                a.appendChild(document.createTextNode(fitzroy.name))
-                filterResult.appendChild(a)
-              })
-            })
-          }
-        })
-      </script>
-      <select id="filter" class="custom-select mb-2">
-        <% if (allFitzroys.length > 0) { %>
-          <option value="all" selected>All students</option>
-        <% } %>
-        <% if (allFitzroys.some(function (fitzroy) {
-          return fitzroy.oneOnOne
-        })) { %>
-          <option value="oneOnOne">One-on-one attention</option>
-        <% } %>
-        <% if (allFitzroys.some(function (fitzroy) {
-          return fitzroy.intervention
-        })) { %>
-          <option value="intervention">Intervention owing to absenteeism</option>
-        <% } %>
-      </select>
-      <div id="filter-result" class="list-group">
       <% if (allFitzroys.length > 0) { %>
-        <% allFitzroys.forEach(function (fitzroy) { %>
-          <a class="list-group-item list-group-item-action" href="/students/fitzroy/<%= fitzroy.id %>">
-            <span class="d-inline-lock text-truncate">
-              <%= fitzroy.name %>
-            </span>
-          </a>
-        <% }) %>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var filter = document.getElementById('filter')
+            var filterResult = document.getElementById('filter-result')
+            var all = <%- JSON.stringify(allFitzroys) %>
+            var result
+            if (document.getElementById('filter')) {
+              filter.addEventListener('change', function () {
+                if (this.value === 'all') {
+                  result = all
+                } else if (this.value === 'oneOnOne') {
+                  result = all.filter(function (fitzroy) {
+                    return fitzroy.oneOnOne
+                  })
+                } else if (this.value === 'intervention') {
+                  result = all.filter(function (fitzroy) {
+                    return fitzroy.intervention
+                  })
+                }
+                filterResult.innerHTML = ''
+                result.forEach(function (fitzroy) {
+                  var a = document.createElement('a')
+                  a.classList.add('list-group-item', 'list-group-item-action')
+                  a.href = '/students/fitzroy/' + fitzroy._id
+                  a.appendChild(document.createTextNode(fitzroy.name))
+                  filterResult.appendChild(a)
+                })
+              })
+            }
+          })
+        </script>
+        <select id="filter" class="custom-select mb-2">
+          <option value="all" selected>All students</option>
+          <% if (allFitzroys.some(function (fitzroy) {
+            return fitzroy.oneOnOne
+          })) { %>
+            <option value="oneOnOne">One-on-one attention</option>
+          <% } %>
+          <% if (allFitzroys.some(function (fitzroy) {
+            return fitzroy.intervention
+          })) { %>
+            <option value="intervention">Intervention owing to absenteeism</option>
+          <% } %>
+        </select>
+        <div id="filter-result" class="list-group">
+          <% allFitzroys.forEach(function (fitzroy) { %>
+            <a class="list-group-item list-group-item-action" href="/students/fitzroy/<%= fitzroy.id %>">
+              <span class="d-inline-lock text-truncate">
+                <%= fitzroy.name %>
+              </span>
+            </a>
+          <% }) %>
+        </div>
+      <% } else { %>
+        No students yet
       <% } %>
-      </div>
     </div>
   </div>
 </div>

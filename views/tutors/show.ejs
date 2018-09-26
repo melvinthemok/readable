@@ -13,13 +13,51 @@
           <span class="badge badge-pill badge-primary"><%= chosenTutor.gender %></span>
           <span class="badge badge-pill badge-primary"><%= chosenTutor.age %></span>
           <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenTutor.startDate) %></span>
+          <span class="badge badge-pill badge-primary"><%= chosenTutor.archived ? "archived" : "active" %></span>
         </p>
         <p>
           <%= chosenTutor.experience %>
         </p>
-        <% if (isCurrentUser) { %>
-          <a href="/tutors/edit/<%= chosenTutor.id %>"><button class="btn btn-primary mt-3 mb-2" type="button" style="cursor:pointer;">Edit your details</button></a>
-        <% } %>
+        <div class="d-flex flex-column flex-md-row">
+          <% if (isCurrentUser) { %>
+            <a href="/tutors/edit/<%= chosenTutor.id %>"><button class="btn btn-primary my-2 mb-2" type="button" style="cursor:pointer;">Edit your details</button></a>
+          <% } %>
+          <%
+            var isAdmin = "cursor: pointer;"
+            if (currentUser && !currentUser.admin) {
+              isAdmin = "display: none; visibility: hidden;"
+            }
+          %>
+          <button class="btn btn-warning my-2 mx-2" type="button" style="<%= isAdmin %>" data-toggle="modal" data-target="#archiveModal">
+            <%= chosenTutor.archived ? "Reactivate" : "Archive" %> this tutor
+          </button>
+        </div>
+        <div class="modal fade" id="archiveModal" tabindex="-1" role="dialog" aria-labelledby="archiveModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="archiveModalLabel">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                This tutor is currently <span class="font-weight-bold"><%= chosenTutor.archived ? "archived" : "active" %></span>. <%= chosenTutor.archived ? "Reactivate this tutor if he/she will be attending ReadAble regularly again." : "Only archive this tutor if he/she will not be attending ReadAble for the foreseeable future." %><br><br>
+                If you are sure, enter the tutor's name below:
+                <div class="input-group">
+                  <input id="archiveCheck" type="text" class="form-control my-3" placeholder="Tutor's name">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" style="cursor:pointer;"data-dismiss="modal">Cancel</button>
+                <form action="/tutors/archive/<%= chosenTutor._id %>?_method=PUT" method="POST">
+                  <input type="hidden" id="archived" name="archived" value=<%= chosenTutor.archived ? "false" : "true" %> />
+                  <button id="archiveButton" class="btn btn-warning" type="submit" disabled><%= chosenTutor.archived ? "Reactivate" : "Archive" %></button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -265,3 +303,5 @@
     </div>
   </div>
 </div>
+
+<script id="targetArchiveCheck" data-target-name="<%= chosenTutor.name %>" type="text/javascript" src="/client_side_helpers/targetArchiveCheck.js"></script>
