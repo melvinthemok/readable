@@ -13,6 +13,7 @@
             <span class="badge badge-pill badge-primary">family group <%= chosenFitzroy.family %></span>
           <% } %>
           <span class="badge badge-pill badge-primary">joined <%= formatDateShort(chosenFitzroy.startDate) %></span>
+          <span class="badge badge-pill badge-primary"><%= chosenFitzroy.archived ? "archived" : "active" %></span>
         </p>
       </div>
     </div>
@@ -32,6 +33,35 @@
             isAdmin = "display: none; visibility: hidden;"
           }
         %>
+        <button class="btn btn-warning my-2 mx-2" type="button" style="<%= isAdmin %>" data-toggle="modal" data-target="#archiveModal">
+          <%= chosenFitzroy.archived ? "Reactivate" : "Archive" %> this student
+        </button>
+        <div class="modal fade" id="archiveModal" tabindex="-1" role="dialog" aria-labelledby="archiveModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="archiveModalLabel">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                This student is currently <span class="font-weight-bold"><%= chosenFitzroy.archived ? "archived" : "active" %></span>. <%= chosenFitzroy.archived ? "Reactivate this student if he/she will be attending ReadAble regularly again." : "Only archive this student if he/she will not be attending ReadAble for the foreseeable future." %><br><br>
+                If you are sure, enter the student's name below:
+                <div class="input-group">
+                  <input id="archiveCheck" type="text" class="form-control my-3" placeholder="Student's name">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" style="cursor:pointer;"data-dismiss="modal">Cancel</button>
+                <form action="/students/fitzroy/archive/<%= chosenFitzroy._id %>?_method=PUT" method="POST">
+                  <input type="hidden" id="archived" name="archived" value=<%= chosenFitzroy.archived ? "false" : "true" %> />
+                  <button id="archiveButton" class="btn btn-warning" type="submit" disabled><%= chosenFitzroy.archived ? "Reactivate" : "Archive" %></button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         <button class="btn btn-danger my-2 mx-2" type="button" style="<%= isAdmin %>" data-toggle="modal" data-target="#deleteModal">
           Delete this student
         </button>
@@ -45,7 +75,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                Once deleted, this student's details cannot be recovered.<br><br>
+                Once deleted, this student's details can never be recovered.<br><br>
                 If you are sure, enter the student's name below:
                 <div class="input-group">
                   <input id="deleteCheck" type="text" class="form-control my-3" placeholder="Student's name">
@@ -470,4 +500,12 @@
   <% } %>
 </div>
 
-<script id="deleteCheckScript" type="text/javascript" src="/client_side_helpers/studentDeleteCheck.js" data-student-name="<%= chosenFitzroy.name %>"></script>
+<%
+  var javaScriptFiles = [
+    'studentArchiveCheck',
+    'studentDeleteCheck'
+  ]
+  javaScriptFiles.forEach(function (file) {
+%>
+<script id="<%= file %>" data-student-name="<%= chosenFitzroy.name %>" type="text/javascript" src="/client_side_helpers/<%= file %>.js"></script>
+<%  })  %>

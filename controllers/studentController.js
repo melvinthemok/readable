@@ -269,7 +269,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenPreSchool.archived = req.body.archived
         chosenPreSchool.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -301,6 +300,26 @@ var studentController = {
             }
           }
         )
+      })
+    },
+
+    archive: function (req, res) {
+      PreSchool.findById(req.params.id, function (err, chosenPreSchool) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/pre-school/' + req.params.id)
+        } else {
+          chosenPreSchool.archived = req.body.archived
+          chosenPreSchool.save(function(err) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/pre-school/' + req.params.id)
+            } else {
+              req.flash('success', chosenPreSchool.name + '\'s status successfully updated')
+              res.redirect('/students/pre-school/' + chosenPreSchool.id)
+            }
+          })
+        }
       })
     },
 
@@ -740,7 +759,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenFitzroy.archived = req.body.archived
         chosenFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -772,6 +790,26 @@ var studentController = {
             }
           }
         )
+      })
+    },
+
+    archive: function (req, res) {
+      Fitzroy.findById(req.params.id, function (err, chosenFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/fitzroy/' + req.params.id)
+        } else {
+          chosenFitzroy.archived = req.body.archived
+          chosenFitzroy.save(function(err) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/fitzroy/' + req.params.id)
+            } else {
+              req.flash('success', chosenFitzroy.name + '\'s status successfully updated')
+              res.redirect('/students/fitzroy/' + chosenFitzroy.id)
+            }
+          })
+        }
       })
     },
 
@@ -1178,7 +1216,6 @@ var studentController = {
               return obj
             })
             : []
-        chosenPostFitzroy.archived = req.body.archived
         chosenPostFitzroy.save(function (err) {
           if (err) {
             req.flash('error', err.toString())
@@ -1210,6 +1247,26 @@ var studentController = {
             }
           }
         )
+      })
+    },
+
+    archive: function (req, res) {
+      PostFitzroy.findById(req.params.id, function (err, chosenPostFitzroy) {
+        if (err) {
+          req.flash('error', err.toString())
+          res.redirect('/students/post-fitzroy/' + req.params.id)
+        } else {
+          chosenPostFitzroy.archived = req.body.archived
+          chosenPostFitzroy.save(function(err) {
+            if (err) {
+              req.flash('error', err.toString())
+              res.redirect('/students/postfitzroy/' + req.params.id)
+            } else {
+              req.flash('success', chosenPostFitzroy.name + '\'s status successfully updated')
+              res.redirect('/students/post-fitzroy/' + chosenPostFitzroy.id)
+            }
+          })
+        }
       })
     },
 

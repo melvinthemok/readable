@@ -334,35 +334,6 @@
           <% }) %>
         </div>
         <% } %>
-        <%
-          var isAdmin = ""
-          if (currentUser && !currentUser.admin) {
-            isAdmin = "display: none; visibility: hidden;"
-          }
-        %>
-        <div class="form-group required-group" style="<%= isAdmin %>">
-          <label for="archived">Is this student active or archived?</label><br>
-          <div class="form-check">
-            <label class="form-check-label">
-              <% if (!chosenPostFitzroy.archived) { %>
-                <input checked class="form-check-input mr-1" type="radio" name="archived" value="false">
-              <% } else { %>
-                <input class="form-check-input mr-1" type="radio" name="archived" value="false">
-              <% } %>
-              Active
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <% if (chosenPostFitzroy.archived) { %>
-                <input checked class="form-check-input mr-1" type="radio" name="archived" value="true">
-              <% } else { %>
-                <input class="form-check-input mr-1" type="radio" name="archived" value="true">
-              <% } %>
-              Archived
-            </label>
-          </div>
-        </div>
       </form>
     </div>
   </div>
