@@ -347,7 +347,13 @@ var studentController = {
                       req.flash('error', err.toString())
                       res.redirect('/students/pre-school/')
                     } else {
-                      Comment.remove({ preSchools: { $exists: true, $eq: [] }}, function (err) {
+                      Comment.remove({
+                        $and: [
+                          { preSchools: { $exists: true, $eq: [] }},
+                          { fitzroys: { $exists: true, $eq: [] }},
+                          { postFitzroys: { $exists: true, $eq: [] }}
+                        ]
+                      }, function (err) {
                         if (err) {
                           req.flash('error', err.toString())
                           res.redirect('/students/pre-school/')
@@ -837,7 +843,13 @@ var studentController = {
                       req.flash('error', err.toString())
                       res.redirect('/students/fitzroy/')
                     } else {
-                      Comment.remove({ fitzroys: { $exists: true, $eq: [] }}, function (err) {
+                      Comment.remove({
+                        $and: [
+                          { preSchools: { $exists: true, $eq: [] }},
+                          { fitzroys: { $exists: true, $eq: [] }},
+                          { postFitzroys: { $exists: true, $eq: [] }}
+                        ]
+                      }, function (err) {
                         if (err) {
                           req.flash('error', err.toString())
                           res.redirect('/students/fitzroy/')
@@ -1294,7 +1306,13 @@ var studentController = {
                       req.flash('error', err.toString())
                       res.redirect('/students/post-fitzroy/')
                     } else {
-                      Comment.remove({ postFitzroys: { $exists: true, $eq: [] }}, function (err) {
+                      Comment.remove({
+                        $and: [
+                          { preSchools: { $exists: true, $eq: [] }},
+                          { fitzroys: { $exists: true, $eq: [] }},
+                          { postFitzroys: { $exists: true, $eq: [] }}
+                        ]
+                      }, function (err) {
                         if (err) {
                           req.flash('error', err.toString())
                           res.redirect('/students/post-fitzroy/')
