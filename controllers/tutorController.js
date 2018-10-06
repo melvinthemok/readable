@@ -237,15 +237,27 @@ var tutorController = {
           path: 'attendance.date',
           model: 'Saturdate'
         }).exec(function (err, allTutors) {
-        if (err) {
-          req.flash('error', err.toString())
-          res.redirect('/tutors')
-        } else {
-          res.render('tutors/attendance/index', {
-            allTutors: sortByProperty(allTutors, 'name'),
-            formatDateShort: formatDateShort
-          })
-        }
+          if (err) {
+            req.flash('error', err.toString())
+            res.redirect('/tutors')
+          } else {
+            Saturdate.find({}, function (err, allSaturdates) {
+              if (err) {
+                req.flash('error', err.toString())
+                res.redirect('/tutors')
+              } else {
+                var sortedAllSaturdates = sortByProperty(allSaturdates, 'date')
+                var nextSaturdateIndex = sortedAllSaturdates.findIndex(function (saturdate) {
+                  return saturdate.date > Date.now() - 64 * 60 * 60 * 1000
+                })
+                res.render('tutors/attendance/index', {
+                  allTutors: sortByProperty(allTutors, 'name'),
+                  latestSaturdates: sortedAllSaturdates.slice(nextSaturdateIndex,  nextSaturdateIndex + 4),
+                  formatDateLong: formatDateLong
+                })
+              }
+            })
+          }
       })
     },
 
@@ -292,7 +304,7 @@ var tutorController = {
         _id: req.params.id
       }, {
         attendance: []
-      }, function (err, clearedTutor) {
+      }, function (err) {
         if (err) {
           req.flash('error', err.toString())
           res.redirect('/tutors/attendance/' + req.params.id)
@@ -301,7 +313,7 @@ var tutorController = {
             _id: req.params.id
           }, {
             attendance: attendance
-          }, function (err, updatedTutor) {
+          }, function (err) {
             if (err) {
               req.flash('error', err.toString())
               res.redirect('/tutors/attendance/' + req.params.id)
