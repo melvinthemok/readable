@@ -27,13 +27,13 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <div class="list-group">
-        <% if (allSaturdates.length > 0) { %>
-          <% allSaturdates.forEach(function (saturdate) { %>
+        <% if (recentSaturdates.length > 0) { %>
+          <% recentSaturdates.forEach(function (saturdate) { %>
             <a class="list-group-item list-group-item-action" href="/history/<%= saturdate.id %>"><%= formatDateLong(saturdate.date) %></a>
           <% }) %>
         <% } %>
       </div>
-      <a href="/history/recent" class="btn btn-primary float-right mt-2 mx-2">See recent</a>
+      <a href="/history" class="btn btn-primary float-right mt-2 mx-2">See all</a>
     </div>
   </div>
 </div>
