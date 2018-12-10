@@ -10,6 +10,22 @@ var sortByProperty = require('../helpers/sortByProperty')
 var fitzroyBookLevelPlusX = require('../helpers/fitzroyBookLevelPlusX')
 
 var saturdateController = {
+  indexRecent: function (req, res) {
+    Saturdate.find({}, function (err, allSaturdates) {
+      if (err) {
+        req.flash('error', err.toString())
+        res.redirect('/index')
+      } else {
+        var sortedAllSaturdates = sortByProperty(allSaturdates, 'date', true)
+        var recentSaturdates = sortedAllSaturdates.slice(0, 10)
+        res.render('history/index-recent', {
+          recentSaturdates: recentSaturdates,
+          formatDateLong: formatDateLong
+        })
+      }
+    })
+  },
+
   index: function (req, res) {
     Saturdate.find({}, function (err, allSaturdates) {
       if (err) {
