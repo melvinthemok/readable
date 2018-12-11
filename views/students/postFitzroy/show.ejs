@@ -113,6 +113,9 @@
             <% } else { %>
               <div class="list-group-item">Does not require intervention for absenteeism</div>
             <% } %>
+            <% if (chosenPostFitzroy.sensitiveInfo && currentUser && (currentUser.admin || currentUser.userType === "catchPlus")) { %>
+              <a data-toggle="popover" tabindex="0" data-content="<strong>Confidential:</strong> visible only to administrators and Catch+ users" class="list-group-item list-group-item-warning" style="cursor: pointer;"><%= chosenPostFitzroy.sensitiveInfo %></a>
+            <% } %>
             <% if (chosenPostFitzroy.generalComment) { %>
               <div class="list-group-item"><%= chosenPostFitzroy.generalComment %></div>
             <% } %>
