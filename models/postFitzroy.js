@@ -100,6 +100,13 @@ var PostFitzroySchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
+  sensitiveInfo: {
+    type: String,
+    maxlength: [
+      500,
+      'please keep this student\'s sensitive information within 500 characters'
+    ]
+  },
   generalComment: {
     type: String,
     maxlength: [

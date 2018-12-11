@@ -13,14 +13,12 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <div class="d-flex flex-column flex-md-row">
-        <a href="/students/pre-school/new" class="btn btn-primary my-2 mx-2">Sign up a new student</a>
-        <%
-          var isAdmin = ""
-          if (currentUser && !currentUser.admin) {
-            isAdmin = "display: none; visibility: hidden;"
-          }
-        %>
-        <a href="/students/pre-school/archived" class="btn btn-primary my-2 mx-2" style="<%= isAdmin %>">Archived students</a>
+        <% if (currentUser && (currentUser.admin || currentUser.userType === "catchPlus")) { %>
+          <a href="/students/pre-school/new" class="btn btn-primary my-2 mx-2">Sign up a new student</a>
+        <% } %>
+        <% if (currentUser && currentUser.admin) { %>
+          <a href="/students/pre-school/archived" class="btn btn-primary my-2 mx-2">Archived students</a> 
+        <% } %>
       </div>
     </div>
   </div>

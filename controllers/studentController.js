@@ -153,6 +153,7 @@ var studentController = {
         startDate: req.body.startDate,
         oneOnOne: req.body.oneOnOne,
         intervention: req.body.intervention,
+        sensitiveInfo: req.body.sensitiveInfo,
         generalComment: req.body.generalComment,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
@@ -252,6 +253,7 @@ var studentController = {
         chosenPreSchool.startDate = req.body.startDate
         chosenPreSchool.oneOnOne = req.body.oneOnOne
         chosenPreSchool.intervention = req.body.intervention
+        req.body.sensitiveInfo && (chosenPreSchool.sensitiveInfo = req.body.sensitiveInfo)
         chosenPreSchool.generalComment = req.body.generalComment
         chosenPreSchool.preferredTutors = req.body.preferredTutors || []
         chosenPreSchool.kidsToAvoid = req.body.kidsToAvoid || []
@@ -613,6 +615,7 @@ var studentController = {
         startDate: req.body.startDate,
         oneOnOne: req.body.oneOnOne,
         intervention: req.body.intervention,
+        sensitiveInfo: req.body.sensitiveInfo,
         generalComment: req.body.generalComment,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
@@ -738,6 +741,7 @@ var studentController = {
         chosenFitzroy.startDate = req.body.startDate
         chosenFitzroy.oneOnOne = req.body.oneOnOne
         chosenFitzroy.intervention = req.body.intervention
+        req.body.sensitiveInfo && (chosenFitzroy.sensitiveInfo = req.body.sensitiveInfo)
         chosenFitzroy.generalComment = req.body.generalComment
         chosenFitzroy.preferredTutors = req.body.preferredTutors || []
         chosenFitzroy.kidsToAvoid = req.body.kidsToAvoid || []
@@ -1111,6 +1115,7 @@ var studentController = {
         startDate: req.body.startDate,
         oneOnOne: req.body.oneOnOne,
         intervention: req.body.intervention,
+        sensitiveInfo: req.body.sensitiveInfo,
         generalComment: req.body.generalComment,
         preferredTutors: req.body.preferredTutors,
         kidsToAvoid: req.body.kidsToAvoid,
@@ -1211,6 +1216,7 @@ var studentController = {
         chosenPostFitzroy.startDate = req.body.startDate
         chosenPostFitzroy.oneOnOne = req.body.oneOnOne
         chosenPostFitzroy.intervention = req.body.intervention
+        req.body.sensitiveInfo && (chosenPostFitzroy.sensitiveInfo = req.body.sensitiveInfo)
         chosenPostFitzroy.generalComment = req.body.generalComment
         chosenPostFitzroy.preferredTutors = req.body.preferredTutors || []
         chosenPostFitzroy.kidsToAvoid = req.body.kidsToAvoid || []
