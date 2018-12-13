@@ -29,12 +29,14 @@
       <% if (allPostFitzroys.length > 0) { %>
         <script>
           document.addEventListener('DOMContentLoaded', function () {
-            var filter = document.getElementById('filter')
-            var filterResult = document.getElementById('filter-result')
             var all = <%- JSON.stringify(allPostFitzroys) %>
+            var allResults = document.getElementById('all-results')
+            var filter = document.getElementById('filter')
+            var searchBar = document.getElementById('search-bar')
             var result
-            if (document.getElementById('filter')) {
+            if (filter) {
               filter.addEventListener('change', function () {
+                searchBar.value = null
                 if (this.value === 'all') {
                   result = all
                 } else if (this.value === 'oneOnOne') {
@@ -46,18 +48,36 @@
                     return postFitzroy.intervention
                   })
                 }
-                filterResult.innerHTML = ''
+                allResults.innerHTML = ''
                 result.forEach(function (postFitzroy) {
                   var a = document.createElement('a')
                   a.classList.add('list-group-item', 'list-group-item-action')
                   a.href = '/students/post-fitzroy/' + postFitzroy._id
                   a.appendChild(document.createTextNode(postFitzroy.name))
-                  filterResult.appendChild(a)
+                  allResults.appendChild(a)
+                })
+              })
+            }
+            if (searchBar) {
+              searchBar.addEventListener('keyup', function () {
+                filter.value = 'all'
+                var re = new RegExp("\\w*" + this.value + "\\w*", "i")
+                result = all.filter(function (fitzroy) {
+                  return re.test(fitzroy.name)
+                })
+                allResults.innerHTML = ''
+                result.forEach(function (fitzroy) {
+                  var a = document.createElement('a')
+                  a.classList.add('list-group-item', 'list-group-item-action')
+                  a.href = '/students/fitzroy/' + fitzroy._id
+                  a.appendChild(document.createTextNode(fitzroy.name))
+                  allResults.appendChild(a)
                 })
               })
             }
           })
         </script>
+        <small class="form-text text-muted">Filter students</small>
         <select id="filter" class="custom-select mb-2">
           <option value="all" selected>All students</option>
           <% if (allPostFitzroys.some(function (postFitzroy) {
@@ -71,7 +91,9 @@
             <option value="intervention">Intervention owing to absenteeism</option>
           <% } %>
         </select>
-        <div id="filter-result" class="list-group">
+        <small class="form-text text-muted">Or search by name</small>
+        <input id="search-bar" class="form-control mb-5" type="text" placeholder="Enter student's name"></input>
+        <div id="all-results" class="list-group">
           <% allPostFitzroys.forEach(function (postFitzroy) { %>
             <a class="list-group-item list-group-item-action" href="/students/post-fitzroy/<%= postFitzroy.id %>">
               <span class="d-inline-block text-truncate">
