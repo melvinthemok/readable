@@ -31,15 +31,17 @@
       <% if (allTutors.length > 0) { %>
         <script>
           document.addEventListener('DOMContentLoaded', function () {
-            var filter = document.getElementById('filterTutor')
-            var filterResult = document.getElementById('filter-tutor-result')
             var all = <%- JSON.stringify(allTutors) %>
+            var allResults = document.getElementById('all-results')
+            var filter = document.getElementById('filter-tutor')
+            var searchBar = document.getElementById('search-bar-tutor')
             var fitzroyTutorsList = <%- JSON.stringify(fitzroyTutors)%>
             var preSchoolTutorsList = <%- JSON.stringify(preSchoolTutors)%>
             var postFitzroyTutorsList = <%- JSON.stringify(postFitzroyTutors)%>
             var result
-            if (document.getElementById('filterTutor')) {
+            if (filter) {
               filter.addEventListener('change', function () {
+                searchBar.value = null
                 if (this.value === 'all') {
                   result = all
                 } else if (this.value === 'fitzroyTutors') {
@@ -61,19 +63,37 @@
                     }
                   })
                 }
-                filterResult.innerHTML = ''
+                allResults.innerHTML = ''
                 result.forEach(function (tutor) {
                   var a = document.createElement('a')
                   a.classList.add('list-group-item', 'list-group-item-action')
                   a.href = '/tutors/' + tutor._id
                   a.appendChild(document.createTextNode(tutor.name))
-                  filterResult.appendChild(a)
+                  allResults.appendChild(a)
+                })
+              })
+            }
+            if (searchBar) {
+              searchBar.addEventListener('keyup', function () {
+                filter.value = 'all'
+                var re = new RegExp("\\w*" + this.value + "\\w*", "i")
+                result = all.filter(function (fitzroy) {
+                  return re.test(fitzroy.name)
+                })
+                allResults.innerHTML = ''
+                result.forEach(function (tutor) {
+                  var a = document.createElement('a')
+                  a.classList.add('list-group-item', 'list-group-item-action')
+                  a.href = '/tutor/' + tutor._id
+                  a.appendChild(document.createTextNode(tutor.name))
+                  allResults.appendChild(a)
                 })
               })
             }
           })
         </script>
-        <select id="filterTutor" class="custom-select mb-2">
+        <small class="form-text text-muted">Filter tutors</small>
+        <select id="filter-tutor" class="custom-select mb-2">
           <option value="all" selected>All tutors</option>
           <% if (fitzroyTutors.length > 0) { %>
             <option value="fitzroyTutors">Fitzroy tutors</option>
@@ -85,7 +105,9 @@
             <option value="postFitzroyTutors">Post-Fitzroy tutors</option>
           <% } %>
         </select>
-        <div id="filter-tutor-result" class="list-group">
+        <small class="form-text text-muted">Or search by name</small>
+        <input id="search-bar-tutor" class="form-control mb-5" type="text" placeholder="Enter tutor's name"></input>
+        <div id="all-results" class="list-group">
           <% allTutors.forEach(function (tutor) { %>
             <a class="list-group-item list-group-item-action" href="/tutors/<%= tutor.id %>">
               <%= tutor.name %>
