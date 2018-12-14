@@ -62,15 +62,15 @@
               searchBar.addEventListener('keyup', function () {
                 filter.value = 'all'
                 var re = new RegExp("\\w*" + this.value + "\\w*", "i")
-                result = all.filter(function (fitzroy) {
-                  return re.test(fitzroy.name)
+                result = all.filter(function (postFitzroy) {
+                  return re.test(postFitzroy.name)
                 })
                 allResults.innerHTML = ''
-                result.forEach(function (fitzroy) {
+                result.forEach(function (postFitzroy) {
                   var a = document.createElement('a')
                   a.classList.add('list-group-item', 'list-group-item-action')
-                  a.href = '/students/fitzroy/' + fitzroy._id
-                  a.appendChild(document.createTextNode(fitzroy.name))
+                  a.href = '/students/post-fitzroy/' + postFitzroy._id
+                  a.appendChild(document.createTextNode(postFitzroy.name))
                   allResults.appendChild(a)
                 })
               })
