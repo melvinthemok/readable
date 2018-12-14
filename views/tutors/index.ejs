@@ -84,7 +84,7 @@
                 result.forEach(function (tutor) {
                   var a = document.createElement('a')
                   a.classList.add('list-group-item', 'list-group-item-action')
-                  a.href = '/tutor/' + tutor._id
+                  a.href = '/tutors/' + tutor._id
                   a.appendChild(document.createTextNode(tutor.name))
                   allResults.appendChild(a)
                 })
