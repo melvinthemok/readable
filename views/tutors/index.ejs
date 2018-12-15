@@ -51,24 +51,26 @@
               updateDom()
             }
             function filtering() {
+              var resetValue
+              sort.value === 'name'
+                ? resetValue = all
+                : resetValue = allByDateJoined
               if (this.value === 'all') {
-                sort.value === 'name'
-                ? result = all
-                : result = allByDateJoined
+                result = resetValue
               } else if (this.value === 'fitzroyTutors') {
-                result = result.filter(function (tutor) {
+                result = resetValue.filter(function (tutor) {
                   if (fitzroyTutorsList.includes(tutor._id)) {
                     return tutor
                   }
                 })
               } else if (this.value === 'preSchoolTutors') {
-                result = result.filter(function (tutor) {
+                result = resetValue.filter(function (tutor) {
                   if (preSchoolTutorsList.includes(tutor._id)) {
                     return tutor
                   }
                 })
               } else if (this.value === 'postFitzroyTutors') {
-                result = result.filter(function (tutor) {
+                result = resetValue.filter(function (tutor) {
                   if (postFitzroyTutorsList.includes(tutor._id)) {
                     return tutor
                   }
@@ -77,9 +79,10 @@
               updateDom()
             }
             function searching() {
-              sort.value = 'name'
+              sort.value == 'name'
+                ? result = all
+                : result = allByDateJoined
               filter.value = 'all'
-              result = all
               var re = new RegExp("\\w*" + this.value + "\\w*", "i")
               result = result.filter(function (fitzroy) {
                 return re.test(fitzroy.name)
