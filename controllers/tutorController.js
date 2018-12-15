@@ -42,7 +42,9 @@ var tutorController = {
                       fitzroyTutors: fitzroyTutors,
                       preSchoolTutors: preSchoolTutors,
                       postFitzroyTutors: postFitzroyTutors,
-                      allTutors: sortByProperty(allTutors, 'name')
+                      allTutorsByName: sortByProperty(allTutors.slice(), 'name'),
+                      allTutorsByDateJoined: sortByProperty(allTutors.slice(), 'startDate', true)
+                      // .sort() modifies array in place by default
                     })
                   }
                 })

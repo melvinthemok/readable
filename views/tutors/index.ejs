@@ -28,70 +28,91 @@
 <div class="container mb-5">
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <% if (allTutors.length > 0) { %>
+      <% if (allTutorsByName.length > 0) { %>
         <script>
           document.addEventListener('DOMContentLoaded', function () {
-            var all = <%- JSON.stringify(allTutors) %>
+            var all = <%- JSON.stringify(allTutorsByName) %>
+            var allByDateJoined = <%- JSON.stringify(allTutorsByDateJoined) %>
             var allResults = document.getElementById('all-results')
+            var sort = document.getElementById('sort-tutor')
             var filter = document.getElementById('filter-tutor')
             var searchBar = document.getElementById('search-bar-tutor')
             var fitzroyTutorsList = <%- JSON.stringify(fitzroyTutors)%>
             var preSchoolTutorsList = <%- JSON.stringify(preSchoolTutors)%>
             var postFitzroyTutorsList = <%- JSON.stringify(postFitzroyTutors)%>
-            var result
-            if (filter) {
-              filter.addEventListener('change', function () {
-                searchBar.value = null
-                if (this.value === 'all') {
-                  result = all
-                } else if (this.value === 'fitzroyTutors') {
-                  result = all.filter(function (tutor) {
-                    if (fitzroyTutorsList.includes(tutor._id)) {
-                      return tutor
-                    }
-                  })
-                } else if (this.value === 'preSchoolTutors') {
-                  result = all.filter(function (tutor) {
-                    if (preSchoolTutorsList.includes(tutor._id)) {
-                      return tutor
-                    }
-                  })
-                } else if (this.value === 'postFitzroyTutors') {
-                  result = all.filter(function (tutor) {
-                    if (postFitzroyTutorsList.includes(tutor._id)) {
-                      return tutor
-                    }
-                  })
-                }
-                allResults.innerHTML = ''
-                result.forEach(function (tutor) {
-                  var a = document.createElement('a')
-                  a.classList.add('list-group-item', 'list-group-item-action')
-                  a.href = '/tutors/' + tutor._id
-                  a.appendChild(document.createTextNode(tutor.name))
-                  allResults.appendChild(a)
+            var result = all
+
+            function sorting() {
+              if (this.value === 'date') {
+                result = allByDateJoined
+              } else { // this.value === 'name'
+                result = all
+              }
+              updateDom()
+            }
+            function filtering() {
+              if (this.value === 'all') {
+                sort.value === 'name'
+                ? result = all
+                : result = allByDateJoined
+              } else if (this.value === 'fitzroyTutors') {
+                result = result.filter(function (tutor) {
+                  if (fitzroyTutorsList.includes(tutor._id)) {
+                    return tutor
+                  }
                 })
+              } else if (this.value === 'preSchoolTutors') {
+                result = result.filter(function (tutor) {
+                  if (preSchoolTutorsList.includes(tutor._id)) {
+                    return tutor
+                  }
+                })
+              } else if (this.value === 'postFitzroyTutors') {
+                result = result.filter(function (tutor) {
+                  if (postFitzroyTutorsList.includes(tutor._id)) {
+                    return tutor
+                  }
+                })
+              }
+              updateDom()
+            }
+            function searching() {
+              sort.value = 'name'
+              filter.value = 'all'
+              result = all
+              var re = new RegExp("\\w*" + this.value + "\\w*", "i")
+              result = result.filter(function (fitzroy) {
+                return re.test(fitzroy.name)
+              })
+              updateDom()
+            }
+            function updateDom() {
+              allResults.innerHTML = ''
+              result.forEach(function (tutor) {
+                var a = document.createElement('a')
+                a.classList.add('list-group-item', 'list-group-item-action')
+                a.href = '/tutors/' + tutor._id
+                a.appendChild(document.createTextNode(tutor.name))
+                allResults.appendChild(a)
               })
             }
+            
+            if (sort) {
+              sort.addEventListener('change', sorting)
+            }
+            if (filter) {
+              filter.addEventListener('change', filtering)
+            }
             if (searchBar) {
-              searchBar.addEventListener('keyup', function () {
-                filter.value = 'all'
-                var re = new RegExp("\\w*" + this.value + "\\w*", "i")
-                result = all.filter(function (fitzroy) {
-                  return re.test(fitzroy.name)
-                })
-                allResults.innerHTML = ''
-                result.forEach(function (tutor) {
-                  var a = document.createElement('a')
-                  a.classList.add('list-group-item', 'list-group-item-action')
-                  a.href = '/tutors/' + tutor._id
-                  a.appendChild(document.createTextNode(tutor.name))
-                  allResults.appendChild(a)
-                })
-              })
+              searchBar.addEventListener('keyup', searching)
             }
           })
         </script>
+        <small class="form-text text-muted">Sort all tutors by</small>
+        <select id="sort-tutor" class="custom-select mb-2">
+          <option value="name" selected>Name</option>
+          <option value="date">Date joined</option>
+        </select>
         <small class="form-text text-muted">Filter tutors</small>
         <select id="filter-tutor" class="custom-select mb-2">
           <option value="all" selected>All tutors</option>
@@ -108,7 +129,7 @@
         <small class="form-text text-muted">Or search by name</small>
         <input id="search-bar-tutor" class="form-control mb-5" type="text" placeholder="Enter tutor's name"></input>
         <div id="all-results" class="list-group">
-          <% allTutors.forEach(function (tutor) { %>
+          <% allTutorsByName.forEach(function (tutor) { %>
             <a class="list-group-item list-group-item-action" href="/tutors/<%= tutor.id %>">
               <%= tutor.name %>
             </a>
