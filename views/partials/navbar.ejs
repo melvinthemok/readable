@@ -51,17 +51,18 @@
                 <a class="dropdown-item" href="/students/pre-school">pre-school</a>
                 <a class="dropdown-item" href="/students/fitzroy">fitzroy</a>
                 <a class="dropdown-item" href="/students/post-fitzroy">post-fitzroy</a>
-                <div class="dropdown-divider"></div>
-                <h6 class="dropdown-header"><em>comments</em></h6>
+                <div class="dropdown-divider" style="<%= isTutor %>"></div>
+                <h6 class="dropdown-header" style="<%= isTutor %>"><em>comments</em></h6>
                 <a class="dropdown-item" href="/comments/new" style="<%= isTutor %>">add comment</a>
                 <div class="dropdown-divider"></div>
                 <h6 class="dropdown-header"><em>tutors</em></h6>
-                <a class="dropdown-item" href="/tutors/attendance/<%= currentUserId %>" style="<%= isTutor %>">your attendance</a>
-                <a class="dropdown-item" href="/tutors/attendance"> attendance (all)</a>
+                <!-- suspended feature build -->
+                <!-- <a class="dropdown-item" href="/tutors/attendance/<%= currentUserId %>" style="<%= isTutor %>">your attendance</a> -->
+                <!-- <a class="dropdown-item" href="/tutors/attendance"> attendance (all)</a> -->
                 <a class="dropdown-item" href="/tutors">all tutors</a>
-                <div class="dropdown-divider"></div>
-                <h6 class="dropdown-header"><em>history</em></h6>
-                <a class="dropdown-item" href="/history/recent">all sessions held</a>
+                <div class="dropdown-divider" style="<%= isAdminOrCatchPlus %>"></div>
+                <h6 class="dropdown-header" style="<%= isAdminOrCatchPlus %>"><em>history</em></h6>
+                <a class="dropdown-item" href="/history/recent" style="<%= isAdminOrCatchPlus %>">all sessions held</a>
                 <div class="dropdown-divider"></div>
                 <h6 class="dropdown-header"><em>stay don't go</em></h6>
                 <a class="dropdown-item" href="/auth/logout">log out</a>
