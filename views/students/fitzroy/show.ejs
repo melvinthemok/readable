@@ -449,6 +449,7 @@
                   <% chosenFitzroy.attendance.filter(function (dateAttendance) { %>
                     <% return dateAttendance.date.date === indivDate.date %>
                   <% }).forEach(function (indivAttendance) { %>
+                    <% indivAttendance = JSON.parse(JSON.stringify(indivAttendance)) %>
                     <div class="list-group-item justify-content-start">
                       <% if (indivAttendance.completed || !indivAttendance.hasOwnProperty('completed')) { %>
                         <% badgeStyle = "badge-success" %>
@@ -466,7 +467,8 @@
                       </div>
                       <% if (allComments.length > 0) { %>
                         <% allComments.filter(function (comment) { %>
-                          <% return comment.date.id === indivAttendance.date.id %>
+                          <% comment = JSON.parse(JSON.stringify(comment)) %>
+                          <% return comment.date._id === indivAttendance.date._id %>
                         <% }).forEach(function (comment) { %>
                           <div style="flex-grow: <%= indivAttendance.tutor ? 1 : 2 %>; cursor: pointer;">
                             <a data-toggle="popover" tabindex="0" data-content="<a href='/comments/<%= comment.id %>'><%= comment.contents %></a>">
