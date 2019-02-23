@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
       phone.classList.add('form-control-warning')
       phoneFormGroup.classList.remove('has-success')
       phone.classList.remove('form-control-success')
-      message.textContent = 'Please provide a valid phone number'
+      message.textContent = 'Please provide a valid phone number, e.g. 91234567, omitting +65'
     }
   }
 
