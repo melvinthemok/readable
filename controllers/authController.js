@@ -99,6 +99,9 @@ var authController = {
         if (!chosenTutor) {
           req.flash('error', 'No account with that email address exists')
           res.redirect('/auth/tutor/forgot')
+        } else if (chosenTutor.archived) {
+          req.flash('error', 'Looks like you haven\'t dropped by in a while. Please contact a ReadAble administrator to reactivate your account')
+          res.redirect('/auth/tutor/forgot')
         } else {
           Tutor.findOne({ email: req.body.email }, function (err, chosenTutorAgain) {
             var smtpTransport = nodemailer.createTransport({
@@ -375,6 +378,9 @@ var authController = {
       if (err) return next(err)
       if (!user) {
         req.flash('error', info.message)
+        res.redirect('/auth/tutor/login')
+      } else if (user.archived) {
+        req.flash('error', 'Looks like you haven\'t dropped by in a while. Please contact a ReadAble administrator to reactivate your account')
         res.redirect('/auth/tutor/login')
       } else {
         req.logIn(user, function (err) {
